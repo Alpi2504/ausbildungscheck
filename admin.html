@@ -12,8 +12,6 @@
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--dark:#021D3D;--navy:#042C53;--ice:#4FAADF;--ice-light:#EBF5FC;--gray:#F7F9FC;--gray2:#EEF2F7;--text:#0A1929;--text2:#5A7490;--green:#10B981;--red:#EF4444;--yellow:#F59E0B}
 body{font-family:'DM Sans',sans-serif;background:var(--gray);color:var(--text)}
-
-/* LOGIN */
 .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--navy)}
 .login-box{background:#fff;border-radius:20px;padding:2.5rem;width:100%;max-width:400px;text-align:center}
 .login-logo{font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;color:var(--dark);margin-bottom:.5rem}
@@ -23,8 +21,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--gray);color:var(--text)}
 .login-input:focus{border-color:var(--ice)}
 .login-btn{width:100%;background:var(--navy);color:#fff;border:none;padding:13px;border-radius:9px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;cursor:pointer}
 .login-error{color:var(--red);font-size:13px;margin-top:.75rem;display:none}
-
-/* LAYOUT */
 .admin-wrap{display:none;min-height:100vh}
 .sidebar{position:fixed;left:0;top:0;bottom:0;width:240px;background:var(--dark);padding:1.5rem;display:flex;flex-direction:column}
 .sidebar-logo{font-family:'Outfit',sans-serif;font-size:18px;font-weight:800;color:#fff;margin-bottom:2rem}
@@ -35,20 +31,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--gray);color:var(--text)}
 .sidebar-bottom{margin-top:auto}
 .logout-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;cursor:pointer;color:rgba(255,255,255,0.4);font-size:14px;width:100%;background:none;border:none;font-family:'DM Sans',sans-serif}
 .logout-btn:hover{color:#fff;background:rgba(255,255,255,0.08)}
-
 .main{margin-left:240px;padding:2rem}
 .page{display:none}
 .page.active{display:block}
 .page-title{font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;color:var(--dark);letter-spacing:-0.5px;margin-bottom:1.75rem}
-
-/* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
 .stat-card{background:#fff;border-radius:14px;padding:1.25rem;border:1.5px solid var(--gray2)}
 .stat-value{font-family:'Outfit',sans-serif;font-size:32px;font-weight:800;color:var(--dark);letter-spacing:-1px}
 .stat-label{font-size:13px;color:var(--text2);margin-top:4px}
 .stat-icon{font-size:24px;margin-bottom:.5rem}
-
-/* TABLES */
 .card{background:#fff;border-radius:14px;border:1.5px solid var(--gray2);overflow:hidden;margin-bottom:1.5rem}
 .card-header{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border-bottom:1px solid var(--gray2)}
 .card-title{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:var(--dark)}
@@ -64,8 +55,6 @@ tr:hover td{background:var(--gray)}
 .badge-inaktiv{background:#FEE2E2;color:#991B1B}
 .action-btn{background:none;border:none;cursor:pointer;font-size:16px;padding:4px 6px;border-radius:6px}
 .action-btn:hover{background:var(--gray2)}
-
-/* MODAL */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(2,13,29,0.5);z-index:100;align-items:center;justify-content:center;padding:1rem}
 .modal-bg.open{display:flex}
 .modal-box{background:#fff;border-radius:16px;padding:2rem;width:100%;max-width:600px;max-height:90vh;overflow-y:auto}
@@ -81,10 +70,7 @@ tr:hover td{background:var(--gray)}
 .btn-save{background:var(--navy);color:#fff;border:none;padding:10px 24px;border-radius:9px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer}
 .btn-cancel{background:transparent;color:var(--text2);border:1.5px solid var(--gray2);padding:10px 24px;border-radius:9px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer}
 .btn-delete{background:#FEE2E2;color:var(--red);border:none;padding:10px 24px;border-radius:9px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer}
-
-/* SECTION DIVIDER in modal */
 .form-section{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ice);margin:1.5rem 0 .75rem;padding-bottom:.5rem;border-bottom:1.5px solid var(--ice-light)}
-/* LOGO UPLOAD */
 .logo-upload-wrap{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
 .logo-preview{width:64px;height:64px;border-radius:12px;background:var(--ice-light);border:1.5px solid var(--gray2);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;overflow:hidden}
 .logo-preview img{width:100%;height:100%;object-fit:contain;border-radius:10px}
@@ -94,8 +80,6 @@ tr:hover td{background:var(--gray)}
 .logo-upload-label:hover{background:var(--ice);color:#fff}
 .logo-upload-hint{font-size:11px;color:var(--text2);margin-top:4px}
 .logo-uploading{font-size:12px;color:var(--ice);margin-top:4px;display:none}
-
-/* BEWERBUNG DETAIL */
 .bewerbung-card{background:#fff;border-radius:14px;border:1.5px solid var(--gray2);padding:1.5rem;margin-bottom:1rem}
 .bewerbung-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
 .bewerbung-name{font-family:'Outfit',sans-serif;font-size:17px;font-weight:700;color:var(--dark)}
@@ -113,21 +97,34 @@ tr:hover td{background:var(--gray)}
 .btn-weiterleiten{background:var(--ice-light);color:var(--ice)}
 .btn-archivieren{background:var(--gray2);color:var(--text2)}
 
-/* PREISE */
-.preis-card{background:#fff;border-radius:14px;border:1.5px solid var(--gray2);padding:1.5rem;margin-bottom:1rem}
-.preis-name{font-family:'Outfit',sans-serif;font-size:18px;font-weight:800;color:var(--dark);margin-bottom:1rem}
-.preis-fields{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+/* PAKETE */
+.pakete-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;margin-bottom:1.5rem}
+.paket-admin-card{background:#fff;border-radius:14px;border:1.5px solid var(--gray2);padding:1.5rem;position:relative}
+.paket-admin-card.highlighted{border-color:var(--ice);background:linear-gradient(135deg,#fff,var(--ice-light))}
+.paket-admin-card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.75rem}
+.paket-admin-name{font-family:'Outfit',sans-serif;font-size:18px;font-weight:800;color:var(--dark)}
+.paket-admin-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--ice-light);color:var(--ice);margin-top:3px}
+.paket-admin-preis{margin-bottom:.75rem}
+.paket-admin-preis-main{font-family:'Outfit',sans-serif;font-size:28px;font-weight:800;color:var(--dark);letter-spacing:-1px}
+.paket-admin-preis-unit{font-size:13px;color:var(--text2)}
+.paket-admin-preis-einmalig{font-size:13px;color:var(--text2);margin-top:2px}
+.paket-admin-features{list-style:none;margin-bottom:1rem}
+.paket-admin-features li{font-size:13px;color:var(--text);padding:3px 0;display:flex;align-items:flex-start;gap:7px}
+.paket-admin-features li::before{content:'✓';color:var(--ice);font-weight:800;flex-shrink:0}
+.paket-admin-actions{display:flex;gap:8px;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--gray2)}
+.paket-status-badge{position:absolute;top:1rem;right:1rem;font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px}
 
 .empty-state{text-align:center;padding:3rem;color:var(--text2);font-size:14px}
 .empty-icon{font-size:40px;margin-bottom:.75rem}
-
 .toast{position:fixed;bottom:2rem;right:2rem;background:var(--dark);color:#fff;padding:.75rem 1.25rem;border-radius:10px;font-size:14px;font-weight:500;z-index:999;display:none;font-family:'Outfit',sans-serif}
 .toast.show{display:block}
+.toggle-switch{display:flex;align-items:center;gap:10px;cursor:pointer}
+.toggle-switch input{accent-color:var(--ice);width:18px;height:18px;cursor:pointer}
+.toggle-switch label{font-size:13px;font-weight:600;color:var(--dark);cursor:pointer}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
 <div class="login-wrap" id="login-screen">
   <div class="login-box">
     <div class="login-logo">Ausbildungs<span>Check</span></div>
@@ -138,7 +135,6 @@ tr:hover td{background:var(--gray)}
   </div>
 </div>
 
-<!-- ADMIN -->
 <div class="admin-wrap" id="admin-screen">
   <div class="sidebar">
     <div class="sidebar-logo">Ausbildungs<span>Check</span></div>
@@ -148,7 +144,7 @@ tr:hover td{background:var(--gray)}
     <div class="nav-item" onclick="showPage('bewerbungen')"><span class="icon">📨</span> Bewerbungen</div>
     <div class="nav-item" onclick="showPage('bewerber')"><span class="icon">👤</span> Bewerber</div>
     <div class="nav-item" onclick="showPage('berufsfelder')"><span class="icon">🗂️</span> Berufsfelder</div>
-    <div class="nav-item" onclick="showPage('preise')"><span class="icon">💰</span> Preise</div>
+    <div class="nav-item" onclick="showPage('pakete')"><span class="icon">💰</span> Pakete & Preise</div>
     <div class="sidebar-bottom">
       <button class="logout-btn" onclick="logout()"><span>🚪</span> Ausloggen</button>
     </div>
@@ -213,9 +209,7 @@ tr:hover td{background:var(--gray)}
     <div class="page" id="page-bewerber">
       <div class="page-title">Bewerber</div>
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">Alle registrierten Bewerber</div>
-        </div>
+        <div class="card-header"><div class="card-title">Alle registrierten Bewerber</div></div>
         <table><thead><tr><th>Name</th><th>E-Mail</th><th>Adresse</th><th>Telefon</th><th>Schulabschluss</th><th>Registriert</th></tr></thead>
         <tbody id="bewerber-table"><tr><td colspan="6" class="empty-state">Lädt...</td></tr></tbody></table>
       </div>
@@ -234,10 +228,14 @@ tr:hover td{background:var(--gray)}
       </div>
     </div>
 
-    <!-- PREISE -->
-    <div class="page" id="page-preise">
-      <div class="page-title">Preise</div>
-      <div id="preise-list"><div class="empty-state">Lädt...</div></div>
+    <!-- PAKETE & PREISE -->
+    <div class="page" id="page-pakete">
+      <div class="page-title">Pakete & Preise</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+        <div style="font-size:14px;color:var(--text2)">Diese Pakete werden direkt auf der <strong>betriebe.html</strong> angezeigt – Änderungen sind sofort live.</div>
+        <button class="add-btn" onclick="openPaketModal()">+ Paket hinzufügen</button>
+      </div>
+      <div id="pakete-grid" class="pakete-grid"><div class="empty-state">Lädt...</div></div>
     </div>
 
   </div>
@@ -252,7 +250,6 @@ tr:hover td{background:var(--gray)}
     <div class="form-group"><label class="form-label">E-Mail *</label><input class="form-input" id="betrieb-email" type="email" placeholder="info@firma.de"></div>
     <div class="form-group"><label class="form-label">Telefon</label><input class="form-input" id="betrieb-telefon" placeholder="+49 123 456789"></div>
     <div class="form-group"><label class="form-label">Adresse</label><input class="form-input" id="betrieb-adresse" placeholder="Musterstraße 1, 12345 Stadt"></div>
-    <!-- LOGO UPLOAD -->
     <div class="form-group">
       <label class="form-label">Firmenlogo</label>
       <div class="logo-upload-wrap">
@@ -279,8 +276,6 @@ tr:hover td{background:var(--gray)}
   <div class="modal-box">
     <div class="modal-title" id="stelle-modal-title">Stelle hinzufügen</div>
     <input type="hidden" id="stelle-id">
-
-    <!-- BASISDATEN -->
     <div class="form-section">Basisdaten</div>
     <div class="form-group"><label class="form-label">Betrieb *</label>
       <select class="form-select" id="stelle-betrieb"><option value="">Bitte auswählen...</option></select>
@@ -291,47 +286,37 @@ tr:hover td{background:var(--gray)}
     <div class="form-group"><label class="form-label">Ausbildungsberuf *</label><input class="form-input" id="stelle-beruf" placeholder="z.B. Kfz-Mechatroniker/in"></div>
     <div class="form-row">
       <div class="form-group"><label class="form-label">Gehalt (€/Monat)</label><input class="form-input" id="stelle-gehalt" placeholder="820"></div>
-      <div class="form-group"><label class="form-label">Standort</label><input class="form-input" id="stelle-standort" placeholder="Wuppertal"></div>
+      <div class="form-group"><label class="form-label">Standort</label><input class="form-input" id="stelle-standort" placeholder="Köln"></div>
     </div>
     <div class="form-row">
       <div class="form-group"><label class="form-label">Ausbildungsbeginn</label><input class="form-input" id="stelle-beginn" placeholder="Sep 2025"></div>
       <div class="form-group"><label class="form-label">Dauer</label><input class="form-input" id="stelle-dauer" placeholder="3 Jahre"></div>
     </div>
-
-    <!-- STELLENBESCHREIBUNG -->
     <div class="form-section">Stellenbeschreibung</div>
     <div class="form-group">
       <label class="form-label">Tätigkeiten <span class="form-label-hint">Was macht der Azubi?</span></label>
-      <textarea class="form-input" id="stelle-taetigkeiten" rows="5" placeholder="• Wartung und Reparatur von Fahrzeugen&#10;• Diagnose von Fehlern mit moderner Messtechnik&#10;• Einbau von Elektronik und Fahrerassistenzsystemen&#10;• Kundengespräche und Beratung&#10;(Zeilenweise eingeben – jede Zeile wird als Punkt dargestellt)"></textarea>
+      <textarea class="form-input" id="stelle-taetigkeiten" rows="5" placeholder="• Wartung und Reparatur von Fahrzeugen&#10;• Diagnose von Fehlern mit moderner Messtechnik&#10;(Zeilenweise eingeben)"></textarea>
     </div>
     <div class="form-group">
       <label class="form-label">Arbeitgeber-Wünsche <span class="form-label-hint">Was erwartet der Betrieb?</span></label>
-      <textarea class="form-input" id="stelle-arbeitgeber-wuensche" rows="5" placeholder="• Mindestens Hauptschulabschluss&#10;• Technisches Interesse und handwerkliches Geschick&#10;• Teamfähigkeit und Zuverlässigkeit&#10;• Führerschein Klasse B von Vorteil&#10;(Zeilenweise eingeben – jede Zeile wird als Punkt dargestellt)"></textarea>
+      <textarea class="form-input" id="stelle-arbeitgeber-wuensche" rows="5" placeholder="• Mindestens Hauptschulabschluss&#10;• Technisches Interesse&#10;(Zeilenweise eingeben)"></textarea>
     </div>
     <div class="form-group">
       <label class="form-label">Kurzbeschreibung <span class="form-label-hint">Für die Stellenkarte (optional)</span></label>
-      <textarea class="form-input" id="stelle-beschreibung" rows="2" placeholder="Kurze Beschreibung der Stelle für die Übersicht..."></textarea>
+      <textarea class="form-input" id="stelle-beschreibung" rows="2" placeholder="Kurze Beschreibung..."></textarea>
     </div>
-
-    <!-- YOUTUBE -->
     <div class="form-section">YouTube-Video</div>
     <div class="form-group">
-      <label class="form-label">YouTube-Link zum Ausbildungsberuf <span class="form-label-hint">optional</span></label>
-      <input class="form-input" id="stelle-youtube" placeholder="https://www.youtube.com/watch?v=... oder https://youtu.be/...">
-      <div style="font-size:12px;color:var(--text2);margin-top:4px">🎬 Das Video wird direkt im Detail-Modal des Azubis eingebettet</div>
+      <label class="form-label">YouTube-Link <span class="form-label-hint">optional</span></label>
+      <input class="form-input" id="stelle-youtube" placeholder="https://www.youtube.com/watch?v=...">
+      <div style="font-size:12px;color:var(--text2);margin-top:4px">🎬 Wird direkt im Detail-Modal eingebettet</div>
     </div>
-
-    <!-- FRAGEN & SETTINGS -->
     <div class="form-section">Bewerberfragen & Einstellungen</div>
     <div class="form-group"><label class="form-label">Frage 1 für Bewerber</label><input class="form-input" id="stelle-frage1" placeholder="z.B. Warum interessiert dich dieser Beruf?"></div>
-    <div class="form-group"><label class="form-label">Frage 2 für Bewerber</label><input class="form-input" id="stelle-frage2" placeholder="z.B. Hast du bereits Erfahrungen in diesem Bereich?"></div>
+    <div class="form-group"><label class="form-label">Frage 2 für Bewerber</label><input class="form-input" id="stelle-frage2" placeholder="z.B. Hast du bereits Erfahrungen?"></div>
     <div class="form-group"><label class="form-label">Status</label>
-      <select class="form-select" id="stelle-aktiv">
-        <option value="true">Aktiv</option>
-        <option value="false">Inaktiv</option>
-      </select>
+      <select class="form-select" id="stelle-aktiv"><option value="true">Aktiv</option><option value="false">Inaktiv</option></select>
     </div>
-
     <div class="modal-btns">
       <button class="btn-delete" id="stelle-delete-btn" onclick="deleteStelle()" style="display:none">Löschen</button>
       <button class="btn-cancel" onclick="closeModal('stelle-modal')">Abbrechen</button>
@@ -355,15 +340,65 @@ tr:hover td{background:var(--gray)}
   </div>
 </div>
 
+<!-- PAKET MODAL -->
+<div class="modal-bg" id="paket-modal">
+  <div class="modal-box">
+    <div class="modal-title" id="paket-modal-title">Paket hinzufügen</div>
+    <input type="hidden" id="paket-id">
+
+    <div class="form-section">Paket-Info</div>
+    <div class="form-group"><label class="form-label">Paketname *</label><input class="form-input" id="paket-name" placeholder="z.B. Video + Listing"></div>
+    <div class="form-group"><label class="form-label">Emoji / Icon</label><input class="form-input" id="paket-emoji" placeholder="z.B. 🎥"></div>
+    <div class="form-group"><label class="form-label">Badge Text <span class="form-label-hint">z.B. ⭐ Beliebt – leer lassen wenn kein Badge</span></label><input class="form-input" id="paket-badge" placeholder="⭐ Empfohlen"></div>
+
+    <div class="form-section">Preise</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Monatlicher Preis (€ netto)</label><input class="form-input" id="paket-preis-monatlich" type="number" placeholder="129"></div>
+      <div class="form-group"><label class="form-label">Einmaliger Preis (€ netto) <span class="form-label-hint">optional</span></label><input class="form-input" id="paket-preis-einmalig" type="number" placeholder="1500"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Mindestlaufzeit</label><input class="form-input" id="paket-mindestlaufzeit" placeholder="z.B. 3 Monate Mindestlaufzeit"></div>
+    <div class="form-group"><label class="form-label">Preishinweis <span class="form-label-hint">z.B. „zzgl. MwSt." oder „pro Stelle"</span></label><input class="form-input" id="paket-preishinweis" placeholder="pro Stelle, zzgl. MwSt."></div>
+
+    <div class="form-section">Leistungen</div>
+    <div class="form-group">
+      <label class="form-label">Features <span class="form-label-hint">Eine Zeile pro Feature</span></label>
+      <textarea class="form-input" id="paket-features" rows="6" placeholder="Listing deiner Ausbildungsstelle(n)&#10;Direkte Bewerbungen per E-Mail&#10;Sichtbar für alle Besucher&#10;Monatlich kündbar nach Mindestlaufzeit"></textarea>
+    </div>
+
+    <div class="form-section">Einstellungen</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Reihenfolge</label>
+        <input class="form-input" id="paket-reihenfolge" type="number" placeholder="1" value="1">
+      </div>
+      <div class="form-group" style="display:flex;flex-direction:column;justify-content:flex-end">
+        <div class="toggle-switch" style="margin-bottom:.5rem">
+          <input type="checkbox" id="paket-highlighted">
+          <label for="paket-highlighted">Hervorgehoben (Empfohlen-Design)</label>
+        </div>
+        <div class="toggle-switch">
+          <input type="checkbox" id="paket-aktiv" checked>
+          <label for="paket-aktiv">Aktiv (auf Website sichtbar)</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-btns">
+      <button class="btn-delete" id="paket-delete-btn" onclick="deletePaket()" style="display:none">Löschen</button>
+      <button class="btn-cancel" onclick="closeModal('paket-modal')">Abbrechen</button>
+      <button class="btn-save" onclick="savePaket()">Speichern</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-const SUPABASE_URL = 'https://trccxzjdddhbqjgyzlkv.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRyY2N4empkZGRoYnFqZ3l6bGt2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1MDgyMjIsImV4cCI6MjA5NDA4NDIyMn0.xS5-9Tq1-i9_K9lYDuayomybBazHmnvY29K24LvRxaQ';
-const ADMIN_PASSWORD = 'ausbildungscheck2025';
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const SUPABASE_URL='https://trccxzjdddhbqjgyzlkv.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRyY2N4empkZGRoYnFqZ3l6bGt2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1MDgyMjIsImV4cCI6MjA5NDA4NDIyMn0.xS5-9Tq1-i9_K9lYDuayomybBazHmnvY29K24LvRxaQ';
+const ADMIN_PASSWORD='ausbildungscheck2025';
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-// LOGIN
 function checkLogin(){
   var pw=document.getElementById('pw-input').value;
   if(pw===ADMIN_PASSWORD){
@@ -380,14 +415,13 @@ function logout(){
   document.getElementById('pw-input').value='';
 }
 
-// NAVIGATION
 function showPage(name){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
   event.currentTarget.classList.add('active');
   if(name==='bewerbungen') loadBewerbungen();
-  if(name==='preise') loadPreise();
+  if(name==='pakete') loadPakete();
   if(name==='berufsfelder') loadBerufsfelder();
   if(name==='bewerber') loadBewerber();
 }
@@ -398,12 +432,10 @@ function showToast(msg){
   setTimeout(()=>t.classList.remove('show'),3000);
 }
 
-// LOAD ALL
 async function loadAll(){
   await Promise.all([loadDashboard(),loadBetriebe(),loadStellen(),loadBerufsfelder()]);
 }
 
-// DASHBOARD
 async function loadDashboard(){
   var [b,s,bew,neu]=await Promise.all([
     sb.from('betriebe').select('id',{count:'exact'}),
@@ -415,34 +447,19 @@ async function loadDashboard(){
   document.getElementById('stat-stellen').textContent=s.count||0;
   document.getElementById('stat-bewerbungen').textContent=bew.count||0;
   document.getElementById('stat-neu').textContent=neu.count||0;
-
   var {data}=await sb.from('bewerbungen').select('*, stellen:stellen_id(beruf, betrieb:betrieb_id(name))').order('created_at',{ascending:false}).limit(5);
   var tb=document.getElementById('recent-bewerbungen');
   if(!data||!data.length){tb.innerHTML='<tr><td colspan="5" style="text-align:center;padding:2rem;color:#5A7490">Noch keine Bewerbungen</td></tr>';return;}
-  tb.innerHTML=data.map(b=>`<tr>
-    <td>${b.vorname||''} ${b.nachname||''}</td>
-    <td>${b.stellen?.beruf||'-'}</td>
-    <td>${b.stellen?.betrieb?.name||'-'}</td>
-    <td>${new Date(b.created_at).toLocaleDateString('de-DE')}</td>
-    <td><span class="badge badge-${b.status==='neu'?'neu':'aktiv'}">${b.status}</span></td>
-  </tr>`).join('');
+  tb.innerHTML=data.map(b=>`<tr><td>${b.vorname||''} ${b.nachname||''}</td><td>${b.stellen?.beruf||'-'}</td><td>${b.stellen?.betrieb?.name||'-'}</td><td>${new Date(b.created_at).toLocaleDateString('de-DE')}</td><td><span class="badge badge-${b.status==='neu'?'neu':'aktiv'}">${b.status}</span></td></tr>`).join('');
 }
 
-// BETRIEBE
 var betriebeData=[];
 async function loadBetriebe(){
   var {data}=await sb.from('betriebe').select('*,stellen(id)').order('created_at',{ascending:false});
   betriebeData=data||[];
   var tb=document.getElementById('betriebe-table');
   if(!data||!data.length){tb.innerHTML='<tr><td colspan="5" style="text-align:center;padding:2rem;color:#5A7490">Noch keine Betriebe</td></tr>';return;}
-  tb.innerHTML=data.map(b=>`<tr>
-    <td><strong>${b.name}</strong></td>
-    <td>${b.email}</td>
-    <td>${b.telefon||'-'}</td>
-    <td>${b.stellen?.length||0} Stellen</td>
-    <td><button class="action-btn" onclick="openBetriebModal('${b.id}')">✏️</button></td>
-  </tr>`).join('');
-
+  tb.innerHTML=data.map(b=>`<tr><td><strong>${b.name}</strong></td><td>${b.email}</td><td>${b.telefon||'-'}</td><td>${b.stellen?.length||0} Stellen</td><td><button class="action-btn" onclick="openBetriebModal('${b.id}')">✏️</button></td></tr>`).join('');
   var sel=document.getElementById('stelle-betrieb');
   sel.innerHTML='<option value="">Bitte auswählen...</option>';
   data.forEach(b=>sel.innerHTML+=`<option value="${b.id}">${b.name}</option>`);
@@ -469,9 +486,7 @@ function openBetriebModal(id){
       document.getElementById('betrieb-telefon').value=b.telefon||'';
       document.getElementById('betrieb-adresse').value=b.adresse||'';
       document.getElementById('betrieb-logo-url').value=b.logo_url||'';
-      if(b.logo_url){
-        document.getElementById('betrieb-logo-preview').innerHTML=`<img src="${b.logo_url}" alt="Logo">`;
-      }
+      if(b.logo_url) document.getElementById('betrieb-logo-preview').innerHTML=`<img src="${b.logo_url}" alt="Logo">`;
       document.getElementById('betrieb-delete-btn').style.display='block';
       document.getElementById('betrieb-modal-title').textContent='Betrieb bearbeiten';
     }
@@ -486,7 +501,7 @@ async function uploadBetriebLogo(input){
   document.getElementById('betrieb-logo-uploading').style.display='block';
   var ext=file.name.split('.').pop();
   var filename='logos/'+Date.now()+'.'+ext;
-  var {data,error}=await sb.storage.from('betrieb-logos').upload(filename,file,{upsert:true});
+  var {error}=await sb.storage.from('betrieb-logos').upload(filename,file,{upsert:true});
   document.getElementById('betrieb-logo-uploading').style.display='none';
   if(error){alert('Upload fehlgeschlagen: '+error.message);return;}
   var {data:{publicUrl}}=sb.storage.from('betrieb-logos').getPublicUrl(filename);
@@ -496,19 +511,11 @@ async function uploadBetriebLogo(input){
 
 async function saveBetrieb(){
   var id=document.getElementById('betrieb-id').value;
-  var data={
-    name:document.getElementById('betrieb-name').value,
-    email:document.getElementById('betrieb-email').value,
-    telefon:document.getElementById('betrieb-telefon').value,
-    adresse:document.getElementById('betrieb-adresse').value,
-    logo_url:document.getElementById('betrieb-logo-url').value||null
-  };
+  var data={name:document.getElementById('betrieb-name').value,email:document.getElementById('betrieb-email').value,telefon:document.getElementById('betrieb-telefon').value,adresse:document.getElementById('betrieb-adresse').value,logo_url:document.getElementById('betrieb-logo-url').value||null};
   if(!data.name||!data.email){alert('Bitte Name und E-Mail ausfüllen!');return;}
   if(id){await sb.from('betriebe').update(data).eq('id',id);}
   else{await sb.from('betriebe').insert(data);}
-  closeModal('betrieb-modal');
-  await loadBetriebe();
-  loadDashboard();
+  closeModal('betrieb-modal');await loadBetriebe();loadDashboard();
   showToast(id?'✅ Betrieb aktualisiert!':'✅ Betrieb hinzugefügt!');
 }
 
@@ -516,13 +523,10 @@ async function deleteBetrieb(){
   if(!confirm('Betrieb wirklich löschen?')) return;
   var id=document.getElementById('betrieb-id').value;
   await sb.from('betriebe').delete().eq('id',id);
-  closeModal('betrieb-modal');
-  await loadBetriebe();
-  loadDashboard();
+  closeModal('betrieb-modal');await loadBetriebe();loadDashboard();
   showToast('🗑️ Betrieb gelöscht');
 }
 
-// STELLEN
 var stellenData=[];
 async function loadStellen(){
   var {data,error}=await sb.from('stellen').select('*, betrieb:betrieb_id(name)').order('created_at',{ascending:false});
@@ -530,27 +534,16 @@ async function loadStellen(){
   var tb=document.getElementById('stellen-table');
   if(error){tb.innerHTML='<tr><td colspan="6" style="text-align:center;padding:2rem;color:red">Fehler: '+error.message+'</td></tr>';return;}
   if(!data||!data.length){tb.innerHTML='<tr><td colspan="6" style="text-align:center;padding:2rem;color:#5A7490">Noch keine Stellen</td></tr>';return;}
-  tb.innerHTML=data.map(s=>`<tr>
-    <td><strong>${s.beruf||'-'}</strong></td>
-    <td>${s.betrieb?.name||'-'}</td>
-    <td>${s.standort||'-'}</td>
-    <td>${s.gehalt?s.gehalt+' €':'-'}</td>
-    <td><span class="badge badge-${s.aktiv?'aktiv':'inaktiv'}">${s.aktiv?'Aktiv':'Inaktiv'}</span></td>
-    <td><button class="action-btn" onclick="openStelleModal('${s.id}')">✏️</button></td>
-  </tr>`).join('');
+  tb.innerHTML=data.map(s=>`<tr><td><strong>${s.beruf||'-'}</strong></td><td>${s.betrieb?.name||'-'}</td><td>${s.standort||'-'}</td><td>${s.gehalt?s.gehalt+' €':'-'}</td><td><span class="badge badge-${s.aktiv?'aktiv':'inaktiv'}">${s.aktiv?'Aktiv':'Inaktiv'}</span></td><td><button class="action-btn" onclick="openStelleModal('${s.id}')">✏️</button></td></tr>`).join('');
 }
 
 function openStelleModal(id){
-  // Reset alle Felder
-  ['stelle-id','stelle-beruf','stelle-gehalt','stelle-standort','stelle-beginn','stelle-dauer',
-   'stelle-beschreibung','stelle-taetigkeiten','stelle-arbeitgeber-wuensche','stelle-youtube',
-   'stelle-frage1','stelle-frage2'].forEach(f=>document.getElementById(f).value='');
+  ['stelle-id','stelle-beruf','stelle-gehalt','stelle-standort','stelle-beginn','stelle-dauer','stelle-beschreibung','stelle-taetigkeiten','stelle-arbeitgeber-wuensche','stelle-youtube','stelle-frage1','stelle-frage2'].forEach(f=>document.getElementById(f).value='');
   document.getElementById('stelle-aktiv').value='true';
   document.getElementById('stelle-betrieb').value='';
   document.getElementById('stelle-berufsfeld').value='';
   document.getElementById('stelle-delete-btn').style.display='none';
   document.getElementById('stelle-modal-title').textContent='Stelle hinzufügen';
-
   if(id){
     var s=stellenData.find(x=>x.id===id);
     if(s){
@@ -578,28 +571,11 @@ function openStelleModal(id){
 
 async function saveStelle(){
   var id=document.getElementById('stelle-id').value;
-  var data={
-    betrieb_id:document.getElementById('stelle-betrieb').value,
-    berufsfeld_id:document.getElementById('stelle-berufsfeld').value||null,
-    beruf:document.getElementById('stelle-beruf').value,
-    gehalt:document.getElementById('stelle-gehalt').value,
-    standort:document.getElementById('stelle-standort').value,
-    beginn:document.getElementById('stelle-beginn').value,
-    dauer:document.getElementById('stelle-dauer').value,
-    beschreibung:document.getElementById('stelle-beschreibung').value,
-    taetigkeiten:document.getElementById('stelle-taetigkeiten').value,
-    arbeitgeber_wuensche:document.getElementById('stelle-arbeitgeber-wuensche').value,
-    youtube_url:document.getElementById('stelle-youtube').value,
-    frage1:document.getElementById('stelle-frage1').value,
-    frage2:document.getElementById('stelle-frage2').value,
-    aktiv:document.getElementById('stelle-aktiv').value==='true'
-  };
+  var data={betrieb_id:document.getElementById('stelle-betrieb').value,berufsfeld_id:document.getElementById('stelle-berufsfeld').value||null,beruf:document.getElementById('stelle-beruf').value,gehalt:document.getElementById('stelle-gehalt').value,standort:document.getElementById('stelle-standort').value,beginn:document.getElementById('stelle-beginn').value,dauer:document.getElementById('stelle-dauer').value,beschreibung:document.getElementById('stelle-beschreibung').value,taetigkeiten:document.getElementById('stelle-taetigkeiten').value,arbeitgeber_wuensche:document.getElementById('stelle-arbeitgeber-wuensche').value,youtube_url:document.getElementById('stelle-youtube').value,frage1:document.getElementById('stelle-frage1').value,frage2:document.getElementById('stelle-frage2').value,aktiv:document.getElementById('stelle-aktiv').value==='true'};
   if(!data.beruf||!data.betrieb_id){alert('Bitte Betrieb und Beruf ausfüllen!');return;}
   if(id){await sb.from('stellen').update(data).eq('id',id);}
   else{await sb.from('stellen').insert(data);}
-  closeModal('stelle-modal');
-  await loadStellen();
-  loadDashboard();
+  closeModal('stelle-modal');await loadStellen();loadDashboard();
   showToast(id?'✅ Stelle aktualisiert!':'✅ Stelle hinzugefügt!');
 }
 
@@ -607,23 +583,17 @@ async function deleteStelle(){
   if(!confirm('Stelle wirklich löschen?')) return;
   var id=document.getElementById('stelle-id').value;
   await sb.from('stellen').delete().eq('id',id);
-  closeModal('stelle-modal');
-  await loadStellen();
-  loadDashboard();
+  closeModal('stelle-modal');await loadStellen();loadDashboard();
   showToast('🗑️ Stelle gelöscht');
 }
 
-// BEWERBUNGEN
 var aktiverBewerbungFilter='aktiv';
-
 function setBewerbungFilter(filter){
   aktiverBewerbungFilter=filter;
-  document.getElementById('filter-aktiv').style.background=filter==='aktiv'?'var(--navy)':'#fff';
-  document.getElementById('filter-aktiv').style.color=filter==='aktiv'?'#fff':'var(--text2)';
-  document.getElementById('filter-archiviert').style.background=filter==='archiviert'?'var(--navy)':'#fff';
-  document.getElementById('filter-archiviert').style.color=filter==='archiviert'?'#fff':'var(--text2)';
-  document.getElementById('filter-alle').style.background=filter==='alle'?'var(--navy)':'#fff';
-  document.getElementById('filter-alle').style.color=filter==='alle'?'#fff':'var(--text2)';
+  ['aktiv','archiviert','alle'].forEach(f=>{
+    document.getElementById('filter-'+f).style.background=filter===f?'var(--navy)':'#fff';
+    document.getElementById('filter-'+f).style.color=filter===f?'#fff':'var(--text2)';
+  });
   loadBewerbungen();
 }
 
@@ -633,17 +603,11 @@ async function loadBewerbungen(){
   else if(aktiverBewerbungFilter==='archiviert') query=query.eq('status','archiviert');
   var {data}=await query;
   var list=document.getElementById('bewerbungen-list');
-  if(!data||!data.length){
-    list.innerHTML='<div class="empty-state"><div class="empty-icon">📨</div>Keine Bewerbungen gefunden</div>';
-    return;
-  }
+  if(!data||!data.length){list.innerHTML='<div class="empty-state"><div class="empty-icon">📨</div>Keine Bewerbungen gefunden</div>';return;}
   list.innerHTML=data.map(b=>`
     <div class="bewerbung-card">
       <div class="bewerbung-header">
-        <div>
-          <div class="bewerbung-name">${b.vorname||''} ${b.nachname||''}</div>
-          <div class="bewerbung-stelle">${b.stellen?.beruf||'-'} · ${b.stellen?.betrieb?.name||'-'}</div>
-        </div>
+        <div><div class="bewerbung-name">${b.vorname||''} ${b.nachname||''}</div><div class="bewerbung-stelle">${b.stellen?.beruf||'-'} · ${b.stellen?.betrieb?.name||'-'}</div></div>
         <span class="badge badge-${b.status==='neu'?'neu':b.status==='weitergeleitet'?'aktiv':'inaktiv'}">${b.status}</span>
       </div>
       <div class="bewerbung-info">
@@ -663,8 +627,7 @@ async function loadBewerbungen(){
         ${b.status!=='archiviert'?`<button class="status-btn btn-archivieren" onclick="archivierenBewerbung('${b.id}')">📁 Archivieren</button>`:''}
         <button class="status-btn" style="background:#FEE2E2;color:#EF4444" onclick="loeschenBewerbung('${b.id}')">🗑️ Löschen</button>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
 async function weiterleitenBewerbung(id,betriebEmail,name,bewerberEmail,stelle){
@@ -672,92 +635,32 @@ async function weiterleitenBewerbung(id,betriebEmail,name,bewerberEmail,stelle){
   var mailto='mailto:'+betriebEmail+'?subject=Neue Bewerbung: '+encodeURIComponent(stelle)+'&body='+encodeURIComponent('Hallo,\n\nes liegt eine neue Bewerbung für die Stelle "'+stelle+'" vor.\n\nBewerber: '+name+'\nE-Mail: '+bewerberEmail+'\n\nBitte nehmen Sie Kontakt auf.\n\nMit freundlichen Grüßen\nAusbildungsCheck');
   window.open(mailto);
   await sb.from('bewerbungen').update({status:'weitergeleitet'}).eq('id',id);
-  loadBewerbungen();
-  loadDashboard();
-  showToast('✅ Bewerbung weitergeleitet!');
+  loadBewerbungen();loadDashboard();showToast('✅ Bewerbung weitergeleitet!');
 }
-
 async function loeschenBewerbung(id){
-  if(!confirm('Bewerbung wirklich löschen? Das kann nicht rückgängig gemacht werden!')) return;
+  if(!confirm('Bewerbung wirklich löschen?')) return;
   await sb.from('bewerbungen').delete().eq('id',id);
-  loadBewerbungen();
-  loadDashboard();
-  showToast('🗑️ Bewerbung gelöscht');
+  loadBewerbungen();loadDashboard();showToast('🗑️ Bewerbung gelöscht');
 }
-
 async function archivierenBewerbung(id){
   await sb.from('bewerbungen').update({status:'archiviert'}).eq('id',id);
-  loadBewerbungen();
-  loadDashboard();
-  showToast('📁 Bewerbung archiviert');
+  loadBewerbungen();loadDashboard();showToast('📁 Bewerbung archiviert');
 }
 
-// PREISE
-async function loadPreise(){
-  var {data}=await sb.from('preise').select('*').order('id');
-  var list=document.getElementById('preise-list');
-  if(!data||!data.length){list.innerHTML='<div class="empty-state">Keine Preise gefunden</div>';return;}
-  list.innerHTML=data.map(p=>`
-    <div class="preis-card">
-      <div class="preis-name">${p.paket_name}</div>
-      <div class="preis-fields">
-        <div class="form-group">
-          <label class="form-label">Einmaliger Preis (€)</label>
-          <input class="form-input" id="preis-einmalig-${p.id}" value="${p.preis_einmalig||''}" placeholder="z.B. 1500">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Monatlicher Preis (€)</label>
-          <input class="form-input" id="preis-monatlich-${p.id}" value="${p.preis_monatlich||''}" placeholder="z.B. 99">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Beschreibung</label>
-        <input class="form-input" id="preis-beschreibung-${p.id}" value="${p.beschreibung||''}" placeholder="Kurze Beschreibung...">
-      </div>
-      <button class="btn-save" onclick="savePreis('${p.id}')">Speichern</button>
-    </div>
-  `).join('');
-}
-
-async function savePreis(id){
-  var data={
-    preis_einmalig:parseFloat(document.getElementById('preis-einmalig-'+id).value)||null,
-    preis_monatlich:parseFloat(document.getElementById('preis-monatlich-'+id).value)||null,
-    beschreibung:document.getElementById('preis-beschreibung-'+id).value
-  };
-  await sb.from('preise').update(data).eq('id',id);
-  showToast('✅ Preis gespeichert!');
-}
-
-// BEWERBER
 async function loadBewerber(){
   var {data,error}=await sb.from('bewerber_view').select('*');
   var tb=document.getElementById('bewerber-table');
   if(error||!data||!data.length){tb.innerHTML='<tr><td colspan="6" style="text-align:center;padding:2rem;color:#5A7490">Noch keine registrierten Bewerber</td></tr>';return;}
-  tb.innerHTML=data.map(b=>`<tr>
-    <td><strong>${b.vorname||'-'} ${b.nachname||''}</strong></td>
-    <td>${b.email||'-'}</td>
-    <td>${(b.strasse||'')+', '+(b.plz||'')+' '+(b.ort||'-')}</td>
-    <td>${b.telefon||'-'}</td>
-    <td>${b.schulabschluss||'-'}${b.noch_schueler&&b.abschluss_jahr?' (voraus. '+b.abschluss_jahr+')':''}</td>
-    <td>${new Date(b.created_at).toLocaleDateString('de-DE')}</td>
-  </tr>`).join('');
+  tb.innerHTML=data.map(b=>`<tr><td><strong>${b.vorname||'-'} ${b.nachname||''}</strong></td><td>${b.email||'-'}</td><td>${(b.strasse||'')+', '+(b.plz||'')+' '+(b.ort||'-')}</td><td>${b.telefon||'-'}</td><td>${b.schulabschluss||'-'}${b.noch_schueler&&b.abschluss_jahr?' (voraus. '+b.abschluss_jahr+')':''}</td><td>${new Date(b.created_at).toLocaleDateString('de-DE')}</td></tr>`).join('');
 }
 
-// BERUFSFELDER
 var berufsfeldData=[];
 async function loadBerufsfelder(){
   var {data}=await sb.from('berufsfelder').select('*, stellen(id)').order('name');
   berufsfeldData=data||[];
   var tb=document.getElementById('berufsfelder-table');
   if(!data||!data.length){tb.innerHTML='<tr><td colspan="4" style="text-align:center;padding:2rem;color:#5A7490">Noch keine Berufsfelder</td></tr>';return;}
-  tb.innerHTML=data.map(b=>`<tr>
-    <td style="font-size:22px">${b.emoji||'📁'}</td>
-    <td><strong>${b.name}</strong></td>
-    <td>${b.stellen?.length||0} Stellen</td>
-    <td><button class="action-btn" onclick="openBerufsfeldModal('${b.id}')">✏️</button></td>
-  </tr>`).join('');
-
+  tb.innerHTML=data.map(b=>`<tr><td style="font-size:22px">${b.emoji||'📁'}</td><td><strong>${b.name}</strong></td><td>${b.stellen?.length||0} Stellen</td><td><button class="action-btn" onclick="openBerufsfeldModal('${b.id}')">✏️</button></td></tr>`).join('');
   var sel=document.getElementById('stelle-berufsfeld');
   sel.innerHTML='<option value="">Bitte auswählen...</option>';
   data.forEach(b=>sel.innerHTML+=`<option value="${b.id}">${b.emoji||''} ${b.name}</option>`);
@@ -781,25 +684,131 @@ function openBerufsfeldModal(id){
   }
   document.getElementById('berufsfeld-modal').classList.add('open');
 }
-
 async function saveBerufsfeld(){
   var id=document.getElementById('berufsfeld-id').value;
   var data={name:document.getElementById('berufsfeld-name').value,emoji:document.getElementById('berufsfeld-emoji').value};
   if(!data.name){alert('Bitte Name ausfüllen!');return;}
   if(id){await sb.from('berufsfelder').update(data).eq('id',id);}
   else{await sb.from('berufsfelder').insert(data);}
-  closeModal('berufsfeld-modal');
-  await loadBerufsfelder();
+  closeModal('berufsfeld-modal');await loadBerufsfelder();
   showToast(id?'✅ Berufsfeld aktualisiert!':'✅ Berufsfeld hinzugefügt!');
 }
-
 async function deleteBerufsfeld(){
   if(!confirm('Berufsfeld wirklich löschen?')) return;
   var id=document.getElementById('berufsfeld-id').value;
   await sb.from('berufsfelder').delete().eq('id',id);
-  closeModal('berufsfeld-modal');
-  await loadBerufsfelder();
+  closeModal('berufsfeld-modal');await loadBerufsfelder();
   showToast('🗑️ Berufsfeld gelöscht');
+}
+
+// ===== PAKETE =====
+var paketeData=[];
+
+async function loadPakete(){
+  var {data}=await sb.from('pakete').select('*').order('reihenfolge');
+  paketeData=data||[];
+  var grid=document.getElementById('pakete-grid');
+  if(!data||!data.length){
+    grid.innerHTML='<div class="empty-state"><div class="empty-icon">💰</div>Noch keine Pakete. Klick auf "+ Paket hinzufügen" um loszulegen.</div>';
+    return;
+  }
+  grid.innerHTML=data.map(p=>`
+    <div class="paket-admin-card ${p.highlighted?'highlighted':''}">
+      <span class="paket-status-badge badge-${p.aktiv?'aktiv':'inaktiv'}">${p.aktiv?'Aktiv':'Inaktiv'}</span>
+      <div class="paket-admin-card-header">
+        <div>
+          <div style="font-size:28px;margin-bottom:4px">${p.emoji||'📋'}</div>
+          <div class="paket-admin-name">${p.name}</div>
+          ${p.badge?`<div class="paket-admin-badge">${p.badge}</div>`:''}
+        </div>
+      </div>
+      <div class="paket-admin-preis">
+        ${p.preis_einmalig?`<div class="paket-admin-preis-einmalig">${p.preis_einmalig}€ einmalig +</div>`:''}
+        <div><span class="paket-admin-preis-main">${p.preis_monatlich||0}€</span><span class="paket-admin-preis-unit"> / Monat</span></div>
+        ${p.preishinweis?`<div style="font-size:11px;color:var(--text2);margin-top:2px">${p.preishinweis}</div>`:''}
+        ${p.mindestlaufzeit?`<div style="font-size:12px;color:var(--text2);margin-top:4px">⏱ ${p.mindestlaufzeit}</div>`:''}
+      </div>
+      ${p.features?`<ul class="paket-admin-features">${p.features.split('\n').filter(f=>f.trim()).map(f=>`<li>${f}</li>`).join('')}</ul>`:''}
+      <div class="paket-admin-actions">
+        <button class="add-btn" onclick="openPaketModal('${p.id}')" style="flex:1">✏️ Bearbeiten</button>
+        <button onclick="togglePaketAktiv('${p.id}',${p.aktiv})" style="background:${p.aktiv?'#FEF3C7':'#D1FAE5'};color:${p.aktiv?'#D97706':'#065F46'};border:none;padding:8px 14px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;cursor:pointer">
+          ${p.aktiv?'⏸ Deaktivieren':'▶ Aktivieren'}
+        </button>
+      </div>
+    </div>`).join('');
+}
+
+function openPaketModal(id){
+  document.getElementById('paket-id').value='';
+  document.getElementById('paket-name').value='';
+  document.getElementById('paket-emoji').value='';
+  document.getElementById('paket-badge').value='';
+  document.getElementById('paket-preis-monatlich').value='';
+  document.getElementById('paket-preis-einmalig').value='';
+  document.getElementById('paket-mindestlaufzeit').value='';
+  document.getElementById('paket-preishinweis').value='';
+  document.getElementById('paket-features').value='';
+  document.getElementById('paket-reihenfolge').value='1';
+  document.getElementById('paket-highlighted').checked=false;
+  document.getElementById('paket-aktiv').checked=true;
+  document.getElementById('paket-delete-btn').style.display='none';
+  document.getElementById('paket-modal-title').textContent='Paket hinzufügen';
+  if(id){
+    var p=paketeData.find(x=>x.id==id);
+    if(p){
+      document.getElementById('paket-id').value=p.id;
+      document.getElementById('paket-name').value=p.name||'';
+      document.getElementById('paket-emoji').value=p.emoji||'';
+      document.getElementById('paket-badge').value=p.badge||'';
+      document.getElementById('paket-preis-monatlich').value=p.preis_monatlich||'';
+      document.getElementById('paket-preis-einmalig').value=p.preis_einmalig||'';
+      document.getElementById('paket-mindestlaufzeit').value=p.mindestlaufzeit||'';
+      document.getElementById('paket-preishinweis').value=p.preishinweis||'';
+      document.getElementById('paket-features').value=p.features||'';
+      document.getElementById('paket-reihenfolge').value=p.reihenfolge||1;
+      document.getElementById('paket-highlighted').checked=p.highlighted||false;
+      document.getElementById('paket-aktiv').checked=p.aktiv!==false;
+      document.getElementById('paket-delete-btn').style.display='block';
+      document.getElementById('paket-modal-title').textContent='Paket bearbeiten';
+    }
+  }
+  document.getElementById('paket-modal').classList.add('open');
+}
+
+async function savePaket(){
+  var id=document.getElementById('paket-id').value;
+  var data={
+    name:document.getElementById('paket-name').value,
+    emoji:document.getElementById('paket-emoji').value,
+    badge:document.getElementById('paket-badge').value||null,
+    preis_monatlich:parseFloat(document.getElementById('paket-preis-monatlich').value)||null,
+    preis_einmalig:parseFloat(document.getElementById('paket-preis-einmalig').value)||null,
+    mindestlaufzeit:document.getElementById('paket-mindestlaufzeit').value||null,
+    preishinweis:document.getElementById('paket-preishinweis').value||null,
+    features:document.getElementById('paket-features').value||null,
+    reihenfolge:parseInt(document.getElementById('paket-reihenfolge').value)||1,
+    highlighted:document.getElementById('paket-highlighted').checked,
+    aktiv:document.getElementById('paket-aktiv').checked
+  };
+  if(!data.name){alert('Bitte Paketname ausfüllen!');return;}
+  if(id){await sb.from('pakete').update(data).eq('id',id);}
+  else{await sb.from('pakete').insert(data);}
+  closeModal('paket-modal');await loadPakete();
+  showToast(id?'✅ Paket aktualisiert!':'✅ Paket hinzugefügt!');
+}
+
+async function deletePaket(){
+  if(!confirm('Paket wirklich löschen?')) return;
+  var id=document.getElementById('paket-id').value;
+  await sb.from('pakete').delete().eq('id',id);
+  closeModal('paket-modal');await loadPakete();
+  showToast('🗑️ Paket gelöscht');
+}
+
+async function togglePaketAktiv(id,aktiv){
+  await sb.from('pakete').update({aktiv:!aktiv}).eq('id',id);
+  await loadPakete();
+  showToast(!aktiv?'✅ Paket aktiviert!':'⏸ Paket deaktiviert');
 }
 
 function closeModal(id){document.getElementById(id).classList.remove('open')}
