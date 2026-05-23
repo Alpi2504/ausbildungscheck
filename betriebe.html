@@ -6,19 +6,17 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ausbildungsbetrieb werden – AusbildungsCheck</title>
-<meta name="description" content="Schalte deine Ausbildungsstelle auf AusbildungsCheck und erreiche motivierte Bewerber aus deiner Region. Jetzt Partnerwerden.">
+<meta name="description" content="Schalte deine Ausbildungsstelle auf AusbildungsCheck und erreiche motivierte Bewerber aus deiner Region. Jetzt Partner werden.">
 <meta name="keywords" content="Ausbildungsbetrieb, Azubi suchen, Ausbildungsplatz anbieten, Ausbildung schalten">
 <meta name="author" content="AusbildungsCheck">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="Ausbildungsbetrieb werden – AusbildungsCheck">
-<meta property="og:description" content="Schalte deine Ausbildungsstelle auf AusbildungsCheck und erreiche motivierte Bewerber aus deiner Region. Jetzt Partnerwerden.">
+<meta property="og:description" content="Schalte deine Ausbildungsstelle auf AusbildungsCheck und erreiche motivierte Bewerber aus deiner Region.">
 <meta property="og:image" content="https://www.deinausbildungscheck.de/favicon.svg">
 <meta property="og:url" content="https://www.deinausbildungscheck.de/betriebe.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AusbildungsCheck">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ausbildungsbetrieb werden – AusbildungsCheck">
-<meta name="twitter:description" content="Schalte deine Ausbildungsstelle auf AusbildungsCheck und erreiche motivierte Bewerber aus deiner Region. Jetzt Partnerwerden.">
 <!-- PWA -->
 <meta name="theme-color" content="#042C53">
 <meta name="mobile-web-app-capable" content="yes">
@@ -26,6 +24,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="AusbildungsCheck">
 <link rel="manifest" href="/manifest.json">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -38,7 +37,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-links a{font-size:13px;color:var(--text2);text-decoration:none;font-weight:500}
 .nav-links a:hover{color:var(--dark)}
 .nav-links a.active{color:var(--ice);font-weight:700}
-.nav-cta{background:var(--navy);color:#fff;border:none;padding:8px 18px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;cursor:pointer}
 .nav-login{background:transparent;color:var(--navy);border:1.5px solid rgba(4,44,83,0.2);padding:7px 16px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:5px}
 .hero{background:var(--navy);padding:100px 2rem 5rem;position:relative;overflow:hidden}
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 100% 50%,rgba(79,170,223,0.1),transparent 60%)}
@@ -75,7 +73,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .vorteil-title{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:var(--dark);margin-bottom:.4rem}
 .vorteil-desc{font-size:13px;color:var(--text2);line-height:1.6}
 .pakete{background:#fff;padding:4rem 2rem}
-.pakete-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:860px;margin:0 auto}
+.pakete-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;max-width:900px;margin:0 auto}
 .paket-card{border:1.5px solid var(--gray2);border-radius:20px;padding:2rem;position:relative}
 .paket-card.highlight{border-color:var(--ice);background:linear-gradient(160deg,#fff,var(--ice-light))}
 .paket-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--ice);color:#fff;font-size:11px;font-weight:700;padding:3px 16px;border-radius:20px;white-space:nowrap;font-family:'Outfit',sans-serif}
@@ -95,6 +93,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .paket-btn{width:100%;padding:13px;border-radius:9px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none}
 .paket-btn.primary{background:var(--navy);color:#fff !important}
 .paket-btn.outline{background:transparent;color:var(--navy) !important;border:1.5px solid rgba(4,44,83,0.2)}
+.pakete-loading{text-align:center;padding:3rem;color:var(--text2);font-size:14px}
 .kontakt{background:var(--gray);padding:4rem 2rem}
 .kontakt-inner{max-width:680px;margin:0 auto;background:#fff;border-radius:20px;border:1.5px solid var(--gray2);padding:2.5rem}
 .form-group{margin-bottom:1rem}
@@ -102,8 +101,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 .form-input{width:100%;border:1.5px solid var(--gray2);border-radius:9px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none;transition:border-color .2s}
 .form-input:focus{border-color:var(--ice)}
-.paket-select{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1rem}
-.paket-option{border:1.5px solid var(--gray2);border-radius:10px;padding:.85rem 1rem;cursor:pointer;transition:all .2s;text-align:center}
+.paket-select{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1rem}
+.paket-option{border:1.5px solid var(--gray2);border-radius:10px;padding:.85rem 1rem;cursor:pointer;transition:all .2s}
 .paket-option:hover{border-color:var(--ice)}
 .paket-option.selected{border-color:var(--ice);background:var(--ice-light)}
 .paket-option-title{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--dark);margin-bottom:3px}
@@ -133,10 +132,8 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
   .hero-card{display:none}
   .hero h1{font-size:28px !important}
   .hero-btns{flex-direction:column}
-  .hero-btns a,.hero-btns button{width:100%;text-align:center}
   .pakete-grid{grid-template-columns:1fr}
   .form-row{grid-template-columns:1fr}
-  .paket-select{grid-template-columns:1fr}
   footer{flex-direction:column;padding:1.25rem}
   .footer-links{flex-wrap:wrap}
 }
@@ -157,7 +154,7 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
   <a href="index.html">🏠 Start</a>
   <a href="stellen.html">📋 Stellen</a>
   <a href="betriebe.html">🏢 Für Betriebe</a>
-  <a href="konto.html" id="mobile-konto">👤 Anmelden</a>
+  <a href="konto.html">👤 Anmelden</a>
 </div>
 
 <section class="hero">
@@ -205,52 +202,16 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
   </div>
 </section>
 
+<!-- PAKETE – dynamisch aus Supabase -->
 <section class="pakete">
   <div class="max-w">
     <div class="center" style="margin-bottom:2.5rem">
       <div class="section-label">Unsere Pakete</div>
       <div class="section-title">Wähle was zu dir passt</div>
-      <div class="section-sub">Zwei klare Optionen – ohne versteckte Kosten. Alle Preise zzgl. MwSt.</div>
+      <div class="section-sub">Klare Optionen – ohne versteckte Kosten. Alle Preise netto zzgl. MwSt.</div>
     </div>
-    <div class="pakete-grid">
-      <div class="paket-card highlight">
-        <div class="paket-badge">⭐ Mehr Sichtbarkeit</div>
-        <div class="paket-icon">🎥</div>
-        <div class="paket-name">Paket 1</div>
-        <div class="paket-title">Video + Listing</div>
-        <div class="preis-block">
-          <div class="preis-row"><span class="preis-amount">1.500€</span><span class="preis-unit">einmalig</span></div>
-          <div class="preis-note">Videoproduktion zzgl. MwSt.</div>
-          <div class="preis-plus">+ 99€ / Monat für das Listing zzgl. MwSt.</div>
-        </div>
-        <div class="paket-divider"></div>
-        <ul class="paket-features">
-          <li>Exklusives Betriebs-Video – wir kommen zu dir</li>
-          <li>Veröffentlichung auf allen Social Media Kanälen</li>
-          <li>Video dauerhaft auf deiner Stellenanzeige</li>
-          <li>Listing deiner Ausbildungsstelle(n)</li>
-          <li>Direkte Bewerbungen per E-Mail</li>
-          <li>Hervorgehobene Anzeige mit Video-Badge</li>
-        </ul>
-        <button class="paket-btn primary" onclick="selectPaket(1)">Paket anfragen</button>
-      </div>
-      <div class="paket-card">
-        <div class="paket-icon">📋</div>
-        <div class="paket-name">Paket 2</div>
-        <div class="paket-title">Nur Listing</div>
-        <div class="preis-block">
-          <div class="preis-row"><span class="preis-amount">99€</span><span class="preis-unit">/ Monat</span></div>
-          <div class="preis-note">pro Ausbildungsberuf, zzgl. MwSt.</div>
-        </div>
-        <div class="paket-divider"></div>
-        <ul class="paket-features">
-          <li>Listing deiner Ausbildungsstelle(n)</li>
-          <li>Direkte Bewerbungen per E-Mail</li>
-          <li>Sichtbar für alle Besucher der Plattform</li>
-          <li>Monatlich kündbar</li>
-        </ul>
-        <button class="paket-btn outline" onclick="selectPaket(2)">Paket anfragen</button>
-      </div>
+    <div class="pakete-grid" id="pakete-grid">
+      <div class="pakete-loading">⏳ Pakete werden geladen...</div>
     </div>
   </div>
 </section>
@@ -266,17 +227,10 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
       <form id="betriebe-form" action="https://formspree.io/f/xdabywro" method="POST">
         <div class="form-group">
           <label class="form-label">Welches Paket interessiert dich? *</label>
-          <div class="paket-select">
-            <div class="paket-option selected" id="opt1" onclick="selectOption(1)">
-              <div class="paket-option-title">🎥 Video + Listing</div>
-              <div class="paket-option-price">1.500€ + 99€/Monat</div>
-            </div>
-            <div class="paket-option" id="opt2" onclick="selectOption(2)">
-              <div class="paket-option-title">📋 Nur Listing</div>
-              <div class="paket-option-price">99€/Monat</div>
-            </div>
+          <div class="paket-select" id="paket-select-form">
+            <div class="pakete-loading" style="padding:1rem">⏳ Lädt...</div>
           </div>
-          <input type="hidden" name="Paket" id="paket-hidden" value="Video + Listing">
+          <input type="hidden" name="Paket" id="paket-hidden" value="">
         </div>
         <div class="form-row">
           <div class="form-group"><label class="form-label">Firmenname *</label><input class="form-input" type="text" name="Firmenname" placeholder="Musterfirma GmbH" required></div>
@@ -287,13 +241,13 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
           <div class="form-group"><label class="form-label">Telefon</label><input class="form-input" type="tel" name="Telefon" placeholder="+49 123 456789"></div>
         </div>
         <div class="form-group"><label class="form-label">Ausbildungsberuf *</label><input class="form-input" type="text" name="Ausbildungsberuf" placeholder="z.B. Kfz-Mechatroniker/in" required></div>
-        <div class="form-group"><label class="form-label">Standort *</label><input class="form-input" type="text" name="Standort" placeholder="z.B. Wuppertal" required></div>
+        <div class="form-group"><label class="form-label">Standort *</label><input class="form-input" type="text" name="Standort" placeholder="z.B. Köln" required></div>
         <div class="form-group"><label class="form-label">Nachricht (optional)</label><textarea class="form-input" name="Nachricht" rows="3" placeholder="Weitere Infos..."></textarea></div>
         <div style="display:flex;align-items:flex-start;gap:10px;margin-top:.75rem;padding:1rem;background:var(--gray);border-radius:9px;border:1.5px solid var(--gray2)">
           <input type="checkbox" id="datenschutz-betriebe" style="accent-color:var(--ice);width:16px;height:16px;cursor:pointer;flex-shrink:0;margin-top:2px">
           <label for="datenschutz-betriebe" style="font-size:13px;color:var(--text2);line-height:1.5;cursor:pointer">Ich habe die <a href="datenschutz.html" target="_blank" style="color:var(--ice);font-weight:600">Datenschutzerklärung</a> gelesen und bin damit einverstanden, dass meine Daten zur Bearbeitung meiner Anfrage verarbeitet werden. *</label>
         </div>
-        <div id="betriebe-success" style="display:none;background:#E6F9F0;border:1.5px solid #34D399;border-radius:10px;padding:1rem;text-align:center;color:#065F46;font-weight:600;margin-bottom:1rem;font-family:'Outfit',sans-serif">🎉 Anfrage erfolgreich gesendet! Wir melden uns innerhalb von 24 Stunden.</div>
+        <div id="betriebe-success" style="display:none;background:#E6F9F0;border:1.5px solid #34D399;border-radius:10px;padding:1rem;text-align:center;color:#065F46;font-weight:600;margin-top:1rem;font-family:'Outfit',sans-serif">🎉 Anfrage erfolgreich gesendet! Wir melden uns innerhalb von 24 Stunden.</div>
         <button type="button" class="submit-btn" onclick="submitBetriebe()">Anfrage absenden 🚀</button>
       </form>
     </div>
@@ -307,31 +261,94 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
 </footer>
 
 <script>
-function selectOption(n){
-  document.getElementById('opt1').classList.toggle('selected',n===1);
-  document.getElementById('opt2').classList.toggle('selected',n===2);
-  document.getElementById('paket-hidden').value=n===1?'Video + Listing (1.500€ + 99€/Monat)':'Nur Listing (99€/Monat)';
+const SUPABASE_URL='https://trccxzjdddhbqjgyzlkv.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRyY2N4empkZGRoYnFqZ3l6bGt2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1MDgyMjIsImV4cCI6MjA5NDA4NDIyMn0.xS5-9Tq1-i9_K9lYDuayomybBazHmnvY29K24LvRxaQ';
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+var aktiverPaketIndex=0;
+
+async function ladePakete(){
+  var {data}=await sb.from('pakete').select('*').eq('aktiv',true).order('reihenfolge');
+  var grid=document.getElementById('pakete-grid');
+  var formSelect=document.getElementById('paket-select-form');
+
+  if(!data||!data.length){
+    grid.innerHTML='<div class="pakete-loading">Pakete werden bald veröffentlicht.</div>';
+    formSelect.innerHTML='';
+    return;
+  }
+
+  // Pakete Cards rendern
+  grid.innerHTML=data.map((p,i)=>{
+    var features=p.features?p.features.split('\n').filter(f=>f.trim()):[];
+    var preisLabel=p.preis_monatlich?p.preis_monatlich+'€':'-';
+    return `
+      <div class="paket-card ${p.highlighted?'highlight':''}">
+        ${p.badge?`<div class="paket-badge">${p.badge}</div>`:''}
+        <div class="paket-icon">${p.emoji||'📋'}</div>
+        <div class="paket-name">Paket ${i+1}</div>
+        <div class="paket-title">${p.name}</div>
+        <div class="preis-block">
+          ${p.preis_einmalig?`<div class="preis-plus">${p.preis_einmalig}€ einmalig (Videoproduktion)</div>`:''}
+          <div class="preis-row">
+            <span class="preis-amount">${preisLabel}</span>
+            <span class="preis-unit">/ Monat</span>
+          </div>
+          ${p.preishinweis?`<div class="preis-note">${p.preishinweis}</div>`:''}
+          ${p.mindestlaufzeit?`<div class="preis-note" style="margin-top:4px">⏱ ${p.mindestlaufzeit}</div>`:''}
+        </div>
+        <div class="paket-divider"></div>
+        ${features.length?`<ul class="paket-features">${features.map(f=>`<li>${f}</li>`).join('')}</ul>`:''}
+        <button class="paket-btn ${p.highlighted?'primary':'outline'}" onclick="scrollToKontakt(${i})">Paket anfragen</button>
+      </div>`;
+  }).join('');
+
+  // Formular-Optionen rendern
+  formSelect.innerHTML=data.map((p,i)=>{
+    var preisTxt=p.preis_einmalig?p.preis_einmalig+'€ + '+p.preis_monatlich+'€/Monat':p.preis_monatlich+'€/Monat';
+    return `<div class="paket-option ${i===0?'selected':''}" id="form-opt-${i}" onclick="selectFormPaket(${i},'${p.name.replace(/'/g,"\\'")}','${preisTxt}')">
+      <div class="paket-option-title">${p.emoji||''} ${p.name}</div>
+      <div class="paket-option-price">${preisTxt}</div>
+    </div>`;
+  }).join('');
+
+  // Ersten Eintrag im hidden field setzen
+  if(data.length>0){
+    var preisTxt0=data[0].preis_einmalig?data[0].preis_einmalig+'€ + '+data[0].preis_monatlich+'€/Monat':data[0].preis_monatlich+'€/Monat';
+    document.getElementById('paket-hidden').value=data[0].name+' ('+preisTxt0+')';
+  }
 }
-function selectPaket(n){
+
+function selectFormPaket(idx,name,preis){
+  document.querySelectorAll('.paket-option').forEach((el,i)=>{
+    el.classList.toggle('selected',i===idx);
+  });
+  document.getElementById('paket-hidden').value=name+' ('+preis+')';
+  aktiverPaketIndex=idx;
+}
+
+function scrollToKontakt(paketIdx){
   document.querySelector('.kontakt').scrollIntoView({behavior:'smooth'});
-  setTimeout(()=>selectOption(n),500);
+  setTimeout(()=>selectFormPaket(paketIdx,
+    document.querySelectorAll('.paket-option')[paketIdx]?.querySelector('.paket-option-title')?.textContent||'',
+    document.querySelectorAll('.paket-option')[paketIdx]?.querySelector('.paket-option-price')?.textContent||''
+  ),500);
 }
+
 function submitBetriebe(){
-  var datenschutz=document.getElementById('datenschutz-betriebe').checked;
-  if(!datenschutz){alert('Bitte bestätige die Datenschutzerklärung!');return;}
+  if(!document.getElementById('datenschutz-betriebe').checked){alert('Bitte bestätige die Datenschutzerklärung!');return;}
   var form=document.getElementById('betriebe-form');
   var data=new FormData(form);
   fetch('https://formspree.io/f/xdabywro',{method:'POST',body:data,headers:{'Accept':'application/json'}})
-  .then(function(r){
-    if(r.ok){document.getElementById('betriebe-success').style.display='block';form.reset();selectOption(1);}
-    else{alert('Fehler beim Senden. Bitte versuche es nochmal.');}
-  }).catch(function(){alert('Verbindungsfehler. Bitte versuche es nochmal.');});
+  .then(r=>{
+    if(r.ok){document.getElementById('betriebe-success').style.display='block';form.reset();ladePakete();}
+    else alert('Fehler beim Senden. Bitte versuche es nochmal.');
+  }).catch(()=>alert('Verbindungsfehler. Bitte versuche es nochmal.'));
 }
+
 function toggleMenu(){
-  var menu=document.getElementById('mobile-menu');
-  var ham=document.getElementById('hamburger');
-  menu.classList.toggle('open');
-  ham.classList.toggle('open');
+  document.getElementById('mobile-menu').classList.toggle('open');
+  document.getElementById('hamburger').classList.toggle('open');
 }
 if(window.innerWidth<=768){document.getElementById('hamburger').style.display='flex';}
 window.addEventListener('resize',function(){
@@ -339,13 +356,13 @@ window.addEventListener('resize',function(){
   if(window.innerWidth<=768) ham.style.display='flex';
   else{ham.style.display='none';document.getElementById('mobile-menu').classList.remove('open');}
 });
+
+ladePakete();
 </script>
 <!-- PWA Service Worker -->
 <script>
 if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>{
-    navigator.serviceWorker.register('/sw.js');
-  });
+  window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js');});
 }
 </script>
 </body>
