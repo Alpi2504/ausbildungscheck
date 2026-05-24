@@ -162,6 +162,7 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
       <div class="form-group"><label class="form-label">E-Mail *</label><input class="form-input" type="email" id="reg-email" placeholder="max@beispiel.de"></div>
       <div class="form-group"><label class="form-label">Passwort *</label><input class="form-input" type="password" id="reg-pw" placeholder="Mindestens 6 Zeichen"><div class="form-hint">Mindestens 6 Zeichen</div></div>
       <div class="form-group"><label class="form-label">Telefon *</label><input class="form-input" type="tel" id="reg-telefon" placeholder="+49 123 456789"></div>
+      <div class="form-group"><label class="form-label">Geburtsdatum *</label><input class="form-input" type="date" id="reg-geburtsdatum"></div>
       <div class="form-group"><label class="form-label">Straße & Hausnummer *</label><input class="form-input" type="text" id="reg-strasse" placeholder="Musterstraße 1"></div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">PLZ *</label><input class="form-input" type="text" id="reg-plz" placeholder="12345"></div>
@@ -222,6 +223,7 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
           <div class="form-group"><label class="form-label">Nachname</label><input class="form-input" type="text" id="profil-nachname"></div>
         </div>
         <div class="form-group"><label class="form-label">Telefon</label><input class="form-input" type="tel" id="profil-telefon"></div>
+        <div class="form-group"><label class="form-label">Geburtsdatum</label><input class="form-input" type="date" id="profil-geburtsdatum"></div>
         <div class="form-group"><label class="form-label">Straße & Hausnummer</label><input class="form-input" type="text" id="profil-strasse"></div>
         <div class="form-row">
           <div class="form-group"><label class="form-label">PLZ</label><input class="form-input" type="text" id="profil-plz"></div>
@@ -329,6 +331,7 @@ async function doRegister(){
   var email=document.getElementById('reg-email').value.trim();
   var pw=document.getElementById('reg-pw').value;
   var telefon=document.getElementById('reg-telefon').value.trim();
+  var geburtsdatum=document.getElementById('reg-geburtsdatum').value||null;
   var strasse=document.getElementById('reg-strasse').value.trim();
   var plz=document.getElementById('reg-plz').value.trim();
   var ort=document.getElementById('reg-ort').value.trim();
@@ -342,7 +345,7 @@ async function doRegister(){
   if(!datenschutz){showErr('register-error','Bitte bestätige die Datenschutzerklärung!');return;}
   var {data,error}=await sb.auth.signUp({email,password:pw});
   if(error){showErr('register-error','Fehler: '+error.message);return;}
-  await sb.from('profile').insert({id:data.user.id,vorname,nachname,telefon,strasse,plz,ort,schulabschluss:abschluss,noch_schueler:schueler,abschluss_jahr:jahr});
+  await sb.from('profile').insert({id:data.user.id,vorname,nachname,telefon,geburtsdatum,strasse,plz,ort,schulabschluss:abschluss,noch_schueler:schueler,abschluss_jahr:jahr});
   showOk('register-success','✅ Konto erstellt! Du bist jetzt eingeloggt.');
 }
 
@@ -355,6 +358,7 @@ async function showProfil(user){
     document.getElementById('profil-vorname').value=data.vorname||'';
     document.getElementById('profil-nachname').value=data.nachname||'';
     document.getElementById('profil-telefon').value=data.telefon||'';
+    document.getElementById('profil-geburtsdatum').value=data.geburtsdatum||'';
     document.getElementById('profil-strasse').value=data.strasse||'';
     document.getElementById('profil-plz').value=data.plz||'';
     document.getElementById('profil-ort').value=data.ort||'';
@@ -374,7 +378,7 @@ function showAuth(){
 async function saveProfil(){
   var {data:{session}}=await sb.auth.getSession();
   if(!session) return;
-  var profil={vorname:document.getElementById('profil-vorname').value.trim(),nachname:document.getElementById('profil-nachname').value.trim(),telefon:document.getElementById('profil-telefon').value.trim(),strasse:document.getElementById('profil-strasse').value.trim(),plz:document.getElementById('profil-plz').value.trim(),ort:document.getElementById('profil-ort').value.trim(),schulabschluss:document.getElementById('profil-abschluss').value,noch_schueler:document.getElementById('profil-schueler').checked,abschluss_jahr:document.getElementById('profil-jahr').value};
+  var profil={vorname:document.getElementById('profil-vorname').value.trim(),nachname:document.getElementById('profil-nachname').value.trim(),telefon:document.getElementById('profil-telefon').value.trim(),geburtsdatum:document.getElementById('profil-geburtsdatum').value||null,strasse:document.getElementById('profil-strasse').value.trim(),plz:document.getElementById('profil-plz').value.trim(),ort:document.getElementById('profil-ort').value.trim(),schulabschluss:document.getElementById('profil-abschluss').value,noch_schueler:document.getElementById('profil-schueler').checked,abschluss_jahr:document.getElementById('profil-jahr').value};
   await sb.from('profile').upsert({id:session.user.id,...profil});
   showOk('profil-success','✅ Daten gespeichert!');
   setTimeout(()=>document.getElementById('profil-success').style.display='none',3000);
