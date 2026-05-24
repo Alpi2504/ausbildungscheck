@@ -344,6 +344,7 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
         <div class="form-group"><label class="form-label">Telefon *</label><input class="form-input" id="gast-telefon" type="tel" placeholder="+49 123 456789"></div>
       </div>
       <div class="form-group"><label class="form-label">Wohnort *</label><input class="form-input" id="gast-wohnort" type="text" placeholder="Musterstraße 1, 12345 Wuppertal"></div>
+      <div class="form-group"><label class="form-label">Geburtsdatum *</label><input class="form-input" id="gast-geburtsdatum" type="date"></div>
       <div class="toggle-field" onclick="toggleSchuelerGast()">
         <input type="checkbox" id="gast-schueler" onchange="toggleSchuelerGast()">
         <label for="gast-schueler">Ich bin noch Schüler/in</label>
@@ -695,7 +696,7 @@ async function submitGast(){
   var vorname=document.getElementById('gast-vorname').value.trim();
   var email=document.getElementById('gast-email').value.trim();
   if(!vorname||!email){alert('Bitte Vorname und E-Mail ausfüllen!');return;}
-  var data={stellen_id:aktuelleStelle.id,vorname,nachname:document.getElementById('gast-nachname').value.trim(),email,telefon:document.getElementById('gast-telefon').value.trim(),wohnort:document.getElementById('gast-wohnort').value.trim(),schulabschluss:document.getElementById('gast-abschluss').value,noch_schueler:document.getElementById('gast-schueler').checked,antwort1:document.getElementById('gast-antwort1').value.trim(),antwort2:document.getElementById('gast-antwort2').value.trim(),status:'neu'};
+  var data={stellen_id:aktuelleStelle.id,vorname,nachname:document.getElementById('gast-nachname').value.trim(),email,telefon:document.getElementById('gast-telefon').value.trim(),wohnort:document.getElementById('gast-wohnort').value.trim(),geburtsdatum:document.getElementById('gast-geburtsdatum').value||null,schulabschluss:document.getElementById('gast-abschluss').value,noch_schueler:document.getElementById('gast-schueler').checked,antwort1:document.getElementById('gast-antwort1').value.trim(),antwort2:document.getElementById('gast-antwort2').value.trim(),status:'neu'};
   await sendBewerbung(data);
   document.getElementById('success-gast').style.display='block';
   document.getElementById('gast-form-inhalt').style.display='none';
