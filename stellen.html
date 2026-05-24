@@ -263,6 +263,15 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
       <div class="detail-section-title">ℹ️ Über die Stelle</div>
       <div class="detail-text" id="detail-beschreibung-text"></div>
     </div>
+    <!-- ÜBER DEN BETRIEB -->
+    <div class="detail-section" id="detail-betrieb-section" style="display:none">
+      <div class="detail-section-title">🏢 Über den Betrieb</div>
+      <div class="detail-text" id="detail-betrieb-text" style="margin-bottom:.75rem"></div>
+      <a id="detail-betrieb-website" href="#" target="_blank" rel="noopener" style="display:none;align-items:center;gap:7px;background:var(--ice-light);color:var(--ice);border:1.5px solid rgba(79,170,223,0.3);padding:9px 16px;border-radius:9px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;text-decoration:none;width:fit-content">
+        🌐 Website besuchen
+      </a>
+    </div>
+
     <button class="detail-apply-btn" onclick="bewerbenAusDetail()">Jetzt bewerben 🚀</button>
   </div>
 </div>
@@ -404,7 +413,7 @@ sb.auth.getSession().then(async({data:{session}})=>{
 
 async function ladeStellen(){
   var[{data:stellen},{data:berufsfelder}]=await Promise.all([
-    sb.from('stellen').select('*, betrieb:betrieb_id(name,email,logo_url), berufsfeld:berufsfeld_id(name,emoji)').eq('aktiv',true).order('created_at',{ascending:false}),
+    sb.from('stellen').select('*, betrieb:betrieb_id(name,email,logo_url,website,info_text), berufsfeld:berufsfeld_id(name,emoji)').eq('aktiv',true).order('created_at',{ascending:false}),
     sb.from('berufsfelder').select('*').order('name')
   ]);
   if(!stellen){document.getElementById('jobs-list').innerHTML='<div class="empty-state">😔 Keine Stellen gefunden</div>';return;}
@@ -599,6 +608,26 @@ function zeigeDetail(stelleId){
     document.getElementById('detail-beschreibung-text').textContent=s.beschreibung;
     beschSec.style.display='block';
   } else beschSec.style.display='none';
+
+  // Über den Betrieb
+  var betriebSec=document.getElementById('detail-betrieb-section');
+  var betriebText=document.getElementById('detail-betrieb-text');
+  var betriebWebsite=document.getElementById('detail-betrieb-website');
+  var hasInfo=s.betrieb?.info_text&&s.betrieb.info_text.trim();
+  var hasWebsite=s.betrieb?.website&&s.betrieb.website.trim();
+  if(hasInfo||hasWebsite){
+    betriebText.textContent=hasInfo?s.betrieb.info_text:'';
+    betriebText.style.display=hasInfo?'block':'none';
+    if(hasWebsite){
+      betriebWebsite.href=s.betrieb.website;
+      betriebWebsite.style.display='inline-flex';
+    } else {
+      betriebWebsite.style.display='none';
+    }
+    betriebSec.style.display='block';
+  } else {
+    betriebSec.style.display='none';
+  }
 
   document.getElementById('modal-detail').classList.add('open');
 }
