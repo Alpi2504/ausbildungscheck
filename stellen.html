@@ -195,7 +195,9 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
     <div class="filter-title">Filter <span class="filter-reset" onclick="resetFilter()">Zurücksetzen</span></div>
     <div class="filter-group">
       <div class="filter-label">Berufsfeld</div>
-      <div class="filter-options" id="berufsfeld-filter"></div>
+      <select class="location-input" id="berufsfeld-filter" onchange="filterStellen()" style="padding-right:12px">
+        <option value="">Alle Berufsfelder</option>
+      </select>
     </div>
     <div class="filter-divider"></div>
     <div class="filter-group">
@@ -435,7 +437,13 @@ async function ladeStellen(){
 
 function bauFilterOptionen(){
   var el=document.getElementById('berufsfeld-filter');
-  el.innerHTML=alleBerufsfelder.map(b=>`<div class="filter-option"><input type="checkbox" id="bf-${b.id}" onchange="filterStellen()"><label for="bf-${b.id}">${b.emoji||''} ${b.name}</label></div>`).join('');
+  el.innerHTML='<option value="">Alle Berufsfelder</option>';
+  alleBerufsfelder.forEach(b=>{
+    var opt=document.createElement('option');
+    opt.value=b.id;
+    opt.textContent=(b.emoji||'')+' '+b.name;
+    el.appendChild(opt);
+  });
 }
 
 function zeigeStellen(data){
@@ -503,11 +511,12 @@ async function doFilter(){
   var ort=document.getElementById('ort-filter').value.trim();
   var radius=parseInt(document.querySelector('.radius-slider').value)||25;
   var checked=[...document.querySelectorAll('#berufsfeld-filter input:checked')].map(cb=>cb.id.replace('bf-',''));
+  var selectedBeruf=document.getElementById('berufsfeld-filter').value;
 
   // Suchtext + Berufsfeld vorfiltern (synchron, schnell)
   var vorfilter=alleStellen.filter(s=>{
     var mSearch=!search||(s.beruf||'').toLowerCase().includes(search)||(s.standort||'').toLowerCase().includes(search)||(s.betrieb?.name||'').toLowerCase().includes(search);
-    var mBeruf=!checked.length||checked.includes(s.berufsfeld_id);
+    var mBeruf=!selectedBeruf||s.berufsfeld_id===selectedBeruf;
     return mSearch&&mBeruf;
   });
 
@@ -544,7 +553,7 @@ function resetFilter(){
   document.getElementById('search-input').value='';
   document.getElementById('ort-filter').value='';
   document.getElementById('ort-filter').style.borderColor='';
-  document.querySelectorAll('#berufsfeld-filter input').forEach(cb=>cb.checked=false);
+  document.getElementById('berufsfeld-filter').value='';
   document.querySelector('.radius-slider').value=25;
   document.getElementById('radiusVal').textContent='25 km';
   zeigeStellen(alleStellen);
