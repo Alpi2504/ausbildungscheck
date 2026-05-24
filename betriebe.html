@@ -289,11 +289,19 @@ async function ladePakete(){
         <div class="paket-name">Paket ${i+1}</div>
         <div class="paket-title">${p.name}</div>
         <div class="preis-block">
-          ${p.preis_einmalig?`<div class="preis-plus">${p.preis_einmalig}€ einmalig (Videoproduktion)</div>`:''}
-          <div class="preis-row">
-            <span class="preis-amount">${preisLabel}</span>
-            <span class="preis-unit">/ Monat</span>
-          </div>
+          ${p.preis_einmalig?`
+            <div class="preis-row">
+              <span class="preis-amount">${p.preis_einmalig}€</span>
+              <span class="preis-unit">einmalig</span>
+            </div>
+            <div class="preis-note" style="margin-bottom:.6rem">Videoproduktion zzgl. MwSt.</div>
+            <div style="font-size:13px;color:var(--text2);font-weight:600;margin-bottom:.3rem">+ ${p.preis_monatlich}€ / Monat</div>
+          `:`
+            <div class="preis-row">
+              <span class="preis-amount">${preisLabel}</span>
+              <span class="preis-unit">/ Monat</span>
+            </div>
+          `}
           ${p.preishinweis?`<div class="preis-note">${p.preishinweis}</div>`:''}
           ${p.mindestlaufzeit?`<div class="preis-note" style="margin-top:4px">⏱ ${p.mindestlaufzeit}</div>`:''}
         </div>
