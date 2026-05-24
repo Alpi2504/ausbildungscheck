@@ -250,6 +250,8 @@ tr:hover td{background:var(--gray)}
     <div class="form-group"><label class="form-label">E-Mail *</label><input class="form-input" id="betrieb-email" type="email" placeholder="info@firma.de"></div>
     <div class="form-group"><label class="form-label">Telefon</label><input class="form-input" id="betrieb-telefon" placeholder="+49 123 456789"></div>
     <div class="form-group"><label class="form-label">Adresse</label><input class="form-input" id="betrieb-adresse" placeholder="Musterstraße 1, 12345 Stadt"></div>
+    <div class="form-group"><label class="form-label">Website <span class="form-label-hint">z.B. https://www.musterfirma.de</span></label><input class="form-input" id="betrieb-website" placeholder="https://www.musterfirma.de" type="url"></div>
+    <div class="form-group"><label class="form-label">Über den Betrieb <span class="form-label-hint">Kurzer Infotext für Bewerber</span></label><textarea class="form-input" id="betrieb-info-text" rows="4" placeholder="Wir sind ein familiengeführtes Unternehmen aus Köln mit 50 Mitarbeitern. Bei uns erwartet dich ein herzliches Team, moderne Ausstattung und echte Entwicklungschancen nach der Ausbildung..."></textarea></div>
     <div class="form-group">
       <label class="form-label">Firmenlogo</label>
       <div class="logo-upload-wrap">
@@ -471,6 +473,8 @@ function openBetriebModal(id){
   document.getElementById('betrieb-email').value='';
   document.getElementById('betrieb-telefon').value='';
   document.getElementById('betrieb-adresse').value='';
+  document.getElementById('betrieb-website').value='';
+  document.getElementById('betrieb-info-text').value='';
   document.getElementById('betrieb-logo-url').value='';
   document.getElementById('betrieb-logo-preview').innerHTML='🏢';
   document.getElementById('betrieb-logo-input').value='';
@@ -485,6 +489,8 @@ function openBetriebModal(id){
       document.getElementById('betrieb-email').value=b.email||'';
       document.getElementById('betrieb-telefon').value=b.telefon||'';
       document.getElementById('betrieb-adresse').value=b.adresse||'';
+      document.getElementById('betrieb-website').value=b.website||'';
+      document.getElementById('betrieb-info-text').value=b.info_text||'';
       document.getElementById('betrieb-logo-url').value=b.logo_url||'';
       if(b.logo_url) document.getElementById('betrieb-logo-preview').innerHTML=`<img src="${b.logo_url}" alt="Logo">`;
       document.getElementById('betrieb-delete-btn').style.display='block';
@@ -511,7 +517,7 @@ async function uploadBetriebLogo(input){
 
 async function saveBetrieb(){
   var id=document.getElementById('betrieb-id').value;
-  var data={name:document.getElementById('betrieb-name').value,email:document.getElementById('betrieb-email').value,telefon:document.getElementById('betrieb-telefon').value,adresse:document.getElementById('betrieb-adresse').value,logo_url:document.getElementById('betrieb-logo-url').value||null};
+  var data={name:document.getElementById('betrieb-name').value,email:document.getElementById('betrieb-email').value,telefon:document.getElementById('betrieb-telefon').value,adresse:document.getElementById('betrieb-adresse').value,website:document.getElementById('betrieb-website').value||null,info_text:document.getElementById('betrieb-info-text').value||null,logo_url:document.getElementById('betrieb-logo-url').value||null};
   if(!data.name||!data.email){alert('Bitte Name und E-Mail ausfüllen!');return;}
   if(id){await sb.from('betriebe').update(data).eq('id',id);}
   else{await sb.from('betriebe').insert(data);}
