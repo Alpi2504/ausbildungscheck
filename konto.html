@@ -162,7 +162,7 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
       <div class="form-group"><label class="form-label">E-Mail *</label><input class="form-input" type="email" id="reg-email" placeholder="max@beispiel.de"></div>
       <div class="form-group"><label class="form-label">Passwort *</label><input class="form-input" type="password" id="reg-pw" placeholder="Mindestens 6 Zeichen"><div class="form-hint">Mindestens 6 Zeichen</div></div>
       <div class="form-group"><label class="form-label">Telefon *</label><input class="form-input" type="tel" id="reg-telefon" placeholder="+49 123 456789"></div>
-      <div class="form-group"><label class="form-label">Geburtsdatum *</label><input class="form-input" type="date" id="reg-geburtsdatum"></div>
+      <div class="form-group"><label class="form-label">Geburtsdatum *</label><input class="form-input" type="date" id="reg-geburtsdatum" min="1950-01-01" max="2015-12-31"></div>
       <div class="form-group"><label class="form-label">Straße & Hausnummer *</label><input class="form-input" type="text" id="reg-strasse" placeholder="Musterstraße 1"></div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">PLZ *</label><input class="form-input" type="text" id="reg-plz" placeholder="12345"></div>
@@ -223,7 +223,7 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
           <div class="form-group"><label class="form-label">Nachname</label><input class="form-input" type="text" id="profil-nachname"></div>
         </div>
         <div class="form-group"><label class="form-label">Telefon</label><input class="form-input" type="tel" id="profil-telefon"></div>
-        <div class="form-group"><label class="form-label">Geburtsdatum</label><input class="form-input" type="date" id="profil-geburtsdatum"></div>
+        <div class="form-group"><label class="form-label">Geburtsdatum</label><input class="form-input" type="date" id="profil-geburtsdatum" min="1950-01-01" max="2015-12-31"></div>
         <div class="form-group"><label class="form-label">Straße & Hausnummer</label><input class="form-input" type="text" id="profil-strasse"></div>
         <div class="form-row">
           <div class="form-group"><label class="form-label">PLZ</label><input class="form-input" type="text" id="profil-plz"></div>
