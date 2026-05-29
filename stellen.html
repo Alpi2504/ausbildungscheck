@@ -9,8 +9,8 @@
 <meta name="description" content="Alle aktuellen Ausbildungsstellen bei Partnerbetrieben. Jetzt bewerben und in 2 Minuten deine Traumausbildung sichern.">
 <meta property="og:title" content="Ausbildungsstellen finden – AusbildungsCheck">
 <meta property="og:description" content="Alle aktuellen Ausbildungsstellen bei Partnerbetrieben. Jetzt bewerben und in 2 Minuten deine Traumausbildung sichern.">
-<meta property="og:image" content="https://www.deinausbildungscheck.de/favicon.svg">
-<meta property="og:url" content="https://www.deinausbildungscheck.de/stellen.html">
+<meta property="og:image" content="https://www.ausbildungscheck.de/favicon.svg">
+<meta property="og:url" content="https://www.ausbildungscheck.de/stellen.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AusbildungsCheck">
 <meta name="twitter:card" content="summary">
@@ -582,7 +582,7 @@ function zeigeDetail(stelleId){
   }
 
   // Share
-  var shareUrl='https://www.deinausbildungscheck.de/stellen.html?stelle='+s.id;
+  var shareUrl='https://www.ausbildungscheck.de/stellen.html?stelle='+s.id;
   var shareText='Hey, schau mal – "'+( s.beruf||'Ausbildungsstelle')+'" bei '+(s.betrieb?.name||'einem Betrieb')+' in '+(s.standort||'deiner Region')+'! 👇\n';
   document.getElementById('share-wa-btn').href='https://wa.me/?text='+encodeURIComponent(shareText+shareUrl);
   document.getElementById('share-copy-btn').textContent='📋 Link kopieren';
@@ -648,7 +648,7 @@ function getYoutubeEmbed(url){
 }
 
 function linkKopieren(){
-  var url='https://www.deinausbildungscheck.de/stellen.html?stelle='+aktuelleStelle.id;
+  var url='https://www.ausbildungscheck.de/stellen.html?stelle='+aktuelleStelle.id;
   navigator.clipboard.writeText(url).catch(()=>{
     var ta=document.createElement('textarea');ta.value=url;ta.style.position='fixed';ta.style.opacity='0';
     document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
