@@ -224,32 +224,30 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
       <div class="section-sub">Füll das Formular aus – wir melden uns innerhalb von 24 Stunden.</div>
     </div>
     <div class="kontakt-inner">
-      <form id="betriebe-form" action="https://formspree.io/f/xdabywro" method="POST">
-        <div class="form-group">
-          <label class="form-label">Welches Paket interessiert dich? *</label>
-          <div class="paket-select" id="paket-select-form">
-            <div class="pakete-loading" style="padding:1rem">⏳ Lädt...</div>
-          </div>
-          <input type="hidden" name="Paket" id="paket-hidden" value="">
+      <div id="betriebe-success" style="display:none;background:#E6F9F0;border:1.5px solid #34D399;border-radius:10px;padding:1rem;text-align:center;color:#065F46;font-weight:600;margin-bottom:1rem;font-family:'Outfit',sans-serif">🎉 Anfrage erfolgreich gesendet! Wir melden uns innerhalb von 24 Stunden.</div>
+      <div class="form-group">
+        <label class="form-label">Welches Paket interessiert dich? *</label>
+        <div class="paket-select" id="paket-select-form">
+          <div class="pakete-loading" style="padding:1rem">⏳ Lädt...</div>
         </div>
-        <div class="form-row">
-          <div class="form-group"><label class="form-label">Firmenname *</label><input class="form-input" type="text" name="Firmenname" placeholder="Musterfirma GmbH" required></div>
-          <div class="form-group"><label class="form-label">Ansprechpartner *</label><input class="form-input" type="text" name="Ansprechpartner" placeholder="Max Mustermann" required></div>
-        </div>
-        <div class="form-row">
-          <div class="form-group"><label class="form-label">E-Mail *</label><input class="form-input" type="email" name="Email" placeholder="max@firma.de" required></div>
-          <div class="form-group"><label class="form-label">Telefon</label><input class="form-input" type="tel" name="Telefon" placeholder="+49 123 456789"></div>
-        </div>
-        <div class="form-group"><label class="form-label">Ausbildungsberuf *</label><input class="form-input" type="text" name="Ausbildungsberuf" placeholder="z.B. Kfz-Mechatroniker/in" required></div>
-        <div class="form-group"><label class="form-label">Standort *</label><input class="form-input" type="text" name="Standort" placeholder="z.B. Köln" required></div>
-        <div class="form-group"><label class="form-label">Nachricht (optional)</label><textarea class="form-input" name="Nachricht" rows="3" placeholder="Weitere Infos..."></textarea></div>
-        <div style="display:flex;align-items:flex-start;gap:10px;margin-top:.75rem;padding:1rem;background:var(--gray);border-radius:9px;border:1.5px solid var(--gray2)">
-          <input type="checkbox" id="datenschutz-betriebe" style="accent-color:var(--ice);width:16px;height:16px;cursor:pointer;flex-shrink:0;margin-top:2px">
-          <label for="datenschutz-betriebe" style="font-size:13px;color:var(--text2);line-height:1.5;cursor:pointer">Ich habe die <a href="datenschutz.html" target="_blank" style="color:var(--ice);font-weight:600">Datenschutzerklärung</a> gelesen und bin damit einverstanden, dass meine Daten zur Bearbeitung meiner Anfrage verarbeitet werden. *</label>
-        </div>
-        <div id="betriebe-success" style="display:none;background:#E6F9F0;border:1.5px solid #34D399;border-radius:10px;padding:1rem;text-align:center;color:#065F46;font-weight:600;margin-top:1rem;font-family:'Outfit',sans-serif">🎉 Anfrage erfolgreich gesendet! Wir melden uns innerhalb von 24 Stunden.</div>
-        <button type="button" class="submit-btn" onclick="submitBetriebe()">Anfrage absenden 🚀</button>
-      </form>
+        <input type="hidden" id="paket-hidden" value="">
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Firmenname *</label><input class="form-input" type="text" id="bf-firmenname" placeholder="Musterfirma GmbH"></div>
+        <div class="form-group"><label class="form-label">Ansprechpartner *</label><input class="form-input" type="text" id="bf-ansprechpartner" placeholder="Max Mustermann"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">E-Mail *</label><input class="form-input" type="email" id="bf-email" placeholder="max@firma.de"></div>
+        <div class="form-group"><label class="form-label">Telefon</label><input class="form-input" type="tel" id="bf-telefon" placeholder="+49 123 456789"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Ausbildungsberuf *</label><input class="form-input" type="text" id="bf-ausbildungsberuf" placeholder="z.B. Kfz-Mechatroniker/in"></div>
+      <div class="form-group"><label class="form-label">Standort *</label><input class="form-input" type="text" id="bf-standort" placeholder="z.B. Köln"></div>
+      <div class="form-group"><label class="form-label">Nachricht (optional)</label><textarea class="form-input" id="bf-nachricht" rows="3" placeholder="Weitere Infos..."></textarea></div>
+      <div style="display:flex;align-items:flex-start;gap:10px;margin-top:.75rem;padding:1rem;background:var(--gray);border-radius:9px;border:1.5px solid var(--gray2)">
+        <input type="checkbox" id="datenschutz-betriebe" style="accent-color:var(--ice);width:16px;height:16px;cursor:pointer;flex-shrink:0;margin-top:2px">
+        <label for="datenschutz-betriebe" style="font-size:13px;color:var(--text2);line-height:1.5;cursor:pointer">Ich habe die <a href="datenschutz.html" target="_blank" style="color:var(--ice);font-weight:600">Datenschutzerklärung</a> gelesen und bin damit einverstanden, dass meine Daten zur Bearbeitung meiner Anfrage verarbeitet werden. *</label>
+      </div>
+      <button type="button" class="submit-btn" onclick="submitBetriebe()">Anfrage absenden 🚀</button>
     </div>
   </div>
 </section>
@@ -343,15 +341,34 @@ function scrollToKontakt(paketIdx){
   ),500);
 }
 
-function submitBetriebe(){
+async function submitBetriebe(){
   if(!document.getElementById('datenschutz-betriebe').checked){alert('Bitte bestätige die Datenschutzerklärung!');return;}
-  var form=document.getElementById('betriebe-form');
-  var data=new FormData(form);
-  fetch('https://formspree.io/f/xdabywro',{method:'POST',body:data,headers:{'Accept':'application/json'}})
-  .then(r=>{
-    if(r.ok){document.getElementById('betriebe-success').style.display='block';form.reset();ladePakete();}
-    else alert('Fehler beim Senden. Bitte versuche es nochmal.');
-  }).catch(()=>alert('Verbindungsfehler. Bitte versuche es nochmal.'));
+  var firmenname=document.getElementById('bf-firmenname').value.trim();
+  var ansprechpartner=document.getElementById('bf-ansprechpartner').value.trim();
+  var email=document.getElementById('bf-email').value.trim();
+  var telefon=document.getElementById('bf-telefon').value.trim();
+  var ausbildungsberuf=document.getElementById('bf-ausbildungsberuf').value.trim();
+  var standort=document.getElementById('bf-standort').value.trim();
+  var nachricht=document.getElementById('bf-nachricht').value.trim();
+  var paket=document.getElementById('paket-hidden').value;
+  if(!firmenname||!ansprechpartner||!email||!ausbildungsberuf||!standort){alert('Bitte alle Pflichtfelder ausfüllen!');return;}
+  var btn=document.querySelector('.submit-btn');
+  btn.disabled=true;btn.textContent='Wird gesendet...';
+  var anfrage={paket,firmenname,ansprechpartner,email,telefon,ausbildungsberuf,standort,nachricht};
+  var {error}=await sb.from('betrieb_anfragen').insert(anfrage);
+  if(error){btn.disabled=false;btn.textContent='Anfrage absenden 🚀';alert('Fehler beim Senden. Bitte versuche es nochmal.');return;}
+  await sb.functions.invoke('betrieb-anfrage-weiterleiten',{body:{anfrage}});
+  document.getElementById('betriebe-success').style.display='block';
+  document.getElementById('bf-firmenname').value='';
+  document.getElementById('bf-ansprechpartner').value='';
+  document.getElementById('bf-email').value='';
+  document.getElementById('bf-telefon').value='';
+  document.getElementById('bf-ausbildungsberuf').value='';
+  document.getElementById('bf-standort').value='';
+  document.getElementById('bf-nachricht').value='';
+  document.getElementById('datenschutz-betriebe').checked=false;
+  btn.disabled=false;btn.textContent='Anfrage absenden 🚀';
+  ladePakete();
 }
 
 function toggleMenu(){
