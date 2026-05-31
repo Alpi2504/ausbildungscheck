@@ -129,9 +129,10 @@ tr:hover td{background:var(--gray)}
   <div class="login-box">
     <div class="login-logo">Ausbildungs<span>Check</span></div>
     <div class="login-sub">Admin Dashboard</div>
-    <input class="login-input" type="password" id="pw-input" placeholder="Passwort eingeben..." onkeydown="if(event.key==='Enter')checkLogin()">
+    <input class="login-input" type="email" id="pw-input" placeholder="E-Mail Adresse..." onkeydown="if(event.key==='Enter')checkLogin()">
+    <input class="login-input" type="password" id="pw-password" placeholder="Passwort eingeben..." onkeydown="if(event.key==='Enter')checkLogin()">
     <button class="login-btn" onclick="checkLogin()">Einloggen</button>
-    <div class="login-error" id="login-error">Falsches Passwort!</div>
+    <div class="login-error" id="login-error">Falsche E-Mail oder Passwort!</div>
   </div>
 </div>
 
@@ -409,24 +410,47 @@ tr:hover td{background:var(--gray)}
 <script>
 const SUPABASE_URL='https://trccxzjdddhbqjgyzlkv.supabase.co';
 const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRyY2N4empkZGRoYnFqZ3l6bGt2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1MDgyMjIsImV4cCI6MjA5NDA4NDIyMn0.xS5-9Tq1-i9_K9lYDuayomybBazHmnvY29K24LvRxaQ';
-const ADMIN_PASSWORD='ausbildungscheck2025';
 const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-function checkLogin(){
-  var pw=document.getElementById('pw-input').value;
-  if(pw===ADMIN_PASSWORD){
-    document.getElementById('login-screen').style.display='none';
-    document.getElementById('admin-screen').style.display='flex';
-    loadAll();
-  } else {
+// LOGIN
+async function checkLogin(){
+  var email=document.getElementById('pw-input').value.trim();
+  var password=document.getElementById('pw-password').value.trim();
+  var {data,error}=await sb.auth.signInWithPassword({email,password});
+  if(error||!data.user){
     document.getElementById('login-error').style.display='block';
+    document.getElementById('login-error').textContent='Falsche E-Mail oder Passwort!';
+    return;
   }
+  if(data.user.email!=='info@ausbildungscheck.de'){
+    await sb.auth.signOut();
+    document.getElementById('login-error').style.display='block';
+    document.getElementById('login-error').textContent='Kein Zugriff!';
+    return;
+  }
+  showAdmin();
 }
-function logout(){
+
+function showAdmin(){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('admin-screen').style.display='flex';
+  loadAll();
+}
+
+async function logout(){
+  await sb.auth.signOut();
   document.getElementById('admin-screen').style.display='none';
   document.getElementById('login-screen').style.display='flex';
   document.getElementById('pw-input').value='';
+  document.getElementById('pw-password').value='';
 }
+
+// Check if already logged in
+sb.auth.getSession().then(({data:{session}})=>{
+  if(session&&session.user.email==='info@ausbildungscheck.de'){
+    showAdmin();
+  }
+});
 
 function showPage(name){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
