@@ -145,6 +145,7 @@ tr:hover td{background:var(--gray)}
     <div class="nav-item" onclick="showPage('bewerber')"><span class="icon">👤</span> Bewerber</div>
     <div class="nav-item" onclick="showPage('berufsfelder')"><span class="icon">🗂️</span> Berufsfelder</div>
     <div class="nav-item" onclick="showPage('pakete')"><span class="icon">💰</span> Pakete & Preise</div>
+    <div class="nav-item" onclick="showPage('anfragen')"><span class="icon">📬</span> Betriebsanfragen</div>
     <div class="sidebar-bottom">
       <button class="logout-btn" onclick="logout()"><span>🚪</span> Ausloggen</button>
     </div>
@@ -226,6 +227,16 @@ tr:hover td{background:var(--gray)}
         <table><thead><tr><th>Emoji</th><th>Name</th><th>Stellen</th><th>Aktionen</th></tr></thead>
         <tbody id="berufsfelder-table"><tr><td colspan="4" class="empty-state">Lädt...</td></tr></tbody></table>
       </div>
+    </div>
+
+    <!-- BETRIEBSANFRAGEN -->
+    <div class="page" id="page-anfragen">
+      <div class="page-title">Betriebsanfragen</div>
+      <div style="display:flex;gap:.75rem;margin-bottom:1rem;flex-wrap:wrap">
+        <button id="anfragen-filter-neu" onclick="setAnfragenFilter('neu')" style="background:var(--navy);color:#fff;border:none;padding:8px 16px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;cursor:pointer">📬 Neue</button>
+        <button id="anfragen-filter-alle" onclick="setAnfragenFilter('alle')" style="background:#fff;color:var(--text2);border:1.5px solid var(--gray2);padding:8px 16px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;cursor:pointer">📋 Alle</button>
+      </div>
+      <div id="anfragen-list"><div class="empty-state"><div class="empty-icon">📬</div>Lädt...</div></div>
     </div>
 
     <!-- PAKETE & PREISE -->
@@ -424,6 +435,7 @@ function showPage(name){
   event.currentTarget.classList.add('active');
   if(name==='bewerbungen') loadBewerbungen();
   if(name==='pakete') loadPakete();
+  if(name==='anfragen') loadAnfragen();
   if(name==='berufsfelder') loadBerufsfelder();
   if(name==='bewerber') loadBewerber();
 }
@@ -706,6 +718,63 @@ async function deleteBerufsfeld(){
   await sb.from('berufsfelder').delete().eq('id',id);
   closeModal('berufsfeld-modal');await loadBerufsfelder();
   showToast('🗑️ Berufsfeld gelöscht');
+}
+
+// ===== BETRIEBSANFRAGEN =====
+var anfragenFilter='neu';
+
+function setAnfragenFilter(filter){
+  anfragenFilter=filter;
+  document.getElementById('anfragen-filter-neu').style.background=filter==='neu'?'var(--navy)':'#fff';
+  document.getElementById('anfragen-filter-neu').style.color=filter==='neu'?'#fff':'var(--text2)';
+  document.getElementById('anfragen-filter-alle').style.background=filter==='alle'?'var(--navy)':'#fff';
+  document.getElementById('anfragen-filter-alle').style.color=filter==='alle'?'#fff':'var(--text2)';
+  loadAnfragen();
+}
+
+async function loadAnfragen(){
+  var query=sb.from('betrieb_anfragen').select('*').order('created_at',{ascending:false});
+  if(anfragenFilter==='neu') query=query.eq('status','neu');
+  var {data}=await query;
+  var list=document.getElementById('anfragen-list');
+  if(!data||!data.length){list.innerHTML='<div class="empty-state"><div class="empty-icon">📬</div>Keine Anfragen gefunden</div>';return;}
+  list.innerHTML=data.map(a=>`
+    <div class="bewerbung-card">
+      <div class="bewerbung-header">
+        <div>
+          <div class="bewerbung-name">${a.firmenname}</div>
+          <div class="bewerbung-stelle">${a.paket||'-'} · ${a.standort||'-'}</div>
+        </div>
+        <span class="badge badge-${a.status==='neu'?'neu':'aktiv'}">${a.status}</span>
+      </div>
+      <div class="bewerbung-info">
+        <div class="info-item"><label>Ansprechpartner</label><span>${a.ansprechpartner||'-'}</span></div>
+        <div class="info-item"><label>E-Mail</label><span>${a.email||'-'}</span></div>
+        <div class="info-item"><label>Telefon</label><span>${a.telefon||'-'}</span></div>
+        <div class="info-item"><label>Ausbildungsberuf</label><span>${a.ausbildungsberuf||'-'}</span></div>
+        <div class="info-item"><label>Standort</label><span>${a.standort||'-'}</span></div>
+        <div class="info-item"><label>Datum</label><span>${new Date(a.created_at).toLocaleDateString('de-DE')}</span></div>
+      </div>
+      ${a.nachricht?`<div class="bewerbung-antworten"><div class="antwort-frage">Nachricht</div><div class="antwort-text">${a.nachricht}</div></div>`:''}
+      <div class="status-btns">
+        <a href="mailto:${a.email}?subject=Ihre Anfrage bei AusbildungsCheck" class="status-btn btn-weiterleiten" style="text-decoration:none">✉️ Antworten</a>
+        ${a.status==='neu'?`<button class="status-btn btn-archivieren" onclick="anfragErledigt('${a.id}')">✅ Als erledigt markieren</button>`:''}
+        <button class="status-btn" style="background:#FEE2E2;color:#EF4444" onclick="loeschenAnfrage('${a.id}')">🗑️ Löschen</button>
+      </div>
+    </div>`).join('');
+}
+
+async function anfragErledigt(id){
+  await sb.from('betrieb_anfragen').update({status:'erledigt'}).eq('id',id);
+  loadAnfragen();
+  showToast('✅ Anfrage als erledigt markiert');
+}
+
+async function loeschenAnfrage(id){
+  if(!confirm('Anfrage wirklich löschen?')) return;
+  await sb.from('betrieb_anfragen').delete().eq('id',id);
+  loadAnfragen();
+  showToast('🗑️ Anfrage gelöscht');
 }
 
 // ===== PAKETE =====
