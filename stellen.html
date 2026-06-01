@@ -356,6 +356,15 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
       </div>
       <div class="form-group"><label class="form-label">Wohnort *</label><input class="form-input" id="gast-wohnort" type="text" placeholder="Musterstraße 1, 12345 Wuppertal"></div>
       <div class="form-group"><label class="form-label">Geburtsdatum *</label><input class="form-input" id="gast-geburtsdatum" type="date" min="1950-01-01" max="2015-12-31"></div>
+      <!-- DATEI UPLOAD -->
+      <div id="gast-datei-wrap" style="display:none">
+        <div class="form-group">
+          <label class="form-label" id="gast-datei-label">📎 Lebenslauf / Zeugnisse hochladen</label>
+          <input type="file" id="gast-datei" accept=".pdf,.jpg,.jpeg,.png" style="width:100%;border:1.5px dashed var(--gray2);border-radius:9px;padding:12px;font-size:13px;color:var(--text2);cursor:pointer">
+          <div style="font-size:11px;color:var(--text2);margin-top:4px">PDF, JPG oder PNG · max. 5 MB</div>
+          <div id="gast-datei-uploading" style="display:none;font-size:12px;color:var(--ice);margin-top:4px">⏳ Wird hochgeladen...</div>
+        </div>
+      </div>
       <div class="toggle-field" onclick="toggleSchuelerGast()">
         <input type="checkbox" id="gast-schueler" onchange="toggleSchuelerGast()">
         <label for="gast-schueler">Ich bin noch Schüler/in</label>
@@ -638,6 +647,20 @@ function zeigeDetail(stelleId){
     betriebSec.style.display='none';
   }
 
+  // Datei Upload
+  var dateiWrap=document.getElementById('gast-datei-wrap');
+  var dateiLabel=document.getElementById('gast-datei-label');
+  var dateiInput=document.getElementById('gast-datei');
+  if(s.datei_upload){
+    dateiWrap.style.display='block';
+    dateiLabel.textContent=s.datei_pflicht?'📎 Lebenslauf / Zeugnisse hochladen *':'📎 Lebenslauf / Zeugnisse hochladen (optional)';
+    dateiInput.required=s.datei_pflicht||false;
+  } else {
+    dateiWrap.style.display='none';
+    dateiInput.required=false;
+  }
+  document.getElementById('gast-datei').value='';
+
   document.getElementById('modal-detail').classList.add('open');
 }
 
@@ -734,7 +757,25 @@ async function submitGast(){
   var vorname=document.getElementById('gast-vorname').value.trim();
   var email=document.getElementById('gast-email').value.trim();
   if(!vorname||!email){alert('Bitte Vorname und E-Mail ausfüllen!');return;}
-  var data={stellen_id:aktuelleStelle.id,vorname,nachname:document.getElementById('gast-nachname').value.trim(),email,telefon:document.getElementById('gast-telefon').value.trim(),wohnort:document.getElementById('gast-wohnort').value.trim(),geburtsdatum:document.getElementById('gast-geburtsdatum').value||null,schulabschluss:document.getElementById('gast-abschluss').value,noch_schueler:document.getElementById('gast-schueler').checked,antwort1:document.getElementById('gast-antwort1').value.trim(),antwort2:document.getElementById('gast-antwort2').value.trim(),status:'neu'};
+  // Datei Upload
+  var dateiUrl=null;
+  var dateiInput=document.getElementById('gast-datei');
+  if(aktuelleStelle.datei_upload&&dateiInput.files[0]){
+    var file=dateiInput.files[0];
+    if(file.size>5*1024*1024){alert('Datei zu groß! Maximal 5 MB.');return;}
+    document.getElementById('gast-datei-uploading').style.display='block';
+    var ext=file.name.split('.').pop();
+    var filename=Date.now()+'-'+vorname+'.'+ext;
+    var {error:uploadError}=await sb.storage.from('bewerbungen-dateien').upload(filename,file,{upsert:true});
+    document.getElementById('gast-datei-uploading').style.display='none';
+    if(uploadError){alert('Upload fehlgeschlagen: '+uploadError.message);return;}
+    var {data:{publicUrl}}=sb.storage.from('bewerbungen-dateien').getPublicUrl(filename);
+    dateiUrl=publicUrl;
+  } else if(aktuelleStelle.datei_pflicht){
+    alert('Bitte lade eine Datei hoch!');return;
+  }
+
+  var data={stellen_id:aktuelleStelle.id,vorname,nachname:document.getElementById('gast-nachname').value.trim(),email,telefon:document.getElementById('gast-telefon').value.trim(),wohnort:document.getElementById('gast-wohnort').value.trim(),geburtsdatum:document.getElementById('gast-geburtsdatum').value||null,schulabschluss:document.getElementById('gast-abschluss').value,noch_schueler:document.getElementById('gast-schueler').checked,antwort1:document.getElementById('gast-antwort1').value.trim(),antwort2:document.getElementById('gast-antwort2').value.trim(),datei_url:dateiUrl,status:'neu'};
   await sendBewerbung(data);
   document.getElementById('success-gast').style.display='block';
   document.getElementById('gast-form-inhalt').style.display='none';
