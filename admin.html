@@ -331,6 +331,17 @@ tr:hover td{background:var(--gray)}
     <div class="form-group"><label class="form-label">Status</label>
       <select class="form-select" id="stelle-aktiv"><option value="true">Aktiv</option><option value="false">Inaktiv</option></select>
     </div>
+    <div class="form-section">Datei-Upload</div>
+    <div class="form-group">
+      <div class="toggle-switch" style="margin-bottom:.75rem">
+        <input type="checkbox" id="stelle-datei-upload">
+        <label for="stelle-datei-upload">Bewerber können Dateien hochladen (Lebenslauf, Zeugnisse etc.)</label>
+      </div>
+      <div class="toggle-switch">
+        <input type="checkbox" id="stelle-datei-pflicht">
+        <label for="stelle-datei-pflicht">Datei-Upload ist Pflichtfeld</label>
+      </div>
+    </div>
     <div class="modal-btns">
       <button class="btn-delete" id="stelle-delete-btn" onclick="deleteStelle()" style="display:none">Löschen</button>
       <button class="btn-cancel" onclick="closeModal('stelle-modal')">Abbrechen</button>
@@ -582,6 +593,8 @@ async function loadStellen(){
 function openStelleModal(id){
   ['stelle-id','stelle-beruf','stelle-gehalt','stelle-standort','stelle-beginn','stelle-dauer','stelle-beschreibung','stelle-taetigkeiten','stelle-arbeitgeber-wuensche','stelle-youtube','stelle-frage1','stelle-frage2'].forEach(f=>document.getElementById(f).value='');
   document.getElementById('stelle-aktiv').value='true';
+  document.getElementById('stelle-datei-upload').checked=false;
+  document.getElementById('stelle-datei-pflicht').checked=false;
   document.getElementById('stelle-betrieb').value='';
   document.getElementById('stelle-berufsfeld').value='';
   document.getElementById('stelle-delete-btn').style.display='none';
@@ -602,6 +615,8 @@ function openStelleModal(id){
       document.getElementById('stelle-frage1').value=s.frage1||'';
       document.getElementById('stelle-frage2').value=s.frage2||'';
       document.getElementById('stelle-aktiv').value=s.aktiv?'true':'false';
+      document.getElementById('stelle-datei-upload').checked=s.datei_upload||false;
+      document.getElementById('stelle-datei-pflicht').checked=s.datei_pflicht||false;
       document.getElementById('stelle-betrieb').value=s.betrieb_id||'';
       document.getElementById('stelle-berufsfeld').value=s.berufsfeld_id||'';
       document.getElementById('stelle-delete-btn').style.display='block';
@@ -613,7 +628,7 @@ function openStelleModal(id){
 
 async function saveStelle(){
   var id=document.getElementById('stelle-id').value;
-  var data={betrieb_id:document.getElementById('stelle-betrieb').value,berufsfeld_id:document.getElementById('stelle-berufsfeld').value||null,beruf:document.getElementById('stelle-beruf').value,gehalt:document.getElementById('stelle-gehalt').value,standort:document.getElementById('stelle-standort').value,beginn:document.getElementById('stelle-beginn').value,dauer:document.getElementById('stelle-dauer').value,beschreibung:document.getElementById('stelle-beschreibung').value,taetigkeiten:document.getElementById('stelle-taetigkeiten').value,arbeitgeber_wuensche:document.getElementById('stelle-arbeitgeber-wuensche').value,youtube_url:document.getElementById('stelle-youtube').value,frage1:document.getElementById('stelle-frage1').value,frage2:document.getElementById('stelle-frage2').value,aktiv:document.getElementById('stelle-aktiv').value==='true'};
+  var data={betrieb_id:document.getElementById('stelle-betrieb').value,berufsfeld_id:document.getElementById('stelle-berufsfeld').value||null,beruf:document.getElementById('stelle-beruf').value,gehalt:document.getElementById('stelle-gehalt').value,standort:document.getElementById('stelle-standort').value,beginn:document.getElementById('stelle-beginn').value,dauer:document.getElementById('stelle-dauer').value,beschreibung:document.getElementById('stelle-beschreibung').value,taetigkeiten:document.getElementById('stelle-taetigkeiten').value,arbeitgeber_wuensche:document.getElementById('stelle-arbeitgeber-wuensche').value,youtube_url:document.getElementById('stelle-youtube').value,frage1:document.getElementById('stelle-frage1').value,frage2:document.getElementById('stelle-frage2').value,aktiv:document.getElementById('stelle-aktiv').value==='true',datei_upload:document.getElementById('stelle-datei-upload').checked,datei_pflicht:document.getElementById('stelle-datei-pflicht').checked};
   if(!data.beruf||!data.betrieb_id){alert('Bitte Betrieb und Beruf ausfüllen!');return;}
   if(id){await sb.from('stellen').update(data).eq('id',id);}
   else{await sb.from('stellen').insert(data);}
@@ -661,6 +676,7 @@ async function loadBewerbungen(){
         <div class="info-item"><label>Noch Schüler</label><span>${b.noch_schueler?'Ja':'Nein'}</span></div>
         <div class="info-item"><label>Datum</label><span>${new Date(b.created_at).toLocaleDateString('de-DE')}</span></div>
       </div>
+      ${b.datei_url?`<div style="margin-bottom:1rem"><a href="${b.datei_url}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:var(--ice-light);color:var(--ice);border:1.5px solid rgba(79,170,223,0.3);padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none">📎 Datei herunterladen</a></div>`:''}
       ${b.antwort1||b.antwort2?`<div class="bewerbung-antworten">
         ${b.antwort1?`<div class="antwort-item"><div class="antwort-frage">${b.stellen?.frage1||'Frage 1'}</div><div class="antwort-text">${b.antwort1}</div></div>`:''}
         ${b.antwort2?`<div class="antwort-item"><div class="antwort-frage">${b.stellen?.frage2||'Frage 2'}</div><div class="antwort-text">${b.antwort2}</div></div>`:''}
