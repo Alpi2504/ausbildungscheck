@@ -327,6 +327,13 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
         <div class="form-group"><label class="form-label" id="frage1-eingeloggt"></label><textarea class="form-input" id="antwort1-eingeloggt" rows="2" placeholder="Deine Antwort..."></textarea></div>
         <div class="form-group" style="margin-bottom:0"><label class="form-label" id="frage2-eingeloggt"></label><textarea class="form-input" id="antwort2-eingeloggt" rows="2" placeholder="Deine Antwort..."></textarea></div>
       </div>
+      <!-- DATEI UPLOAD -->
+      <div id="eingeloggt-datei-wrap" style="display:none;margin-top:1rem">
+        <label class="form-label" id="eingeloggt-datei-label">📎 Lebenslauf / Zeugnisse hochladen</label>
+        <input type="file" id="eingeloggt-datei" accept=".pdf,.jpg,.jpeg,.png" style="width:100%;border:1.5px dashed var(--gray2);border-radius:9px;padding:12px;font-size:13px;color:var(--text2);cursor:pointer;margin-top:.35rem">
+        <div style="font-size:11px;color:var(--text2);margin-top:4px">PDF, JPG oder PNG · max. 5 MB</div>
+        <div id="eingeloggt-datei-uploading" style="display:none;font-size:12px;color:var(--ice);margin-top:4px">⏳ Wird hochgeladen...</div>
+      </div>
       <button class="submit-btn" onclick="submitEingeloggt()">Jetzt bewerben 🚀</button>
     </div>
   </div>
@@ -714,6 +721,16 @@ function zeigeEingeloggtModal(){
   document.getElementById('antwort2-eingeloggt').value='';
   document.getElementById('success-eingeloggt').style.display='none';
   document.getElementById('fragen-eingeloggt').style.display='block';
+  document.getElementById('eingeloggt-datei').value='';
+  // Datei Upload
+  var eingeloggtDateiWrap=document.getElementById('eingeloggt-datei-wrap');
+  var eingeloggtDateiLabel=document.getElementById('eingeloggt-datei-label');
+  if(s.datei_upload){
+    eingeloggtDateiWrap.style.display='block';
+    eingeloggtDateiLabel.textContent=s.datei_pflicht?'📎 Lebenslauf / Zeugnisse hochladen *':'📎 Lebenslauf / Zeugnisse hochladen (optional)';
+  } else {
+    eingeloggtDateiWrap.style.display='none';
+  }
   document.getElementById('banner-avatar').textContent=(p.vorname||'?').charAt(0).toUpperCase();
   document.getElementById('banner-name').textContent=((p.vorname||'')+' '+(p.nachname||'')).trim()||aktuellerUser.email;
   document.getElementById('banner-sub').textContent=(p.strasse?p.strasse+', ':'')+( p.plz||'')+' '+(p.ort||'');
@@ -745,7 +762,24 @@ function goLogin(){localStorage.setItem('bewerbung-stelle-id',aktuelleStelle.id)
 function goRegister(){localStorage.setItem('bewerbung-stelle-id',aktuelleStelle.id);window.location.href='konto.html?tab=register&redirect=stellen';}
 
 async function submitEingeloggt(){
-  var data={stellen_id:aktuelleStelle.id,vorname:aktuellesProfil.vorname,nachname:aktuellesProfil.nachname,email:aktuellerUser.email,telefon:aktuellesProfil.telefon,wohnort:(aktuellesProfil.strasse?aktuellesProfil.strasse+', ':'')+( aktuellesProfil.plz||'')+' '+(aktuellesProfil.ort||''),schulabschluss:aktuellesProfil.schulabschluss,noch_schueler:aktuellesProfil.noch_schueler,antwort1:document.getElementById('antwort1-eingeloggt').value.trim(),antwort2:document.getElementById('antwort2-eingeloggt').value.trim(),status:'neu'};
+  // Datei Upload
+  var dateiUrl=null;
+  var dateiInput=document.getElementById('eingeloggt-datei');
+  if(aktuelleStelle.datei_upload&&dateiInput.files[0]){
+    var file=dateiInput.files[0];
+    if(file.size>5*1024*1024){alert('Datei zu groß! Maximal 5 MB.');return;}
+    document.getElementById('eingeloggt-datei-uploading').style.display='block';
+    var ext=file.name.split('.').pop();
+    var filename=Date.now()+'-'+(aktuellesProfil.vorname||'user')+'.'+ext;
+    var {error:uploadError}=await sb.storage.from('bewerbungen-dateien').upload(filename,file,{upsert:true});
+    document.getElementById('eingeloggt-datei-uploading').style.display='none';
+    if(uploadError){alert('Upload fehlgeschlagen: '+uploadError.message);return;}
+    var {data:{publicUrl}}=sb.storage.from('bewerbungen-dateien').getPublicUrl(filename);
+    dateiUrl=publicUrl;
+  } else if(aktuelleStelle.datei_pflicht){
+    alert('Bitte lade eine Datei hoch!');return;
+  }
+  var data={stellen_id:aktuelleStelle.id,vorname:aktuellesProfil.vorname,nachname:aktuellesProfil.nachname,email:aktuellerUser.email,telefon:aktuellesProfil.telefon,wohnort:(aktuellesProfil.strasse?aktuellesProfil.strasse+', ':'')+( aktuellesProfil.plz||'')+' '+(aktuellesProfil.ort||''),schulabschluss:aktuellesProfil.schulabschluss,noch_schueler:aktuellesProfil.noch_schueler,antwort1:document.getElementById('antwort1-eingeloggt').value.trim(),antwort2:document.getElementById('antwort2-eingeloggt').value.trim(),datei_url:dateiUrl,status:'neu'};
   await sendBewerbung(data);
   document.getElementById('success-eingeloggt').style.display='block';
   document.getElementById('fragen-eingeloggt').style.display='none';
