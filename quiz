@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Berufscheck – Welche Ausbildung passt zu dir?</title>
+<meta name="description" content="Finde heraus welcher Ausbildungsberuf zu dir passt – in nur 10 Fragen.">
+<meta name="theme-color" content="#042C53">
+<link rel="manifest" href="/manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--dark:#021D3D;--navy:#042C53;--ice:#4FAADF;--ice-light:#EBF5FC;--gray:#F7F9FC;--gray2:#EEF2F7;--text:#0A1929;--text2:#5A7490}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--gray);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:60px;background:rgba(255,255,255,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(4,44,83,0.07)}
+.logo{font-family:'Outfit',sans-serif;font-size:18px;font-weight:800;color:var(--dark);text-decoration:none}
+.logo span{color:var(--ice)}
+.nav-links{display:flex;align-items:center;gap:1.75rem}
+.nav-links a{font-size:13px;color:var(--text2);text-decoration:none;font-weight:500}
+.nav-links a.active{color:var(--ice);font-weight:700}
+.nav-login{background:transparent;color:var(--navy);border:1.5px solid rgba(4,44,83,0.2);padding:7px 16px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none}
+.hamburger span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px;transition:all .3s}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.mobile-menu{display:none;position:fixed;left:0;right:0;top:60px;background:#fff;z-index:98;padding:1.25rem;flex-direction:column;border-bottom:1.5px solid var(--gray2);box-shadow:0 8px 24px rgba(2,13,29,0.08)}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-size:15px;padding:12px 0;border-bottom:1px solid var(--gray2);color:var(--text);text-decoration:none;font-weight:500}
+.mobile-menu a:last-child{border-bottom:none}
+
+/* HERO */
+.hero{background:var(--navy);padding:90px 2rem 3rem;text-align:center;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(79,170,223,0.12),transparent 70%)}
+.hero h1{font-family:'Outfit',sans-serif;font-size:clamp(28px,4vw,46px);font-weight:800;color:#fff;letter-spacing:-1.5px;margin-bottom:.75rem;position:relative}
+.hero h1 span{color:var(--ice)}
+.hero p{font-size:15px;color:rgba(255,255,255,0.65);max-width:440px;margin:0 auto;line-height:1.65;position:relative}
+
+/* QUIZ WRAPPER */
+.quiz-wrap{max-width:640px;margin:0 auto;padding:2.5rem 1.5rem 4rem}
+
+/* PROGRESS */
+.progress-wrap{margin-bottom:2rem}
+.progress-info{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}
+.progress-label{font-size:13px;font-weight:600;color:var(--text2)}
+.progress-count{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--ice)}
+.progress-bar{height:6px;background:var(--gray2);border-radius:10px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--ice),#2BC0E4);border-radius:10px;transition:width .4s ease}
+
+/* QUESTION CARD */
+.question-card{background:#fff;border-radius:20px;border:1.5px solid var(--gray2);padding:2rem;margin-bottom:1.5rem;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.question-num{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ice);margin-bottom:.6rem}
+.question-text{font-family:'Outfit',sans-serif;font-size:20px;font-weight:800;color:var(--dark);letter-spacing:-0.5px;margin-bottom:1.5rem;line-height:1.3}
+.answers{display:flex;flex-direction:column;gap:.75rem}
+.answer-btn{display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:12px;border:1.5px solid var(--gray2);background:#fff;cursor:pointer;transition:all .2s;text-align:left;width:100%}
+.answer-btn:hover{border-color:var(--ice);background:var(--ice-light)}
+.answer-btn.selected{border-color:var(--ice);background:var(--ice-light)}
+.answer-emoji{font-size:22px;flex-shrink:0}
+.answer-text{font-size:14px;font-weight:500;color:var(--text)}
+
+/* NAV BUTTONS */
+.quiz-nav{display:flex;gap:.75rem;justify-content:space-between}
+.btn-back{background:transparent;color:var(--text2);border:1.5px solid var(--gray2);padding:12px 24px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer}
+.btn-next{background:var(--navy);color:#fff;border:none;padding:12px 28px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;flex:1}
+.btn-next:disabled{opacity:.4;cursor:not-allowed}
+.btn-next:not(:disabled):hover{background:var(--ice)}
+
+/* RESULTS */
+.results-card{background:#fff;border-radius:20px;border:1.5px solid var(--gray2);padding:2rem;animation:fadeIn .4s ease}
+.results-title{font-family:'Outfit',sans-serif;font-size:24px;font-weight:800;color:var(--dark);letter-spacing:-0.5px;margin-bottom:.4rem}
+.results-sub{font-size:14px;color:var(--text2);margin-bottom:1.75rem}
+.result-items{display:flex;flex-direction:column;gap:1rem;margin-bottom:2rem}
+.result-item{display:flex;align-items:center;gap:14px;padding:1rem 1.25rem;border-radius:12px;border:1.5px solid var(--gray2);background:var(--gray)}
+.result-item.top{border-color:var(--ice);background:var(--ice-light)}
+.result-emoji{font-size:28px;flex-shrink:0}
+.result-info{flex:1}
+.result-name{font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;color:var(--dark)}
+.result-match{font-size:12px;color:var(--text2);margin-top:2px}
+.result-bar-wrap{width:80px;flex-shrink:0}
+.result-bar{height:6px;background:var(--gray2);border-radius:5px;overflow:hidden}
+.result-bar-fill{height:100%;background:var(--ice);border-radius:5px}
+.result-pct{font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;color:var(--ice);text-align:right;margin-top:3px}
+.btn-stellen{width:100%;background:var(--navy);color:#fff;border:none;padding:14px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:.75rem}
+.btn-stellen:hover{background:var(--ice)}
+.btn-retry{width:100%;background:transparent;color:var(--text2);border:1.5px solid var(--gray2);padding:12px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer}
+
+footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-top:auto}
+.footer-logo{font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;color:#fff}
+.footer-logo span{color:var(--ice)}
+.footer-links{display:flex;gap:1.25rem}
+.footer-links a{font-size:12px;color:rgba(255,255,255,0.45);text-decoration:none}
+.footer-copy{font-size:11px;color:rgba(255,255,255,0.3)}
+
+@media(max-width:768px){
+  nav{padding:0 1rem;height:56px}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .mobile-menu{top:56px}
+  .hero{padding:76px 1.25rem 2.5rem}
+  .quiz-wrap{padding:1.5rem 1rem 3rem}
+  .question-card{padding:1.5rem}
+  footer{flex-direction:column;padding:1.25rem}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="index.html">Ausbildungs<span>Check</span></a>
+  <div class="nav-links">
+    <a href="index.html">Start</a>
+    <a href="stellen.html">Stellen</a>
+    <a href="quiz.html" class="active">Berufscheck</a>
+    <a href="betriebe.html">Für Betriebe</a>
+    <a href="konto.html" class="nav-login">👤 Anmelden</a>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html">🏠 Start</a>
+  <a href="stellen.html">📋 Stellen</a>
+  <a href="quiz.html">🎯 Berufscheck</a>
+  <a href="betriebe.html">🏢 Für Betriebe</a>
+  <a href="konto.html">👤 Anmelden</a>
+</div>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <h1>Welche Ausbildung<br><span>passt zu dir?</span></h1>
+  <p>Beantworte 10 kurze Fragen und finde heraus welches Berufsfeld wirklich zu dir passt.</p>
+</div>
+
+<div class="quiz-wrap">
+  <!-- FORTSCHRITT -->
+  <div class="progress-wrap" id="progress-wrap">
+    <div class="progress-info">
+      <span class="progress-label">Dein Fortschritt</span>
+      <span class="progress-count" id="progress-count">Frage 1 von 10</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:10%"></div></div>
+  </div>
+
+  <!-- FRAGE -->
+  <div id="quiz-bereich">
+    <div class="question-card" id="question-card">
+      <div class="question-num" id="question-num">Frage 1</div>
+      <div class="question-text" id="question-text"></div>
+      <div class="answers" id="answers"></div>
+    </div>
+    <div class="quiz-nav">
+      <button class="btn-back" id="btn-back" onclick="goBack()" style="display:none">← Zurück</button>
+      <button class="btn-next" id="btn-next" onclick="goNext()" disabled>Weiter →</button>
+    </div>
+  </div>
+
+  <!-- ERGEBNIS -->
+  <div id="ergebnis-bereich" style="display:none">
+    <div class="results-card">
+      <div class="results-title">🎉 Dein Ergebnis!</div>
+      <div class="results-sub">Diese Berufsfelder passen am besten zu dir:</div>
+      <div class="result-items" id="result-items"></div>
+      <button class="btn-stellen" onclick="zuStellen()">Passende Stellen ansehen →</button>
+      <button class="btn-retry" onclick="neuStarten()">🔄 Quiz neu starten</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Ausbildungs<span>Check</span></div>
+  <div class="footer-links">
+    <a href="index.html">Start</a>
+    <a href="stellen.html">Stellen</a>
+    <a href="datenschutz.html">Datenschutz</a>
+    <a href="#">Impressum</a>
+  </div>
+  <div class="footer-copy">© 2026 AusbildungsCheck</div>
+</footer>
+
+<script>
+const FRAGEN = [
+  {
+    text: "Arbeitest du lieber drinnen oder draußen?",
+    antworten: [
+      {text:"Auf jeden Fall drinnen", emoji:"🏠", punkte:{IT:2, Büro:2, Medien:1}},
+      {text:"Hauptsächlich draußen", emoji:"🌤️", punkte:{Bau:2, Kfz:1, SHK:1}},
+      {text:"Ist mir eigentlich egal", emoji:"🤷", punkte:{Handel:1, Pflege:1, Gastro:1}}
+    ]
+  },
+  {
+    text: "Arbeitest du lieber mit deinen Händen oder am Computer?",
+    antworten: [
+      {text:"Ja, das ist genau mein Ding!", emoji:"🛠️", punkte:{Kfz:2, Elektro:2, Bau:2, SHK:2, Holz:2}},
+      {text:"Könnte ich mir vorstellen", emoji:"💻", punkte:{IT:2, Medien:2, Büro:1}},
+      {text:"Eher nicht", emoji:"🤝", punkte:{Pflege:2, Gastro:2, Handel:2}}
+    ]
+  },
+  {
+    text: "Magst du es mit vielen Menschen zu arbeiten?",
+    antworten: [
+      {text:"Ja, das ist genau mein Ding!", emoji:"👥", punkte:{Gastro:2, Handel:2, Pflege:2}},
+      {text:"Könnte ich mir vorstellen", emoji:"🙂", punkte:{Büro:1, Kfz:1}},
+      {text:"Eher nicht", emoji:"🧩", punkte:{IT:2, Chemie:2, Holz:1}}
+    ]
+  },
+  {
+    text: "Interessiert dich Technik & Maschinen?",
+    antworten: [
+      {text:"Ja, das ist genau mein Ding!", emoji:"⚙️", punkte:{Kfz:3, Elektro:3, Chemie:2, SHK:2}},
+      {text:"Könnte ich mir vorstellen", emoji:"🔩", punkte:{Bau:1, IT:1}},
+      {text:"Eher nicht", emoji:"🎨", punkte:{Medien:2, Gastro:1, Pflege:1}}
+    ]
+  },
+  {
+    text: "Magst du kreatives Arbeiten – gestalten, entwerfen, erschaffen?",
+    antworten: [
+      {text:"Ja, das ist genau mein Ding!", emoji:"🎨", punkte:{Medien:3, Holz:2}},
+      {text:"Könnte ich mir vorstellen", emoji:"✏️", punkte:{Bau:1, IT:1}},
+      {text:"Eher nicht", emoji:"📊", punkte:{Büro:2, Chemie:2, Elektro:1}}
+    ]
+  },
+  {
+    text: "Interessiert dich Gesundheit & anderen Menschen helfen?",
+    antworten: [
+      {text:"Ja, das ist genau mein Ding!", emoji:"🏥", punkte:{Pflege:3}},
+      {text:"Könnte ich mir vorstellen", emoji:"💊", punkte:{Chemie:1, Handel:1}},
+      {text:"Eher nicht", emoji:"🔧", punkte:{Kfz:1, Elektro:1, Bau:1}}
+    ]
+  },
+  {
+    text: "Magst du Ordnung, Zahlen & Organisation?",
+    antworten: [
+      {text:"Ja, das ist genau mein Ding!", emoji:"📋", punkte:{Büro:3, Handel:2}},
+      {text:"Könnte ich mir vorstellen", emoji:"📁", punkte:{IT:1, Chemie:1}},
+      {text:"Eher nicht", emoji:"🔨", punkte:{Kfz:1, Bau:1, Gastro:1}}
+    ]
+  },
+  {
+    text: "Interessiert dich Bauen, Konstruieren & mit den Händen etwas erschaffen?",
+    antworten: [
+      {text:"Ja, das ist genau mein Ding!", emoji:"🏗️", punkte:{Bau:3, Holz:2, SHK:2}},
+      {text:"Könnte ich mir vorstellen", emoji:"🔧", punkte:{Kfz:1, Elektro:1}},
+      {text:"Eher nicht", emoji:"💬", punkte:{Gastro:1, Handel:1, Büro:1}}
+    ]
+  },
+  {
+    text: "Interessiert dich die Gastronomie & Hotellerie – Kochen, Service, Gäste empfangen?",
+    antworten: [
+      {text:"Ja, das ist genau mein Ding!", emoji:"🍽️", punkte:{Gastro:3}},
+      {text:"Könnte ich mir vorstellen", emoji:"☕", punkte:{Handel:1}},
+      {text:"Eher nicht", emoji:"⚡", punkte:{Elektro:1, IT:1, Bau:1}}
+    ]
+  },
+  {
+    text: "Interessiert dich IT, Computer, digitale Medien oder Design?",
+    antworten: [
+      {text:"Ja, das ist genau mein Ding!", emoji:"💻", punkte:{IT:3, Medien:2}},
+      {text:"Könnte ich mir vorstellen", emoji:"📱", punkte:{Büro:1, Handel:1}},
+      {text:"Eher nicht", emoji:"🔩", punkte:{Kfz:1, SHK:1, Bau:1}}
+    ]
+  }
+];
+
+const BERUFSFELDER = {
+  Kfz:    {name:"Kfz & Fahrzeugtechnik", emoji:"🔧"},
+  Elektro:{name:"Elektro & Energie", emoji:"⚡"},
+  SHK:    {name:"Sanitär, Heizung & Klima", emoji:"🚿"},
+  Bau:    {name:"Bau & Handwerk", emoji:"🏗️"},
+  Gastro: {name:"Gastronomie & Hotel", emoji:"🍽️"},
+  IT:     {name:"IT & Digitales", emoji:"💻"},
+  Pflege: {name:"Pflege & Gesundheit", emoji:"🏥"},
+  Handel: {name:"Handel & Logistik", emoji:"🛒"},
+  Holz:   {name:"Holz & Gestaltung", emoji:"🪚"},
+  Medien: {name:"Medien & Design", emoji:"🎨"},
+  Büro:   {name:"Recht, Verwaltung & Büro", emoji:"⚖️"},
+  Chemie: {name:"Chemie & Technik", emoji:"🔬"}
+};
+
+var aktFrage=0;
+var antworten=new Array(FRAGEN.length).fill(null);
+var punkte={};
+Object.keys(BERUFSFELDER).forEach(k=>punkte[k]=0);
+
+function zeigeFrage(){
+  var f=FRAGEN[aktFrage];
+  document.getElementById('question-num').textContent='Frage '+(aktFrage+1);
+  document.getElementById('question-text').textContent=f.text;
+  document.getElementById('progress-count').textContent='Frage '+(aktFrage+1)+' von '+FRAGEN.length;
+  document.getElementById('progress-fill').style.width=(((aktFrage+1)/FRAGEN.length)*100)+'%';
+  document.getElementById('btn-back').style.display=aktFrage>0?'block':'none';
+
+  var answersEl=document.getElementById('answers');
+  answersEl.innerHTML=f.antworten.map((a,i)=>`
+    <button class="answer-btn ${antworten[aktFrage]===i?'selected':''}" onclick="waehleAntwort(${i})">
+      <span class="answer-emoji">${a.emoji}</span>
+      <span class="answer-text">${a.text}</span>
+    </button>`).join('');
+
+  document.getElementById('btn-next').disabled=antworten[aktFrage]===null;
+  document.getElementById('btn-next').textContent=aktFrage===FRAGEN.length-1?'Ergebnis anzeigen 🎉':'Weiter →';
+  document.getElementById('question-card').style.animation='none';
+  requestAnimationFrame(()=>document.getElementById('question-card').style.animation='fadeIn .3s ease');
+}
+
+function waehleAntwort(idx){
+  antworten[aktFrage]=idx;
+  document.querySelectorAll('.answer-btn').forEach((b,i)=>b.classList.toggle('selected',i===idx));
+  document.getElementById('btn-next').disabled=false;
+}
+
+function goNext(){
+  if(antworten[aktFrage]===null) return;
+  // Punkte vergeben
+  var p=FRAGEN[aktFrage].antworten[antworten[aktFrage]].punkte;
+  Object.keys(p).forEach(k=>{if(punkte[k]!==undefined) punkte[k]+=p[k];});
+
+  if(aktFrage<FRAGEN.length-1){
+    aktFrage++;
+    zeigeFrage();
+  } else {
+    zeigeErgebnis();
+  }
+}
+
+function goBack(){
+  if(aktFrage>0){aktFrage--;zeigeFrage();}
+}
+
+function zeigeErgebnis(){
+  document.getElementById('quiz-bereich').style.display='none';
+  document.getElementById('progress-wrap').style.display='none';
+  document.getElementById('ergebnis-bereich').style.display='block';
+
+  var sorted=Object.entries(punkte).sort((a,b)=>b[1]-a[1]).slice(0,3);
+  var max=sorted[0][1]||1;
+
+  document.getElementById('result-items').innerHTML=sorted.map((e,i)=>{
+    var bf=BERUFSFELDER[e[0]];
+    var pct=Math.round((e[1]/max)*100);
+    return `<div class="result-item ${i===0?'top':''}">
+      <span class="result-emoji">${bf.emoji}</span>
+      <div class="result-info">
+        <div class="result-name">${bf.name}</div>
+        <div class="result-match">${i===0?'Beste Übereinstimmung':i===1?'Sehr gute Übereinstimmung':'Gute Übereinstimmung'}</div>
+      </div>
+      <div class="result-bar-wrap">
+        <div class="result-bar"><div class="result-bar-fill" style="width:${pct}%"></div></div>
+        <div class="result-pct">${pct}%</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function zuStellen(){
+  var sorted=Object.entries(punkte).sort((a,b)=>b[1]-a[1]);
+  var topKey=sorted[0][0];
+  var topName=BERUFSFELDER[topKey].name;
+  window.location.href='stellen.html?q='+encodeURIComponent(topName);
+}
+
+function neuStarten(){
+  aktFrage=0;
+  antworten=new Array(FRAGEN.length).fill(null);
+  Object.keys(punkte).forEach(k=>punkte[k]=0);
+  document.getElementById('quiz-bereich').style.display='block';
+  document.getElementById('progress-wrap').style.display='block';
+  document.getElementById('ergebnis-bereich').style.display='none';
+  zeigeFrage();
+}
+
+function toggleMenu(){
+  document.getElementById('mobile-menu').classList.toggle('open');
+  document.getElementById('hamburger').classList.toggle('open');
+}
+
+zeigeFrage();
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js');});
+}
+</script>
+</body>
+</html>
