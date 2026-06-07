@@ -147,6 +147,7 @@ tr:hover td{background:var(--gray)}
     <div class="nav-item" onclick="showPage('berufsfelder')"><span class="icon">🗂️</span> Berufsfelder</div>
     <div class="nav-item" onclick="showPage('pakete')"><span class="icon">💰</span> Pakete & Preise</div>
     <div class="nav-item" onclick="showPage('anfragen')"><span class="icon">📬</span> Betriebsanfragen</div>
+    <div class="nav-item" onclick="showPage('statistiken')"><span class="icon">📊</span> Quiz Statistiken</div>
     <div class="sidebar-bottom">
       <button class="logout-btn" onclick="logout()"><span>🚪</span> Ausloggen</button>
     </div>
@@ -227,6 +228,21 @@ tr:hover td{background:var(--gray)}
         </div>
         <table><thead><tr><th>Emoji</th><th>Name</th><th>Stellen</th><th>Aktionen</th></tr></thead>
         <tbody id="berufsfelder-table"><tr><td colspan="4" class="empty-state">Lädt...</td></tr></tbody></table>
+      </div>
+    </div>
+
+    <!-- QUIZ STATISTIKEN -->
+    <div class="page" id="page-statistiken">
+      <div class="page-title">Quiz Statistiken</div>
+      <div class="stats-grid" id="quiz-stats-grid" style="margin-bottom:2rem">
+        <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-value" id="stat-quiz-total">0</div><div class="stat-label">Quiz Auswertungen</div></div>
+        <div class="stat-card"><div class="stat-icon">🏆</div><div class="stat-value" id="stat-quiz-top">-</div><div class="stat-label">Beliebtestes Berufsfeld</div></div>
+        <div class="stat-card"><div class="stat-icon">📍</div><div class="stat-value" id="stat-quiz-region">-</div><div class="stat-label">Häufigste Region</div></div>
+        <div class="stat-card"><div class="stat-icon">🎂</div><div class="stat-value" id="stat-quiz-alter">-</div><div class="stat-label">Häufigste Altersgruppe</div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Top Berufsfelder</div></div>
+        <div id="quiz-berufsfelder-chart" style="padding:1.5rem"></div>
       </div>
     </div>
 
@@ -471,6 +487,7 @@ function showPage(name){
   if(name==='bewerbungen') loadBewerbungen();
   if(name==='pakete') loadPakete();
   if(name==='anfragen') loadAnfragen();
+  if(name==='statistiken') loadStatistiken();
   if(name==='berufsfelder') loadBerufsfelder();
   if(name==='bewerber') loadBewerber();
 }
@@ -771,6 +788,50 @@ async function deleteBerufsfeld(){
   await sb.from('berufsfelder').delete().eq('id',id);
   closeModal('berufsfeld-modal');await loadBerufsfelder();
   showToast('🗑️ Berufsfeld gelöscht');
+}
+
+// ===== QUIZ STATISTIKEN =====
+async function loadStatistiken(){
+  var {data}=await sb.from('quiz_statistiken').select('*').order('created_at',{ascending:false});
+  if(!data||!data.length){
+    document.getElementById('stat-quiz-total').textContent='0';
+    document.getElementById('quiz-berufsfelder-chart').innerHTML='<div class="empty-state">Noch keine Auswertungen vorhanden</div>';
+    return;
+  }
+  document.getElementById('stat-quiz-total').textContent=data.length;
+
+  // Top Berufsfeld
+  var felder={};
+  data.forEach(d=>{
+    if(d.ergebnis_1) felder[d.ergebnis_1]=(felder[d.ergebnis_1]||0)+1;
+    if(d.ergebnis_2) felder[d.ergebnis_2]=(felder[d.ergebnis_2]||0)+0.5;
+  });
+  var topFelder=Object.entries(felder).sort((a,b)=>b[1]-a[1]);
+  document.getElementById('stat-quiz-top').textContent=topFelder[0]?topFelder[0][0].split(' ')[0]:'–';
+
+  // Top Region
+  var regionen={};
+  data.forEach(d=>{if(d.bundesland) regionen[d.bundesland]=(regionen[d.bundesland]||0)+1;});
+  var topRegion=Object.entries(regionen).sort((a,b)=>b[1]-a[1]);
+  document.getElementById('stat-quiz-region').textContent=topRegion[0]?topRegion[0][0]:'–';
+
+  // Top Alter
+  var alter={};
+  data.forEach(d=>{if(d.altersgruppe) alter[d.altersgruppe]=(alter[d.altersgruppe]||0)+1;});
+  var topAlter=Object.entries(alter).sort((a,b)=>b[1]-a[1]);
+  document.getElementById('stat-quiz-alter').textContent=topAlter[0]?topAlter[0][0]:'–';
+
+  // Balkendiagramm
+  var max=topFelder[0]?topFelder[0][1]:1;
+  document.getElementById('quiz-berufsfelder-chart').innerHTML=topFelder.slice(0,10).map(([name,count])=>`
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:.75rem">
+      <div style="width:160px;font-size:13px;color:var(--text);text-align:right;flex-shrink:0">${name}</div>
+      <div style="flex:1;background:var(--gray2);border-radius:5px;height:24px;overflow:hidden">
+        <div style="width:${Math.round((count/max)*100)}%;height:100%;background:var(--ice);border-radius:5px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px">
+          <span style="font-size:11px;font-weight:700;color:#fff">${Math.round(count)}</span>
+        </div>
+      </div>
+    </div>`).join('');
 }
 
 // ===== BETRIEBSANFRAGEN =====
