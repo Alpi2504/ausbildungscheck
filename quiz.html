@@ -9,6 +9,7 @@
 <meta name="description" content="Finde heraus welcher Ausbildungsberuf zu dir passt – in nur 10 Fragen.">
 <meta name="theme-color" content="#042C53">
 <link rel="manifest" href="/manifest.json">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -31,48 +32,36 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .mobile-menu.open{display:flex}
 .mobile-menu a{font-size:15px;padding:12px 0;border-bottom:1px solid var(--gray2);color:var(--text);text-decoration:none;font-weight:500}
 .mobile-menu a:last-child{border-bottom:none}
-
-/* HERO */
 .hero{background:var(--navy);padding:90px 2rem 3rem;text-align:center;position:relative;overflow:hidden}
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(79,170,223,0.12),transparent 70%)}
 .hero h1{font-family:'Outfit',sans-serif;font-size:clamp(28px,4vw,46px);font-weight:800;color:#fff;letter-spacing:-1.5px;margin-bottom:.75rem;position:relative}
 .hero h1 span{color:var(--ice)}
 .hero p{font-size:15px;color:rgba(255,255,255,0.65);max-width:440px;margin:0 auto;line-height:1.65;position:relative}
-
-/* QUIZ WRAPPER */
 .quiz-wrap{max-width:640px;margin:0 auto;padding:2.5rem 1.5rem 4rem}
-
-/* PROGRESS */
 .progress-wrap{margin-bottom:2rem}
 .progress-info{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}
 .progress-label{font-size:13px;font-weight:600;color:var(--text2)}
 .progress-count{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--ice)}
 .progress-bar{height:6px;background:var(--gray2);border-radius:10px;overflow:hidden}
 .progress-fill{height:100%;background:linear-gradient(90deg,var(--ice),#2BC0E4);border-radius:10px;transition:width .4s ease}
-
-/* QUESTION CARD */
 .question-card{background:#fff;border-radius:20px;border:1.5px solid var(--gray2);padding:2rem;margin-bottom:1.5rem;animation:fadeIn .3s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .question-num{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ice);margin-bottom:.6rem}
-.question-text{font-family:'Outfit',sans-serif;font-size:20px;font-weight:800;color:var(--dark);letter-spacing:-0.5px;margin-bottom:1.5rem;line-height:1.3}
-.answers{display:flex;flex-direction:column;gap:.75rem}
-.answer-btn{display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:12px;border:1.5px solid var(--gray2);background:#fff;cursor:pointer;transition:all .2s;text-align:left;width:100%}
+.question-text{font-family:'Outfit',sans-serif;font-size:20px;font-weight:800;color:var(--dark);letter-spacing:-0.5px;margin-bottom:.4rem;line-height:1.3}
+.question-sub{font-size:13px;color:var(--text2);margin-bottom:1.5rem;line-height:1.5}
+.answers{display:flex;flex-direction:column;gap:.6rem}
+.answer-btn{display:flex;align-items:center;padding:13px 18px;border-radius:12px;border:1.5px solid var(--gray2);background:#fff;cursor:pointer;transition:all .2s;text-align:left;width:100%}
 .answer-btn:hover{border-color:var(--ice);background:var(--ice-light)}
 .answer-btn.selected{border-color:var(--ice);background:var(--ice-light)}
-.answer-emoji{font-size:22px;flex-shrink:0}
-.answer-text{font-size:14px;font-weight:500;color:var(--text)}
-
-/* NAV BUTTONS */
+.answer-text{font-size:14px;font-weight:500;color:var(--text);line-height:1.4}
 .quiz-nav{display:flex;gap:.75rem;justify-content:space-between}
 .btn-back{background:transparent;color:var(--text2);border:1.5px solid var(--gray2);padding:12px 24px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer}
 .btn-next{background:var(--navy);color:#fff;border:none;padding:12px 28px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;flex:1}
 .btn-next:disabled{opacity:.4;cursor:not-allowed}
 .btn-next:not(:disabled):hover{background:var(--ice)}
-
-/* RESULTS */
 .results-card{background:#fff;border-radius:20px;border:1.5px solid var(--gray2);padding:2rem;animation:fadeIn .4s ease}
 .results-title{font-family:'Outfit',sans-serif;font-size:24px;font-weight:800;color:var(--dark);letter-spacing:-0.5px;margin-bottom:.4rem}
-.results-sub{font-size:14px;color:var(--text2);margin-bottom:1.75rem}
+.results-sub{font-size:14px;color:var(--text2);margin-bottom:1.75rem;line-height:1.6}
 .result-items{display:flex;flex-direction:column;gap:1rem;margin-bottom:2rem}
 .result-item{display:flex;align-items:center;gap:14px;padding:1rem 1.25rem;border-radius:12px;border:1.5px solid var(--gray2);background:var(--gray)}
 .result-item.top{border-color:var(--ice);background:var(--ice-light)}
@@ -84,17 +73,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .result-bar{height:6px;background:var(--gray2);border-radius:5px;overflow:hidden}
 .result-bar-fill{height:100%;background:var(--ice);border-radius:5px}
 .result-pct{font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;color:var(--ice);text-align:right;margin-top:3px}
+.save-msg{background:#D1FAE5;border:1.5px solid #6EE7B7;border-radius:9px;padding:.75rem 1rem;font-size:13px;color:#065F46;margin-bottom:1rem;display:none;text-align:center}
 .btn-stellen{width:100%;background:var(--navy);color:#fff;border:none;padding:14px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:.75rem}
 .btn-stellen:hover{background:var(--ice)}
 .btn-retry{width:100%;background:transparent;color:var(--text2);border:1.5px solid var(--gray2);padding:12px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer}
-
 footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-top:auto}
 .footer-logo{font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;color:#fff}
 .footer-logo span{color:var(--ice)}
 .footer-links{display:flex;gap:1.25rem}
 .footer-links a{font-size:12px;color:rgba(255,255,255,0.45);text-decoration:none}
 .footer-copy{font-size:11px;color:rgba(255,255,255,0.3)}
-
 @media(max-width:768px){
   nav{padding:0 1rem;height:56px}
   .nav-links{display:none}
@@ -113,9 +101,9 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
   <div class="nav-links">
     <a href="index.html">Start</a>
     <a href="stellen.html">Stellen</a>
-    <a href="quiz.html" class="active">Berufscheck</a>
+    <a href="quiz.html" class="active">🎯 Berufscheck</a>
     <a href="betriebe.html">Für Betriebe</a>
-    <a href="konto.html" class="nav-login">👤 Anmelden</a>
+    <a href="konto.html" class="nav-login" id="nav-konto">👤 Anmelden</a>
   </div>
   <button class="hamburger" onclick="toggleMenu()" id="hamburger"><span></span><span></span><span></span></button>
 </nav>
@@ -130,11 +118,10 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
 <div class="hero">
   <div class="hero-bg"></div>
   <h1>Welche Ausbildung<br><span>passt zu dir?</span></h1>
-  <p>Beantworte 10 kurze Fragen und finde heraus welches Berufsfeld wirklich zu dir passt.</p>
+  <p>10 ehrliche Fragen – kein Bullshit. Finde heraus welcher Beruf wirklich zu dir passt.</p>
 </div>
 
 <div class="quiz-wrap">
-  <!-- FORTSCHRITT -->
   <div class="progress-wrap" id="progress-wrap">
     <div class="progress-info">
       <span class="progress-label">Dein Fortschritt</span>
@@ -143,11 +130,11 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
     <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:10%"></div></div>
   </div>
 
-  <!-- FRAGE -->
   <div id="quiz-bereich">
     <div class="question-card" id="question-card">
       <div class="question-num" id="question-num">Frage 1</div>
       <div class="question-text" id="question-text"></div>
+      <div class="question-sub" id="question-sub"></div>
       <div class="answers" id="answers"></div>
     </div>
     <div class="quiz-nav">
@@ -156,11 +143,11 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
     </div>
   </div>
 
-  <!-- ERGEBNIS -->
   <div id="ergebnis-bereich" style="display:none">
     <div class="results-card">
       <div class="results-title">🎉 Dein Ergebnis!</div>
-      <div class="results-sub">Diese Berufsfelder passen am besten zu dir:</div>
+      <div class="results-sub" id="results-sub">Diese Berufsfelder passen am besten zu dir. Schau dir die passenden Stellen direkt an!</div>
+      <div class="save-msg" id="save-msg">✅ Ergebnis in deinem Profil gespeichert!</div>
       <div class="result-items" id="result-items"></div>
       <button class="btn-stellen" onclick="zuStellen()">Passende Stellen ansehen →</button>
       <button class="btn-retry" onclick="neuStarten()">🔄 Quiz neu starten</button>
@@ -180,124 +167,149 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
 </footer>
 
 <script>
-const FRAGEN = [
+const SUPABASE_URL='https://trccxzjdddhbqjgyzlkv.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRyY2N4empkZGRoYnFqZ3l6bGt2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1MDgyMjIsImV4cCI6MjA5NDA4NDIyMn0.xS5-9Tq1-i9_K9lYDuayomybBazHmnvY29K24LvRxaQ';
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,storageKey:'ausbildungscheck-auth'}});
+
+const BERUFSFELDER={
+  Kfz:    {name:"Kfz & Fahrzeugtechnik",      emoji:"🔧"},
+  Elektro:{name:"Elektro & Energie",           emoji:"⚡"},
+  SHK:    {name:"Sanitär, Heizung & Klima",    emoji:"🚿"},
+  Bau:    {name:"Bau & Handwerk",              emoji:"🏗️"},
+  Gastro: {name:"Gastronomie & Hotel",         emoji:"🍽️"},
+  IT:     {name:"IT & Digitales",              emoji:"💻"},
+  Pflege: {name:"Pflege & Gesundheit",         emoji:"🏥"},
+  Handel: {name:"Handel & Einzelhandel",       emoji:"🛒"},
+  Logistik:{name:"Lager & Logistik",           emoji:"📦"},
+  Holz:   {name:"Holz & Gestaltung",           emoji:"🪚"},
+  Medien: {name:"Medien & Design",             emoji:"🎨"},
+  Buero:  {name:"Recht, Verwaltung & Büro",    emoji:"⚖️"},
+  Chemie: {name:"Chemie & Technik",            emoji:"🔬"}
+};
+
+const FRAGEN=[
   {
-    text: "Arbeitest du lieber drinnen oder draußen?",
-    antworten: [
-      {text:"Auf jeden Fall drinnen", emoji:"🏠", punkte:{IT:2, Büro:2, Medien:1}},
-      {text:"Hauptsächlich draußen", emoji:"🌤️", punkte:{Bau:2, Kfz:1, SHK:1}},
-      {text:"Ist mir eigentlich egal", emoji:"🤷", punkte:{Handel:1, Pflege:1, Gastro:1}}
+    text:"Wie würdest du dich selbst beschreiben?",
+    sub:"Wähle die Aussage die am besten zu dir passt.",
+    antworten:[
+      {text:"Ich löse lieber praktische Probleme mit meinen Händen",          punkte:{Kfz:3,Elektro:2,SHK:3,Bau:3,Holz:2}},
+      {text:"Ich denke logisch und arbeite gerne am Computer",                punkte:{IT:3,Buero:2,Medien:1}},
+      {text:"Ich bin ein Menschenmensch und helfe gerne anderen",             punkte:{Pflege:3,Gastro:2,Handel:2}},
+      {text:"Ich bin kreativ und mag es Dinge zu gestalten",                  punkte:{Medien:3,Holz:2,Bau:1}}
     ]
   },
   {
-    text: "Arbeitest du lieber mit deinen Händen oder am Computer?",
-    antworten: [
-      {text:"Ja, das ist genau mein Ding!", emoji:"🛠️", punkte:{Kfz:2, Elektro:2, Bau:2, SHK:2, Holz:2}},
-      {text:"Könnte ich mir vorstellen", emoji:"💻", punkte:{IT:2, Medien:2, Büro:1}},
-      {text:"Eher nicht", emoji:"🤝", punkte:{Pflege:2, Gastro:2, Handel:2}}
+    text:"Stell dir vor du hast einen freien Tag – was machst du?",
+    sub:"Keine richtige oder falsche Antwort!",
+    antworten:[
+      {text:"Ich bastle, baue oder repariere etwas zuhause",                  punkte:{Kfz:2,Bau:2,SHK:2,Holz:2,Elektro:1}},
+      {text:"Ich zocke, programmiere oder beschäftige mich mit Technik",      punkte:{IT:3,Medien:2}},
+      {text:"Ich treffe Freunde, koche oder gehe aus",                        punkte:{Gastro:3,Handel:1,Pflege:1}},
+      {text:"Ich male, filme, designe oder mache Musik",                      punkte:{Medien:3,Holz:1}},
+      {text:"Ich sportele, bewege mich oder bin draußen aktiv",               punkte:{Bau:2,Logistik:2,SHK:1}}
     ]
   },
   {
-    text: "Magst du es mit vielen Menschen zu arbeiten?",
-    antworten: [
-      {text:"Ja, das ist genau mein Ding!", emoji:"👥", punkte:{Gastro:2, Handel:2, Pflege:2}},
-      {text:"Könnte ich mir vorstellen", emoji:"🙂", punkte:{Büro:1, Kfz:1}},
-      {text:"Eher nicht", emoji:"🧩", punkte:{IT:2, Chemie:2, Holz:1}}
+    text:"Welcher Satz trifft auf dich am ehesten zu?",
+    sub:"",
+    antworten:[
+      {text:"Ich will einen Beruf wo ich körperlich aktiv bin",               punkte:{Bau:3,Kfz:2,SHK:2,Logistik:2}},
+      {text:"Ich will hauptsächlich sitzen und konzentriert arbeiten",        punkte:{IT:3,Buero:3,Medien:2}},
+      {text:"Ich will immer mit Menschen in Kontakt sein",                    punkte:{Gastro:3,Handel:3,Pflege:2}},
+      {text:"Ich will etwas Sinnvolles tun und anderen direkt helfen",        punkte:{Pflege:3,Buero:1}}
     ]
   },
   {
-    text: "Interessiert dich Technik & Maschinen?",
-    antworten: [
-      {text:"Ja, das ist genau mein Ding!", emoji:"⚙️", punkte:{Kfz:3, Elektro:3, Chemie:2, SHK:2}},
-      {text:"Könnte ich mir vorstellen", emoji:"🔩", punkte:{Bau:1, IT:1}},
-      {text:"Eher nicht", emoji:"🎨", punkte:{Medien:2, Gastro:1, Pflege:1}}
+    text:"Wie gehst du mit Problemen um?",
+    sub:"",
+    antworten:[
+      {text:"Ich analysiere systematisch und gehe Schritt für Schritt vor",   punkte:{IT:3,Chemie:3,Elektro:2,Buero:1}},
+      {text:"Ich pack an und probiere bis es funktioniert",                   punkte:{Kfz:3,Bau:2,SHK:2}},
+      {text:"Ich rede mit anderen und suche gemeinsam eine Lösung",           punkte:{Pflege:2,Gastro:2,Handel:2}},
+      {text:"Ich denke kreativ und finde ungewöhnliche Lösungen",             punkte:{Medien:3,IT:1,Holz:2}}
     ]
   },
   {
-    text: "Magst du kreatives Arbeiten – gestalten, entwerfen, erschaffen?",
-    antworten: [
-      {text:"Ja, das ist genau mein Ding!", emoji:"🎨", punkte:{Medien:3, Holz:2}},
-      {text:"Könnte ich mir vorstellen", emoji:"✏️", punkte:{Bau:1, IT:1}},
-      {text:"Eher nicht", emoji:"📊", punkte:{Büro:2, Chemie:2, Elektro:1}}
+    text:"Was ist dir bei deiner späteren Arbeit am wichtigsten?",
+    sub:"",
+    antworten:[
+      {text:"Gutes Gehalt und sichere Stelle",                                punkte:{Elektro:2,Chemie:2,IT:2,Buero:1}},
+      {text:"Abwechslung und jeden Tag was anderes",                          punkte:{Kfz:2,SHK:2,Gastro:2,Pflege:1}},
+      {text:"Mit netten Menschen zusammenarbeiten",                           punkte:{Gastro:3,Handel:2,Pflege:2}},
+      {text:"Etwas mit meinen Händen erschaffen das bleibt",                  punkte:{Bau:3,Holz:3,SHK:1}}
     ]
   },
   {
-    text: "Interessiert dich Gesundheit & anderen Menschen helfen?",
-    antworten: [
-      {text:"Ja, das ist genau mein Ding!", emoji:"🏥", punkte:{Pflege:3}},
-      {text:"Könnte ich mir vorstellen", emoji:"💊", punkte:{Chemie:1, Handel:1}},
-      {text:"Eher nicht", emoji:"🔧", punkte:{Kfz:1, Elektro:1, Bau:1}}
+    text:"Wie war Technik & Mathe in der Schule für dich?",
+    sub:"",
+    antworten:[
+      {text:"Meine Lieblingsfächer – ich war richtig gut darin",              punkte:{IT:3,Elektro:3,Chemie:3,Kfz:2}},
+      {text:"Ging so – ich habs verstanden aber es war nicht meins",          punkte:{Bau:1,SHK:1,Buero:1}},
+      {text:"Nicht so meins – ich war lieber in anderen Fächern gut",         punkte:{Gastro:2,Handel:2,Medien:2,Pflege:2}},
+      {text:"Ich hab mich mehr für Biologie und Chemie interessiert",         punkte:{Chemie:3,Pflege:2}}
     ]
   },
   {
-    text: "Magst du Ordnung, Zahlen & Organisation?",
-    antworten: [
-      {text:"Ja, das ist genau mein Ding!", emoji:"📋", punkte:{Büro:3, Handel:2}},
-      {text:"Könnte ich mir vorstellen", emoji:"📁", punkte:{IT:1, Chemie:1}},
-      {text:"Eher nicht", emoji:"🔨", punkte:{Kfz:1, Bau:1, Gastro:1}}
+    text:"Kannst du dir vorstellen auch mal körperlich anstrengende Arbeit zu machen?",
+    sub:"",
+    antworten:[
+      {text:"Ja, auf jeden Fall – ich sitze nicht gerne den ganzen Tag",      punkte:{Bau:3,Logistik:3,SHK:2,Kfz:2}},
+      {text:"Ein bisschen schon, aber nicht den ganzen Tag",                  punkte:{Gastro:2,Handel:2,Pflege:2}},
+      {text:"Lieber nicht – ich bevorzuge entspanntes Arbeiten",              punkte:{IT:3,Buero:3,Medien:2}}
     ]
   },
   {
-    text: "Interessiert dich Bauen, Konstruieren & mit den Händen etwas erschaffen?",
-    antworten: [
-      {text:"Ja, das ist genau mein Ding!", emoji:"🏗️", punkte:{Bau:3, Holz:2, SHK:2}},
-      {text:"Könnte ich mir vorstellen", emoji:"🔧", punkte:{Kfz:1, Elektro:1}},
-      {text:"Eher nicht", emoji:"💬", punkte:{Gastro:1, Handel:1, Büro:1}}
+    text:"Stell dir vor du arbeitest in einem Restaurant. Welche Rolle passt am besten zu dir?",
+    sub:"Diese Frage gibt uns Hinweise auf deinen Arbeitstyp.",
+    antworten:[
+      {text:"Ich bin in der Küche und koche",                                 punkte:{Gastro:3,Chemie:1}},
+      {text:"Ich bin im Service und kümmere mich um die Gäste",               punkte:{Gastro:2,Handel:2,Pflege:1}},
+      {text:"Ich mache die Buchhaltung und Organisation",                     punkte:{Buero:3,Handel:1}},
+      {text:"Ich würde lieber woanders arbeiten",                             punkte:{IT:1,Bau:1,Kfz:1,Elektro:1}}
     ]
   },
   {
-    text: "Interessiert dich die Gastronomie & Hotellerie – Kochen, Service, Gäste empfangen?",
-    antworten: [
-      {text:"Ja, das ist genau mein Ding!", emoji:"🍽️", punkte:{Gastro:3}},
-      {text:"Könnte ich mir vorstellen", emoji:"☕", punkte:{Handel:1}},
-      {text:"Eher nicht", emoji:"⚡", punkte:{Elektro:1, IT:1, Bau:1}}
+    text:"Wie wichtig ist dir Kreativität in deinem Beruf?",
+    sub:"",
+    antworten:[
+      {text:"Sehr wichtig – ich will kreativ sein und gestalten",             punkte:{Medien:3,Holz:2}},
+      {text:"Ein bisschen – aber ich will vor allem was Konkretes tun",       punkte:{Bau:2,Kfz:1,IT:1}},
+      {text:"Gar nicht so wichtig – ich mag klare Aufgaben und Strukturen",   punkte:{Buero:3,Logistik:2,Chemie:2}}
     ]
   },
   {
-    text: "Interessiert dich IT, Computer, digitale Medien oder Design?",
-    antworten: [
-      {text:"Ja, das ist genau mein Ding!", emoji:"💻", punkte:{IT:3, Medien:2}},
-      {text:"Könnte ich mir vorstellen", emoji:"📱", punkte:{Büro:1, Handel:1}},
-      {text:"Eher nicht", emoji:"🔩", punkte:{Kfz:1, SHK:1, Bau:1}}
+    text:"Wenn du an deine Zukunft denkst – was siehst du dich machen?",
+    sub:"",
+    antworten:[
+      {text:"Mit Maschinen und Fahrzeugen arbeiten",                          punkte:{Kfz:3,Logistik:2,Chemie:2}},
+      {text:"Häuser, Anlagen oder Systeme bauen und installieren",            punkte:{Bau:3,Elektro:3,SHK:3}},
+      {text:"Menschen betreuen, beraten oder helfen",                         punkte:{Pflege:3,Gastro:2,Handel:2,Buero:1}},
+      {text:"Software entwickeln, Daten analysieren oder digital arbeiten",   punkte:{IT:3,Medien:2}},
+      {text:"Waren bewegen, verwalten oder verkaufen",                        punkte:{Handel:3,Logistik:3,Buero:1}}
     ]
   }
 ];
-
-const BERUFSFELDER = {
-  Kfz:    {name:"Kfz & Fahrzeugtechnik", emoji:"🔧"},
-  Elektro:{name:"Elektro & Energie", emoji:"⚡"},
-  SHK:    {name:"Sanitär, Heizung & Klima", emoji:"🚿"},
-  Bau:    {name:"Bau & Handwerk", emoji:"🏗️"},
-  Gastro: {name:"Gastronomie & Hotel", emoji:"🍽️"},
-  IT:     {name:"IT & Digitales", emoji:"💻"},
-  Pflege: {name:"Pflege & Gesundheit", emoji:"🏥"},
-  Handel: {name:"Handel & Logistik", emoji:"🛒"},
-  Holz:   {name:"Holz & Gestaltung", emoji:"🪚"},
-  Medien: {name:"Medien & Design", emoji:"🎨"},
-  Büro:   {name:"Recht, Verwaltung & Büro", emoji:"⚖️"},
-  Chemie: {name:"Chemie & Technik", emoji:"🔬"}
-};
 
 var aktFrage=0;
 var antworten=new Array(FRAGEN.length).fill(null);
 var punkte={};
 Object.keys(BERUFSFELDER).forEach(k=>punkte[k]=0);
+var topErgebnis=null;
 
 function zeigeFrage(){
   var f=FRAGEN[aktFrage];
   document.getElementById('question-num').textContent='Frage '+(aktFrage+1);
   document.getElementById('question-text').textContent=f.text;
+  document.getElementById('question-sub').textContent=f.sub||'';
+  document.getElementById('question-sub').style.display=f.sub?'block':'none';
   document.getElementById('progress-count').textContent='Frage '+(aktFrage+1)+' von '+FRAGEN.length;
   document.getElementById('progress-fill').style.width=(((aktFrage+1)/FRAGEN.length)*100)+'%';
   document.getElementById('btn-back').style.display=aktFrage>0?'block':'none';
-
   var answersEl=document.getElementById('answers');
   answersEl.innerHTML=f.antworten.map((a,i)=>`
     <button class="answer-btn ${antworten[aktFrage]===i?'selected':''}" onclick="waehleAntwort(${i})">
-      <span class="answer-emoji">${a.emoji}</span>
       <span class="answer-text">${a.text}</span>
     </button>`).join('');
-
   document.getElementById('btn-next').disabled=antworten[aktFrage]===null;
   document.getElementById('btn-next').textContent=aktFrage===FRAGEN.length-1?'Ergebnis anzeigen 🎉':'Weiter →';
   document.getElementById('question-card').style.animation='none';
@@ -312,38 +324,42 @@ function waehleAntwort(idx){
 
 function goNext(){
   if(antworten[aktFrage]===null) return;
-  // Punkte vergeben
   var p=FRAGEN[aktFrage].antworten[antworten[aktFrage]].punkte;
   Object.keys(p).forEach(k=>{if(punkte[k]!==undefined) punkte[k]+=p[k];});
-
-  if(aktFrage<FRAGEN.length-1){
-    aktFrage++;
-    zeigeFrage();
-  } else {
-    zeigeErgebnis();
-  }
+  if(aktFrage<FRAGEN.length-1){aktFrage++;zeigeFrage();}
+  else zeigeErgebnis();
 }
 
 function goBack(){
-  if(aktFrage>0){aktFrage--;zeigeFrage();}
+  if(aktFrage>0){
+    // Punkte der aktuellen Frage zurücknehmen
+    if(antworten[aktFrage]!==null){
+      var p=FRAGEN[aktFrage].antworten[antworten[aktFrage]].punkte;
+      Object.keys(p).forEach(k=>{if(punkte[k]!==undefined) punkte[k]-=p[k];});
+    }
+    aktFrage--;zeigeFrage();
+  }
 }
 
-function zeigeErgebnis(){
+async function zeigeErgebnis(){
   document.getElementById('quiz-bereich').style.display='none';
   document.getElementById('progress-wrap').style.display='none';
   document.getElementById('ergebnis-bereich').style.display='block';
 
-  var sorted=Object.entries(punkte).sort((a,b)=>b[1]-a[1]).slice(0,3);
+  var sorted=Object.entries(punkte).filter(e=>e[1]>0).sort((a,b)=>b[1]-a[1]).slice(0,3);
+  if(!sorted.length) sorted=Object.entries(punkte).sort((a,b)=>b[1]-a[1]).slice(0,3);
   var max=sorted[0][1]||1;
+  topErgebnis=sorted;
 
   document.getElementById('result-items').innerHTML=sorted.map((e,i)=>{
     var bf=BERUFSFELDER[e[0]];
+    if(!bf) return '';
     var pct=Math.round((e[1]/max)*100);
     return `<div class="result-item ${i===0?'top':''}">
       <span class="result-emoji">${bf.emoji}</span>
       <div class="result-info">
         <div class="result-name">${bf.name}</div>
-        <div class="result-match">${i===0?'Beste Übereinstimmung':i===1?'Sehr gute Übereinstimmung':'Gute Übereinstimmung'}</div>
+        <div class="result-match">${i===0?'⭐ Beste Übereinstimmung':i===1?'Sehr gut passend':'Gut passend'}</div>
       </div>
       <div class="result-bar-wrap">
         <div class="result-bar"><div class="result-bar-fill" style="width:${pct}%"></div></div>
@@ -351,22 +367,34 @@ function zeigeErgebnis(){
       </div>
     </div>`;
   }).join('');
+
+  // Im Profil speichern wenn eingeloggt
+  var {data:{session}}=await sb.auth.getSession();
+  if(session){
+    var ergebnisData=sorted.map(e=>({key:e[0],name:BERUFSFELDER[e[0]]?.name,emoji:BERUFSFELDER[e[0]]?.emoji,punkte:e[1]}));
+    await sb.from('profile').update({quiz_ergebnis:ergebnisData,quiz_datum:new Date().toISOString()}).eq('id',session.user.id);
+    document.getElementById('save-msg').style.display='block';
+  }
 }
 
 function zuStellen(){
-  var sorted=Object.entries(punkte).sort((a,b)=>b[1]-a[1]);
-  var topKey=sorted[0][0];
-  var topName=BERUFSFELDER[topKey].name;
-  window.location.href='stellen.html?q='+encodeURIComponent(topName);
+  if(topErgebnis&&topErgebnis[0]){
+    var topName=BERUFSFELDER[topErgebnis[0][0]]?.name||'';
+    window.location.href='stellen.html?q='+encodeURIComponent(topName);
+  } else {
+    window.location.href='stellen.html';
+  }
 }
 
 function neuStarten(){
   aktFrage=0;
   antworten=new Array(FRAGEN.length).fill(null);
   Object.keys(punkte).forEach(k=>punkte[k]=0);
+  topErgebnis=null;
   document.getElementById('quiz-bereich').style.display='block';
   document.getElementById('progress-wrap').style.display='block';
   document.getElementById('ergebnis-bereich').style.display='none';
+  document.getElementById('save-msg').style.display='none';
   zeigeFrage();
 }
 
@@ -374,6 +402,13 @@ function toggleMenu(){
   document.getElementById('mobile-menu').classList.toggle('open');
   document.getElementById('hamburger').classList.toggle('open');
 }
+
+sb.auth.getSession().then(({data:{session}})=>{
+  if(session){
+    document.getElementById('nav-konto').textContent='👤 Mein Konto';
+    document.getElementById('nav-konto').style.color='var(--ice)';
+  }
+});
 
 zeigeFrage();
 </script>
