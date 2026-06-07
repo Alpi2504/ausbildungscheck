@@ -270,6 +270,13 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
 
     <!-- BEWERBUNGEN TAB -->
     <div id="bewerbungen-tab" style="display:none">
+      <div class="card" style="margin-bottom:1rem" id="quiz-ergebnis-card">
+        <div class="section-title">🎯 Dein Berufscheck Ergebnis</div>
+        <div id="quiz-ergebnis-inhalt" style="text-align:center;padding:1rem;color:var(--text2)">
+          Du hast den Berufscheck noch nicht gemacht.<br><br>
+          <a href="quiz.html" style="color:var(--ice);font-weight:600;text-decoration:none">Jetzt starten →</a>
+        </div>
+      </div>
       <div class="card">
         <div class="section-title">Meine Bewerbungen</div>
         <div id="meine-bewerbungen-liste">
@@ -417,6 +424,28 @@ function switchProfilTab(tab){
 async function loadMeineBewerbungen(){
   var {data:{session}}=await sb.auth.getSession();
   if(!session) return;
+
+  // Quiz Ergebnis laden
+  var {data:profil}=await sb.from('profile').select('quiz_ergebnis,quiz_datum').eq('id',session.user.id).single();
+  var quizEl=document.getElementById('quiz-ergebnis-inhalt');
+  if(profil?.quiz_ergebnis&&profil.quiz_ergebnis.length){
+    var datum=profil.quiz_datum?new Date(profil.quiz_datum).toLocaleDateString('de-DE'):'';
+    quizEl.innerHTML=`
+      <div style="margin-bottom:.75rem;font-size:12px;color:var(--text2)">Zuletzt gemacht: ${datum}</div>
+      ${profil.quiz_ergebnis.map((e,i)=>`
+        <div style="display:flex;align-items:center;gap:10px;padding:.75rem 1rem;border-radius:10px;background:${i===0?'var(--ice-light)':'var(--gray)'};border:1.5px solid ${i===0?'rgba(79,170,223,0.3)':'var(--gray2)'};margin-bottom:.5rem">
+          <span style="font-size:22px">${e.emoji}</span>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:600;color:var(--dark)">${e.name}</div>
+            <div style="font-size:12px;color:var(--text2)">${i===0?'⭐ Beste Übereinstimmung':i===1?'Sehr gut passend':'Gut passend'}</div>
+          </div>
+        </div>`).join('')}
+      <a href="quiz.html" style="font-size:13px;color:var(--ice);font-weight:600;text-decoration:none;display:block;margin-top:.75rem">🔄 Quiz neu machen →</a>`;
+  } else {
+    quizEl.innerHTML='Du hast den Berufscheck noch nicht gemacht.<br><br><a href="quiz.html" style="color:var(--ice);font-weight:600;text-decoration:none">Jetzt starten →</a>';
+  }
+
+  // Bewerbungen laden
   var {data}=await sb.from('bewerbungen').select('*, stellen:stellen_id(beruf, betrieb:betrieb_id(name))').eq('email',session.user.email).order('created_at',{ascending:false});
   var liste=document.getElementById('meine-bewerbungen-liste');
   if(!data||!data.length){liste.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text2)">😔 Noch keine Bewerbungen vorhanden.<br><br><a href="stellen.html" style="color:var(--ice);font-weight:600;text-decoration:none">Jetzt Stellen entdecken →</a></div>';return;}
