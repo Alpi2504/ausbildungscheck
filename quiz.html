@@ -374,6 +374,35 @@ async function zeigeErgebnis(){
     var ergebnisData=sorted.map(e=>({key:e[0],name:BERUFSFELDER[e[0]]?.name,emoji:BERUFSFELDER[e[0]]?.emoji,punkte:e[1]}));
     await sb.from('profile').update({quiz_ergebnis:ergebnisData,quiz_datum:new Date().toISOString()}).eq('id',session.user.id);
     document.getElementById('save-msg').style.display='block';
+
+    // Anonyme Statistik aus Profildaten ableiten
+    var {data:profil}=await sb.from('profile').select('geburtsdatum,plz').eq('id',session.user.id).single();
+    var altersgruppe=null;
+    if(profil?.geburtsdatum){
+      var alter=new Date().getFullYear()-new Date(profil.geburtsdatum).getFullYear();
+      if(alter<14) altersgruppe='Unter 14';
+      else if(alter<=16) altersgruppe='14-16';
+      else if(alter<=18) altersgruppe='17-18';
+      else if(alter<=21) altersgruppe='19-21';
+      else altersgruppe='22+';
+    }
+    var bundesland=null;
+    if(profil?.plz){
+      var plz=parseInt(profil.plz);
+      if(plz>=40000&&plz<=59999) bundesland='NRW';
+      else if(plz>=80000&&plz<=87999) bundesland='Bayern';
+      else if(plz>=70000&&plz<=79999) bundesland='BW';
+      else if(plz>=20000&&plz<=31999) bundesland='Niedersachsen';
+      else if(plz>=34000&&plz<=67999) bundesland='Hessen';
+      else bundesland='Andere';
+    }
+    await sb.from('quiz_statistiken').insert({
+      ergebnis_1:sorted[0]?BERUFSFELDER[sorted[0][0]]?.name:null,
+      ergebnis_2:sorted[1]?BERUFSFELDER[sorted[1][0]]?.name:null,
+      ergebnis_3:sorted[2]?BERUFSFELDER[sorted[2][0]]?.name:null,
+      altersgruppe,
+      bundesland
+    });
   }
 }
 
