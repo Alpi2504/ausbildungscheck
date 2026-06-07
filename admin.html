@@ -212,8 +212,8 @@ tr:hover td{background:var(--gray)}
       <div class="page-title">Bewerber</div>
       <div class="card">
         <div class="card-header"><div class="card-title">Alle registrierten Bewerber</div></div>
-        <table><thead><tr><th>Name</th><th>E-Mail</th><th>Geburtsdatum</th><th>Adresse</th><th>Telefon</th><th>Schulabschluss</th><th>Registriert</th></tr></thead>
-        <tbody id="bewerber-table"><tr><td colspan="7" class="empty-state">Lädt...</td></tr></tbody></table>
+        <table><thead><tr><th>Name</th><th>E-Mail</th><th>Geburtsdatum</th><th>Berufscheck</th><th>Adresse</th><th>Telefon</th><th>Schulabschluss</th><th>Registriert</th></tr></thead>
+        <tbody id="bewerber-table"><tr><td colspan="8" class="empty-state">Lädt...</td></tr></tbody></table>
       </div>
     </div>
 
@@ -709,8 +709,21 @@ async function archivierenBewerbung(id){
 async function loadBewerber(){
   var {data,error}=await sb.from('profile').select('*').order('created_at',{ascending:false});
   var tb=document.getElementById('bewerber-table');
-  if(error||!data||!data.length){tb.innerHTML='<tr><td colspan="7" style="text-align:center;padding:2rem;color:#5A7490">Noch keine registrierten Bewerber</td></tr>';return;}
-  tb.innerHTML=data.map(b=>`<tr><td><strong>${b.vorname||'-'} ${b.nachname||''}</strong></td><td>${b.email||'-'}</td><td>${b.geburtsdatum?new Date(b.geburtsdatum).toLocaleDateString('de-DE'):'-'}</td><td>${(b.strasse||'')+', '+(b.plz||'')+' '+(b.ort||'-')}</td><td>${b.telefon||'-'}</td><td>${b.schulabschluss||'-'}${b.noch_schueler&&b.abschluss_jahr?' (voraus. '+b.abschluss_jahr+')':''}</td><td>${new Date(b.created_at).toLocaleDateString('de-DE')}</td></tr>`).join('');
+  if(error||!data||!data.length){tb.innerHTML='<tr><td colspan="8" style="text-align:center;padding:2rem;color:#5A7490">Noch keine registrierten Bewerber</td></tr>';return;}
+  tb.innerHTML=data.map(b=>{
+    var quiz=b.quiz_ergebnis;
+    var quizHtml=quiz&&quiz.length?quiz.slice(0,2).map(e=>`<span style="font-size:11px;background:var(--ice-light);color:var(--ice);padding:2px 7px;border-radius:5px;margin-right:3px">${e.emoji} ${e.name}</span>`).join(''):'-';
+    return `<tr>
+      <td><strong>${b.vorname||'-'} ${b.nachname||''}</strong></td>
+      <td>${b.email||'-'}</td>
+      <td>${b.geburtsdatum?new Date(b.geburtsdatum).toLocaleDateString('de-DE'):'-'}</td>
+      <td>${quizHtml}</td>
+      <td>${(b.strasse||'')+', '+(b.plz||'')+' '+(b.ort||'-')}</td>
+      <td>${b.telefon||'-'}</td>
+      <td>${b.schulabschluss||'-'}${b.noch_schueler&&b.abschluss_jahr?' (voraus. '+b.abschluss_jahr+')':''}</td>
+      <td>${new Date(b.created_at).toLocaleDateString('de-DE')}</td>
+    </tr>`;
+  }).join('');
 }
 
 var berufsfeldData=[];
