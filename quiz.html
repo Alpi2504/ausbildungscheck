@@ -77,6 +77,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .btn-stellen{width:100%;background:var(--navy);color:#fff;border:none;padding:14px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:.75rem}
 .btn-stellen:hover{background:var(--ice)}
 .btn-retry{width:100%;background:transparent;color:var(--text2);border:1.5px solid var(--gray2);padding:12px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer}
+.stat-opt-btn{background:#fff;border:1.5px solid var(--gray2);padding:7px 14px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);cursor:pointer;transition:all .2s}
+.stat-opt-btn:hover{border-color:var(--ice);color:var(--ice)}
+.stat-opt-btn.selected{background:var(--ice-light);border-color:var(--ice);color:var(--ice);font-weight:600}
 footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-top:auto}
 .footer-logo{font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;color:#fff}
 .footer-logo span{color:var(--ice)}
@@ -151,6 +154,22 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
       <div class="result-items" id="result-items"></div>
       <button class="btn-stellen" onclick="zuStellen()">Passende Stellen ansehen →</button>
       <button class="btn-retry" onclick="neuStarten()">🔄 Quiz neu starten</button>
+
+      <!-- Optionale Fragen für nicht eingeloggte Nutzer -->
+      <div id="anonym-fragen" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1.5px solid var(--gray2)">
+        <div style="font-size:13px;font-weight:600;color:var(--text2);margin-bottom:1rem;text-align:center">Darf ich noch kurz fragen? Hilft uns die Plattform zu verbessern – komplett anonym! 🙏</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1rem">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:.4rem">Geburtsjahr</div>
+            <input type="number" id="anonym-jahr" placeholder="z.B. 2005" min="1950" max="2015" style="width:100%;border:1.5px solid var(--gray2);border-radius:9px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none" oninput="speicherAnonymStat()">
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:.4rem">Stadt / PLZ</div>
+            <input type="text" id="anonym-ort" placeholder="z.B. Köln oder 50667" style="width:100%;border:1.5px solid var(--gray2);border-radius:9px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none" oninput="speicherAnonymStat()">
+          </div>
+        </div>
+        <div id="anonym-danke" style="display:none;text-align:center;font-size:13px;color:var(--ice);font-weight:600">✅ Danke für deine Angaben!</div>
+      </div>
     </div>
   </div>
 </div>
@@ -404,6 +423,42 @@ async function zeigeErgebnis(){
       bundesland
     });
   }
+
+  // Anonyme Fragen nur für nicht eingeloggte Nutzer zeigen
+  if(!session){
+    document.getElementById('anonym-fragen').style.display='block';
+    window._statErgebnis={
+      ergebnis_1:sorted[0]?BERUFSFELDER[sorted[0][0]]?.name:null,
+      ergebnis_2:sorted[1]?BERUFSFELDER[sorted[1][0]]?.name:null,
+      ergebnis_3:sorted[2]?BERUFSFELDER[sorted[2][0]]?.name:null,
+      altersgruppe:null,
+      bundesland:null
+    };
+    await sb.from('quiz_statistiken').insert(window._statErgebnis);
+  }
+}
+
+var _statSaved=false;
+
+async function speicherAnonymStat(){
+  var jahr=document.getElementById('anonym-jahr').value;
+  var ort=document.getElementById('anonym-ort').value.trim();
+  if(!jahr&&!ort) return;
+
+  // Altersgruppe aus Geburtsjahr ableiten
+  var altersgruppe=null;
+  if(jahr){
+    var alter=new Date().getFullYear()-parseInt(jahr);
+    if(alter<14) altersgruppe='Unter 14';
+    else if(alter<=16) altersgruppe='14-16';
+    else if(alter<=18) altersgruppe='17-18';
+    else if(alter<=21) altersgruppe='19-21';
+    else altersgruppe='22+';
+  }
+
+  var stat={...(window._statErgebnis||{}), altersgruppe, bundesland:ort||null};
+  await sb.from('quiz_statistiken').insert(stat);
+  document.getElementById('anonym-danke').style.display='block';
 }
 
 function zuStellen(){
