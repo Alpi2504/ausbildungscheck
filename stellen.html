@@ -148,6 +148,11 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
 .submit-btn{width:100%;background:var(--navy);color:#fff !important;border:none;padding:13px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;cursor:pointer;-webkit-text-fill-color:#fff !important}
 .submit-btn:hover{background:var(--ice)}
 .success-msg{display:none;background:#D1FAE5;border:1.5px solid #6EE7B7;border-radius:10px;padding:1rem;text-align:center;color:#065F46;font-weight:600;margin-bottom:1rem;font-family:'Outfit',sans-serif}
+.page-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#042C53;color:#fff;padding:14px 24px;border-radius:12px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;display:flex;align-items:center;gap:10px;box-shadow:0 8px 28px rgba(2,13,29,0.25);z-index:999;opacity:0;pointer-events:none;transition:all .35s ease}
+.page-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.page-toast .toast-icon{font-size:18px}
+@media(max-width:768px){.page-toast{bottom:16px;left:16px;right:16px;transform:translateY(20px);width:auto}
+.page-toast.show{transform:translateY(0)}}
 .divider{display:flex;align-items:center;gap:.75rem;margin:.75rem 0}
 .divider hr{flex:1;border:none;border-top:1px solid var(--gray2)}
 .divider span{font-size:12px;color:var(--text2)}
@@ -412,6 +417,8 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
   <div class="footer-links"><a href="index.html">Start</a><a href="datenschutz.html">Datenschutz</a><a href="impressum.html">Impressum</a></div>
   <div class="footer-copy">© 2025 AusbildungsCheck</div>
 </footer>
+
+<div class="page-toast" id="page-toast"><span class="toast-icon">🎉</span><span id="page-toast-text">Bewerbung erfolgreich gesendet!</span></div>
 
 <script>
 const SUPABASE_URL='https://trccxzjdddhbqjgyzlkv.supabase.co';
@@ -783,6 +790,7 @@ async function submitEingeloggt(){
   await sendBewerbung(data);
   document.getElementById('success-eingeloggt').style.display='block';
   document.getElementById('fragen-eingeloggt').style.display='none';
+  window._bewerbungErfolgreich=true;
   setTimeout(closeAllModals,3000);
 }
 
@@ -813,6 +821,7 @@ async function submitGast(){
   await sendBewerbung(data);
   document.getElementById('success-gast').style.display='block';
   document.getElementById('gast-form-inhalt').style.display='none';
+  window._bewerbungErfolgreich=true;
   setTimeout(closeAllModals,3000);
 }
 
@@ -825,6 +834,17 @@ function closeAllModals(){
   document.getElementById('detail-youtube-iframe').src='';
   document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.remove('open'));
   history.replaceState(null,'','stellen.html');
+  if(window._bewerbungErfolgreich){
+    showPageToast('🎉 Bewerbung erfolgreich gesendet!');
+    window._bewerbungErfolgreich=false;
+  }
+}
+function showPageToast(text){
+  var toast=document.getElementById('page-toast');
+  document.getElementById('page-toast-text').textContent=text||'Bewerbung erfolgreich gesendet!';
+  toast.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer=setTimeout(()=>toast.classList.remove('show'),5000);
 }
 document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click',function(e){if(e.target===this)closeAllModals()}));
 
