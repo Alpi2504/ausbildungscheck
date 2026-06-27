@@ -75,7 +75,7 @@ section{padding:3.5rem 2rem}
 .section-title{font-family:'Outfit',sans-serif;font-size:clamp(22px,3vw,32px);font-weight:800;letter-spacing:-0.5px;color:var(--dark);margin-bottom:.35rem}
 .section-sub{font-size:14px;color:var(--text2);margin-bottom:2rem}
 .center{text-align:center}
-.max-w{max-width:1100px;margin:0 auto}
+.max-w{max-width:1180px;margin:0 auto}
 .jobs-section{background:var(--gray)}
 .jobs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;max-width:1100px;margin:0 auto}
 .job-card{background:#fff;border:1.5px solid var(--gray2);border-radius:14px;padding:1.25rem;cursor:pointer;transition:all .2s}
@@ -114,6 +114,18 @@ section{padding:3.5rem 2rem}
 .video-list li::before{content:'✓';color:var(--ice);font-weight:800}
 .cta-section{background:var(--navy);text-align:center;padding:4rem 2rem}
 .cta-section h2{font-family:'Outfit',sans-serif;font-size:clamp(24px,4vw,40px);font-weight:800;letter-spacing:-1px;color:#fff;margin-bottom:.75rem}
+.berufsfelder-section{background:#fff}
+.berufsfelder-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;max-width:1100px;margin:0 auto}
+.berufsfeld-card{background:var(--gray);border:1.5px solid var(--gray2);border-radius:14px;padding:1.25rem 1rem;text-align:center;cursor:pointer;transition:all .2s;text-decoration:none}
+.berufsfeld-card:hover{border-color:var(--ice);background:var(--ice-light);transform:translateY(-2px)}
+.berufsfeld-emoji{font-size:28px;margin-bottom:.5rem}
+.berufsfeld-name{font-family:'Outfit',sans-serif;font-size:12.5px;font-weight:700;color:var(--dark);line-height:1.3}
+.vorteile-section{background:var(--gray)}
+.vorteile-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;max-width:1100px;margin:0 auto}
+.vorteil-card{background:#fff;border:1.5px solid var(--gray2);border-radius:16px;padding:1.5rem}
+.vorteil-icon{font-size:28px;margin-bottom:.75rem}
+.vorteil-title{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:var(--dark);margin-bottom:.4rem}
+.vorteil-desc{font-size:13px;color:var(--text2);line-height:1.6}
 .cta-section p{font-size:15px;color:rgba(255,255,255,0.7);max-width:420px;margin:0 auto 2rem;line-height:1.6}
 .cta-btns{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
 .btn-ice{background:var(--ice);color:#fff !important;border:none;padding:13px 30px;border-radius:9px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;-webkit-text-fill-color:#fff !important}
@@ -136,6 +148,9 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.06);paddin
   .stats{gap:1.5rem;flex-wrap:wrap}
   section{padding:2rem 1.25rem}
   .jobs-grid{grid-template-columns:1fr}
+  .berufsfelder-grid{grid-template-columns:repeat(3,1fr);gap:8px}
+  .berufsfeld-card{padding:1rem .5rem}
+  .vorteile-grid{grid-template-columns:1fr}
   .steps{grid-template-columns:1fr}
   .video-grid{grid-template-columns:1fr}
   .video-text h3{font-size:20px}
@@ -207,6 +222,19 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.06);paddin
   </div>
 </section>
 
+<section class="berufsfelder-section">
+  <div class="max-w">
+    <div class="center" style="margin-bottom:2rem">
+      <div class="section-label">Berufsfelder</div>
+      <div class="section-title">In welchem Bereich willst du durchstarten?</div>
+      <div class="section-sub">Klick auf ein Feld und entdecke passende Ausbildungsstellen.</div>
+    </div>
+    <div class="berufsfelder-grid" id="berufsfelder-grid">
+      <div style="grid-column:1/-1;text-align:center;padding:1rem;color:var(--text2)">⏳ Lädt...</div>
+    </div>
+  </div>
+</section>
+
 <section class="how-section">
   <div class="max-w">
     <div class="center" style="margin-bottom:2rem">
@@ -256,6 +284,21 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.06);paddin
   </div>
 </section>
 
+<section class="vorteile-section">
+  <div class="max-w">
+    <div class="center" style="margin-bottom:2.5rem">
+      <div class="section-label">Warum AusbildungsCheck</div>
+      <div class="section-title">Mehr als nur eine Stellenanzeige</div>
+      <div class="section-sub">So findest du wirklich heraus, ob ein Beruf zu dir passt.</div>
+    </div>
+    <div class="vorteile-grid">
+      <div class="vorteil-card"><div class="vorteil-icon">🎥</div><div class="vorteil-title">Echte Einblicke</div><div class="vorteil-desc">Statt trockener Stellenanzeigen zeigen wir dir den echten Arbeitsalltag in Videos – ehrlich und ungefiltert.</div></div>
+      <div class="vorteil-card"><div class="vorteil-icon">🎯</div><div class="vorteil-title">Berufscheck</div><div class="vorteil-desc">In 10 Fragen findest du heraus, welches Berufsfeld wirklich zu deinen Interessen und Stärken passt.</div></div>
+      <div class="vorteil-card"><div class="vorteil-icon">⚡</div><div class="vorteil-title">Ein Klick zur Bewerbung</div><div class="vorteil-desc">Einmal registrieren, Profil anlegen – und dich bei jeder Stelle ohne erneutes Tippen bewerben.</div></div>
+    </div>
+  </div>
+</section>
+
 <section class="cta-section">
   <div class="max-w">
     <h2>Du bist Ausbildungsbetrieb?</h2>
@@ -299,14 +342,20 @@ async function ladeStartseite(){
   var [{data:stellen},{data:betriebe},{data:berufsfelder}]=await Promise.all([
     sb.from('stellen').select('*, betrieb:betrieb_id(name), berufsfeld:berufsfeld_id(name,emoji)').eq('aktiv',true).order('created_at',{ascending:false}).limit(4),
     sb.from('betriebe').select('id',{count:'exact'}),
-    sb.from('berufsfelder').select('name,emoji').order('name').limit(6)
+    sb.from('berufsfelder').select('name,emoji').order('name')
   ]);
   if(stellen) document.getElementById('stat-stellen').textContent=stellen.length+' Aktuelle Stellen';
   if(betriebe) document.getElementById('stat-betriebe').textContent=(betriebe.length||0)+' Partnerbetriebe';
   if(berufsfelder&&berufsfelder.length){
-    document.getElementById('search-tags').innerHTML=berufsfelder.map(b=>
+    document.getElementById('search-tags').innerHTML=berufsfelder.slice(0,6).map(b=>
       `<span class="search-tag" onclick="goSearchTerm('${b.name}')">${b.emoji||''} ${b.name}</span>`
     ).join('');
+    var bfGrid=document.getElementById('berufsfelder-grid');
+    bfGrid.innerHTML=berufsfelder.map(b=>`
+      <a class="berufsfeld-card" href="stellen.html?q=${encodeURIComponent(b.name)}">
+        <div class="berufsfeld-emoji">${b.emoji||'📋'}</div>
+        <div class="berufsfeld-name">${b.name}</div>
+      </a>`).join('');
   }
   var grid=document.getElementById('jobs-grid');
   if(!stellen||!stellen.length){
