@@ -25,14 +25,6 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Datenschutzerklärung – AusbildungsCheck">
 <meta name="twitter:description" content="Datenschutzerklärung von AusbildungsCheck gemäß DSGVO.">
-<!-- PWA -->
-<meta name="theme-color" content="#042C53">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="AusbildungsCheck">
-<link rel="manifest" href="/manifest.json">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -58,8 +50,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .content a:hover{text-decoration:underline}
 .highlight-box{background:var(--gray);border-left:3px solid var(--ice);border-radius:8px;padding:1.25rem 1.5rem;margin:1.5rem 0}
 .highlight-box p{margin-bottom:0;font-weight:500;color:var(--dark)}
-.uppercase-block{background:var(--gray);border-radius:8px;padding:1.25rem 1.5rem;margin:1rem 0}
-.uppercase-block p{font-size:13px;font-weight:600;color:var(--dark);line-height:1.7;margin-bottom:0}
+.future-box{background:var(--ice-light);border:1.5px solid rgba(79,170,223,0.25);border-radius:8px;padding:1.25rem 1.5rem;margin:1rem 0}
+.future-box p{font-size:13px;color:var(--navy);line-height:1.7;margin-bottom:0}
 .toc{background:var(--ice-light);border:1.5px solid rgba(79,170,223,0.2);border-radius:12px;padding:1.5rem;margin-bottom:2.5rem}
 .toc-title{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--dark);margin-bottom:.75rem}
 .toc a{display:block;font-size:13px;color:var(--ice);text-decoration:none;padding:3px 0;line-height:1.5}
@@ -93,121 +85,122 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.06);paddin
 
 <div class="page-header">
   <h1>Datenschutzerklärung</h1>
-  <p>Zuletzt aktualisiert: Mai 2025</p>
+  <p>Zuletzt aktualisiert: Juni 2026</p>
 </div>
 
 <div class="content">
   <div class="toc">
     <div class="toc-title">Inhaltsverzeichnis</div>
     <a href="#s1">1. Datenschutz auf einen Blick</a>
-    <a href="#s2">2. Hosting</a>
-    <a href="#s3">3. Allgemeine Hinweise und Pflichtinformationen</a>
-    <a href="#s4">4. Datenerfassung auf dieser Website</a>
-    <a href="#s5">5. Soziale Medien</a>
-    <a href="#s6">6. Analyse-Tools und Werbung</a>
-    <a href="#s7">7. Plugins und Tools</a>
+    <a href="#s2">2. Verantwortliche Stelle</a>
+    <a href="#s3">3. Hosting und eingesetzte Dienste</a>
+    <a href="#s4">4. Deine Daten auf unserer Plattform</a>
+    <a href="#s5">5. Cookies und lokale Speicherung</a>
+    <a href="#s6">6. Soziale Medien</a>
+    <a href="#s7">7. Allgemeine Hinweise und Pflichtinformationen</a>
+    <a href="#s8">8. Änderungen dieser Datenschutzerklärung</a>
   </div>
 
   <h2 id="s1">1. Datenschutz auf einen Blick</h2>
   <h3>Allgemeine Hinweise</h3>
-  <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können. Ausführliche Informationen zum Thema Datenschutz entnehmen Sie unserer unter diesem Text aufgeführten Datenschutzerklärung.</p>
-  <h3>Datenerfassung auf dieser Website</h3>
-  <h4>Wer ist verantwortlich für die Datenerfassung auf dieser Website?</h4>
-  <p>Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten können Sie dem Abschnitt „Hinweis zur Verantwortlichen Stelle" in dieser Datenschutzerklärung entnehmen.</p>
+  <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie unsere Plattform ausbildungscheck.de besuchen, sich registrieren, sich auf eine Ausbildungsstelle bewerben oder als Betrieb mit uns Kontakt aufnehmen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.</p>
+  <h4>Wer ist verantwortlich für die Datenerfassung?</h4>
+  <p>Die Datenverarbeitung erfolgt durch den Betreiber der Plattform. Die Kontaktdaten finden Sie im Abschnitt „Verantwortliche Stelle" weiter unten.</p>
   <h4>Wie erfassen wir Ihre Daten?</h4>
-  <p>Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es sich z. B. um Daten handeln, die Sie in ein Kontaktformular eingeben.</p>
-  <p>Andere Daten werden automatisch oder nach Ihrer Einwilligung beim Besuch der Website durch unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z. B. Internetbrowser, Betriebssystem oder Uhrzeit des Seitenaufrufs). Die Erfassung dieser Daten erfolgt automatisch, sobald Sie diese Website betreten.</p>
+  <p>Zum einen erheben wir Daten, die Sie uns aktiv mitteilen – etwa bei der Registrierung, einer Bewerbung über unsere Plattform, dem Ausfüllen des Berufschecks oder einer Kontaktanfrage als Betrieb. Andere Daten werden technisch beim Besuch der Plattform automatisch erfasst (z. B. durch unseren Hosting-Anbieter).</p>
   <h4>Wofür nutzen wir Ihre Daten?</h4>
-  <p>Ein Teil der Daten wird erhoben, um eine fehlerfreie Bereitstellung der Website zu gewährleisten. Andere Daten können zur Analyse Ihres Nutzerverhaltens verwendet werden. Sofern über die Website Verträge geschlossen oder angebahnt werden können, werden die übermittelten Daten auch für Vertragsangebote, Bestellungen oder sonstige Auftragsanfragen verarbeitet.</p>
+  <p>Wir nutzen Ihre Daten, um Ihnen passende Ausbildungsstellen zu zeigen, Ihre Bewerbung an den jeweiligen Betrieb weiterzuleiten, Ihr Nutzerkonto zu verwalten, Kontaktanfragen von Betrieben zu bearbeiten und unsere Plattform technisch zuverlässig bereitzustellen.</p>
   <h4>Welche Rechte haben Sie bezüglich Ihrer Daten?</h4>
-  <p>Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben außerdem ein Recht, die Berichtigung oder Löschung dieser Daten zu verlangen. Wenn Sie eine Einwilligung zur Datenverarbeitung erteilt haben, können Sie diese Einwilligung jederzeit für die Zukunft widerrufen. Außerdem haben Sie das Recht, unter bestimmten Umständen die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen. Des Weiteren steht Ihnen ein Beschwerderecht bei der zuständigen Aufsichtsbehörde zu.</p>
-  <h3>Analyse-Tools und Tools von Drittanbietern</h3>
-  <p>Beim Besuch dieser Website kann Ihr Surf-Verhalten statistisch ausgewertet werden. Das geschieht vor allem mit sogenannten Analyseprogrammen. Detaillierte Informationen zu diesen Analyseprogrammen finden Sie in der folgenden Datenschutzerklärung.</p>
+  <p>Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten, sowie ein Recht auf Berichtigung, Löschung oder Einschränkung der Verarbeitung. Erteilte Einwilligungen können Sie jederzeit für die Zukunft widerrufen. Außerdem steht Ihnen ein Beschwerderecht bei der zuständigen Aufsichtsbehörde zu. Details dazu finden Sie in Abschnitt 7.</p>
   <div class="divider"></div>
 
-  <h2 id="s2">2. Hosting</h2>
-  <h3>IONOS</h3>
-  <p>Anbieter ist die IONOS SE, Elgendorfer Str. 57, 56410 Montabaur (nachfolgend IONOS). Wenn Sie unsere Website besuchen, erfasst IONOS verschiedene Logfiles inklusive Ihrer IP-Adressen. Details entnehmen Sie der Datenschutzerklärung von IONOS: <a href="https://www.ionos.de/terms-gtc/terms-privacy" target="_blank">https://www.ionos.de/terms-gtc/terms-privacy</a>.</p>
-  <p>Die Verwendung von IONOS erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Wir haben ein berechtigtes Interesse an einer möglichst zuverlässigen Darstellung unserer Website. Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG. Die Einwilligung ist jederzeit widerrufbar.</p>
-  <h4>Auftragsverarbeitung</h4>
-  <p>Wir haben einen Vertrag über Auftragsverarbeitung (AVV) zur Nutzung des oben genannten Dienstes geschlossen. Hierbei handelt es sich um einen datenschutzrechtlich vorgeschriebenen Vertrag, der gewährleistet, dass dieser die personenbezogenen Daten unserer Websitebesucher nur nach unseren Weisungen und unter Einhaltung der DSGVO verarbeitet.</p>
-  <div class="divider"></div>
-
-  <h2 id="s3">3. Allgemeine Hinweise und Pflichtinformationen</h2>
-  <h3>Datenschutz</h3>
-  <p>Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend den gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.</p>
-  <p>Wir weisen darauf hin, dass die Datenübertragung im Internet (z. B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich.</p>
-  <h3>Hinweis zur verantwortlichen Stelle</h3>
-  <p>Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:</p>
+  <h2 id="s2">2. Verantwortliche Stelle</h2>
+  <p>Verantwortlich im Sinne der DSGVO für die Datenverarbeitung auf dieser Plattform ist:</p>
   <div class="highlight-box">
-    <p>Alparslan Sükür<br>Richard Bertram Straße 76<br>Wuppertal<br><br>Telefon: 017622031352<br>E-Mail: info@ausbildungscheck.de</p>
+    <p>Alparslan Sükür – AusbildungsCheck<br>Luxemburger Str. 329<br>50939 Köln<br><br>Telefon: +49 176 22031352<br>E-Mail: info@ausbildungscheck.de</p>
   </div>
+  <p>Verantwortliche Stelle ist diejenige natürliche Person, die allein oder gemeinsam mit anderen über die Zwecke und Mittel der Verarbeitung personenbezogener Daten entscheidet.</p>
+  <div class="divider"></div>
+
+  <h2 id="s3">3. Hosting und eingesetzte Dienste</h2>
+  <p>Wir setzen für den Betrieb unserer Plattform mehrere spezialisierte Dienstleister ein, die als Auftragsverarbeiter für uns tätig sind. Mit allen nachfolgend genannten Anbietern, soweit erforderlich, haben wir Verträge zur Auftragsverarbeitung (AVV) geschlossen bzw. schließen diese zeitnah ab. Diese Verträge gewährleisten, dass Ihre Daten ausschließlich nach unseren Weisungen und unter Einhaltung der DSGVO verarbeitet werden.</p>
+
+  <h3>Vercel (Hosting)</h3>
+  <p>Unsere Website wird über die Plattform Vercel ausgeliefert. Anbieter ist Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, USA. Beim Aufruf unserer Seiten verarbeitet Vercel technische Daten wie Ihre IP-Adresse, um die Inhalte korrekt an Ihr Endgerät auszuliefern. Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer zuverlässigen und schnellen Bereitstellung unserer Plattform).</p>
+  <p>Da Vercel ein US-amerikanisches Unternehmen ist, kann eine Datenverarbeitung außerhalb der EU/des EWR erfolgen. In diesem Fall stellen Standardvertragsklauseln der EU-Kommission ein angemessenes Datenschutzniveau sicher. Weitere Informationen: <a href="https://vercel.com/legal/privacy-policy" target="_blank">vercel.com/legal/privacy-policy</a>.</p>
+
+  <h3>Supabase (Datenbank, Nutzerkonten, Dateispeicher)</h3>
+  <p>Für unsere Datenbank, die Verwaltung von Nutzerkonten (Login/Registrierung), die sichere Speicherung von Bewerbungsunterlagen (z. B. hochgeladene Lebensläufe und Zeugnisse) sowie Betriebslogos nutzen wir den Dienst Supabase. Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO (Erfüllung des Nutzungsvertrags bzw. Vertragsanbahnung, z. B. bei einer Bewerbung) sowie Art. 6 Abs. 1 lit. f DSGVO.</p>
+  <p>Auch hier kann eine Verarbeitung außerhalb der EU/des EWR erfolgen; in diesem Fall sichern entsprechende Garantien (z. B. EU-Standardvertragsklauseln) das Datenschutzniveau ab. Weitere Informationen: <a href="https://supabase.com/privacy" target="_blank">supabase.com/privacy</a>.</p>
+
+  <h3>Resend (E-Mail-Versand)</h3>
+  <p>Wenn Sie sich über unsere Plattform auf eine Ausbildungsstelle bewerben oder als Betrieb eine Anfrage stellen, versenden wir die daraus resultierenden Benachrichtigungen automatisiert über den E-Mail-Dienst Resend. Dabei werden die in Ihrer Bewerbung bzw. Anfrage angegebenen Daten per E-Mail an den jeweiligen Ausbildungsbetrieb bzw. an uns übermittelt. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO. Weitere Informationen: <a href="https://resend.com/legal/privacy-policy" target="_blank">resend.com/legal/privacy-policy</a>.</p>
+  <div class="divider"></div>
+
+  <h2 id="s4">4. Deine Daten auf unserer Plattform</h2>
+
+  <h3>Registrierung und Nutzerkonto</h3>
+  <p>Wenn Sie ein Nutzerkonto anlegen, erheben wir Vorname, Nachname, E-Mail-Adresse, Passwort (verschlüsselt gespeichert), Telefonnummer, Geburtsdatum, Adresse sowie Angaben zu Ihrem Schulabschluss bzw. Ihrer voraussichtlichen Schulabschlusssituation. Diese Daten ermöglichen es Ihnen, sich mit einem Klick auf mehrere Ausbildungsstellen zu bewerben, ohne Ihre Daten jedes Mal erneut eingeben zu müssen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO. Sie können Ihr Konto und die zugehörigen Daten jederzeit über Ihr Profil oder per E-Mail an uns löschen lassen.</p>
+
+  <h3>Bewerbung über die Plattform</h3>
+  <p>Bei einer Bewerbung – ob als registrierter Nutzer oder als Gast – erheben wir die von Ihnen angegebenen Daten (u. a. Name, E-Mail-Adresse, Telefonnummer, Wohnort, Geburtsdatum, Schulabschluss sowie Ihre Antworten auf stellenbezogene Fragen). Sofern die jeweilige Stelle dies vorsieht, können Sie zusätzlich eine Datei (z. B. Lebenslauf oder Zeugnisse) hochladen; diese wird verschlüsselt über unseren Dienstleister Supabase gespeichert.</p>
+  <p>Ihre Bewerberdaten werden ausschließlich zum Zweck der Vermittlung an den jeweiligen Ausbildungsbetrieb verarbeitet und per E-Mail an diesen weitergeleitet. Der empfangende Betrieb wird hinsichtlich der weiteren Verarbeitung Ihrer Daten (z. B. im Bewerbungsprozess) eigenständig datenschutzrechtlich verantwortlich. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO sowie Art. 88 DSGVO i. V. m. § 26 BDSG. Ihre Bewerberdaten werden gelöscht, sobald sie für den Zweck ihrer Erhebung nicht mehr erforderlich sind, spätestens nach 6 Monaten, sofern Sie nicht zuvor ein Nutzerkonto mit dauerhafter Speicherung führen.</p>
+
+  <h3>Berufscheck (Quiz)</h3>
+  <p>Unser Berufscheck hilft Ihnen, passende Berufsfelder anhand Ihrer Antworten zu finden. Wenn Sie eingeloggt sind, speichern wir Ihr Ergebnis in Ihrem Profil, damit Sie es jederzeit wieder einsehen können; es wird nicht für automatisierte Entscheidungen mit rechtlicher Wirkung im Sinne von Art. 22 DSGVO genutzt, sondern dient ausschließlich Ihrer eigenen Orientierung.</p>
+  <p>Zusätzlich erfassen wir anonymisierte, statistische Auswertungen der Quiz-Ergebnisse (z. B. welche Berufsfelder besonders häufig passen, grobe Altersgruppe, grobe Region), um unser Angebot und unsere Inhalte gezielter auszurichten. Bei eingeloggten Nutzern werden Altersgruppe und Region aus den Profildaten abgeleitet; bei Gästen können diese Angaben freiwillig und ohne Namensnennung gemacht werden. Ein Rückschluss auf Ihre Person ist aus diesen statistischen Daten nicht möglich. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Weiterentwicklung unseres Angebots).</p>
+
+  <h3>Betriebsprofile</h3>
+  <p>Ausbildungsbetriebe, die auf unserer Plattform Stellen ausschreiben, hinterlegen ein Betriebsprofil mit Firmenname, Logo, Website und Kontaktdaten. Diese Angaben werden öffentlich auf der jeweiligen Stellenanzeige angezeigt. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO.</p>
+
+  <h3>Kontaktanfragen von Betrieben</h3>
+  <p>Wenn ein Betrieb über unser Kontaktformular eine Anfrage stellt, erheben wir die angegebenen Daten (u. a. Firmenname, Ansprechpartner, E-Mail-Adresse, Telefonnummer, gewünschtes Paket, Nachricht) zur Bearbeitung der Anfrage und zur Kontaktaufnahme. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO bzw. lit. f DSGVO (berechtigtes Interesse an der Bearbeitung eingehender Geschäftsanfragen).</p>
+
+  <h3>Anfrage per E-Mail oder Telefon</h3>
+  <p>Wenn Sie uns per E-Mail oder Telefon kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten zum Zwecke der Bearbeitung Ihres Anliegens bei uns gespeichert und verarbeitet. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
+  <div class="divider"></div>
+
+  <h2 id="s5">5. Cookies und lokale Speicherung</h2>
+  <p>Unsere Plattform ist als Progressive Web App (PWA) umgesetzt. Dabei werden über einen sogenannten Service Worker rein technische Daten (z. B. einzelne Seitenbestandteile) lokal in Ihrem Browser zwischengespeichert, damit die Seite schneller lädt und auch bei schwacher Verbindung nutzbar bleibt. Es handelt sich dabei nicht um Tracking- oder Analyse-Cookies; es findet keine Auswertung Ihres Nutzungsverhaltens statt.</p>
+  <div class="future-box">
+    <p><strong>Hinweis für die Zukunft:</strong> Aktuell setzen wir keine Analyse-, Tracking- oder Werbe-Cookies (z. B. Google Analytics, Meta-Pixel) ein. Sollten wir solche Tools künftig einsetzen, werden wir diese Datenschutzerklärung entsprechend aktualisieren und vorab über einen Cookie-Banner Ihre Einwilligung einholen, soweit diese gesetzlich erforderlich ist.</p>
+  </div>
+  <div class="divider"></div>
+
+  <h2 id="s6">6. Soziale Medien</h2>
+  <p>Auf unserer Plattform verweisen wir mit einfachen Links auf unsere Profile bei Instagram, YouTube und TikTok. Es handelt sich dabei um reine Verlinkungen, keine eingebetteten Social-Media-Plugins. Beim bloßen Besuch unserer Seiten werden dadurch keine Daten an die jeweiligen Anbieter übertragen. Erst wenn Sie aktiv auf einen solchen Link klicken, verlassen Sie unsere Plattform und es gilt die Datenschutzerklärung des jeweiligen Anbieters:</p>
+  <ul>
+    <li>Instagram / Meta Platforms Ireland Limited: <a href="https://privacycenter.instagram.com/policy/" target="_blank">privacycenter.instagram.com/policy</a></li>
+    <li>YouTube / Google Ireland Limited: <a href="https://policies.google.com/privacy?hl=de" target="_blank">policies.google.com/privacy</a></li>
+    <li>TikTok / TikTok Technology Limited: <a href="https://www.tiktok.com/legal/page/eea/privacy-policy/de" target="_blank">tiktok.com/legal/privacy-policy</a></li>
+  </ul>
+  <h3>Google Fonts</h3>
+  <p>Diese Seite nutzt zur einheitlichen Darstellung von Schriftarten so genannte Google Fonts, bereitgestellt von Google Ireland Limited. Beim Aufruf einer Seite lädt Ihr Browser die benötigten Schriftarten. Weitere Informationen: <a href="https://policies.google.com/privacy?hl=de" target="_blank">policies.google.com/privacy</a>.</p>
+  <div class="divider"></div>
+
+  <h2 id="s7">7. Allgemeine Hinweise und Pflichtinformationen</h2>
+  <h3>Datenschutz</h3>
+  <p>Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst und behandeln Ihre personenbezogenen Daten vertraulich und entsprechend den gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung. Wir weisen darauf hin, dass die Datenübertragung im Internet (z. B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann; ein lückenloser Schutz vor dem Zugriff durch Dritte ist nicht möglich.</p>
   <h3>Speicherdauer</h3>
-  <p>Soweit innerhalb dieser Datenschutzerklärung keine speziellere Speicherdauer genannt wurde, verbleiben Ihre personenbezogenen Daten bei uns, bis der Zweck für die Datenverarbeitung entfällt. Wenn Sie ein berechtigtes Löschersuchen geltend machen oder eine Einwilligung zur Datenverarbeitung widerrufen, werden Ihre Daten gelöscht, sofern wir keine anderen rechtlich zulässigen Gründe für die Speicherung Ihrer personenbezogenen Daten haben.</p>
-  <h3>Allgemeine Hinweise zu den Rechtsgrundlagen der Datenverarbeitung auf dieser Website</h3>
-  <p>Sofern Sie in die Datenverarbeitung eingewilligt haben, verarbeiten wir Ihre personenbezogenen Daten auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO bzw. Art. 9 Abs. 2 lit. a DSGVO. Im Falle einer ausdrücklichen Einwilligung in die Übertragung personenbezogener Daten in Drittstaaten erfolgt die Datenverarbeitung außerdem auf Grundlage von Art. 49 Abs. 1 lit. a DSGVO.</p>
+  <p>Soweit innerhalb dieser Datenschutzerklärung keine speziellere Speicherdauer genannt wurde, verbleiben Ihre personenbezogenen Daten bei uns, bis der Zweck für die Datenverarbeitung entfällt. Wenn Sie ein berechtigtes Löschersuchen geltend machen oder eine Einwilligung widerrufen, werden Ihre Daten gelöscht, sofern wir keine anderen rechtlich zulässigen Gründe für die weitere Speicherung haben.</p>
   <h3>Widerruf Ihrer Einwilligung zur Datenverarbeitung</h3>
-  <p>Viele Datenverarbeitungsvorgänge sind nur mit Ihrer ausdrücklichen Einwilligung möglich. Sie können eine bereits erteilte Einwilligung jederzeit widerrufen. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Datenverarbeitung bleibt vom Widerruf unberührt.</p>
-  <h3>Widerspruchsrecht gegen die Datenerhebung in besonderen Fällen sowie gegen Direktwerbung (Art. 21 DSGVO)</h3>
-  <div class="uppercase-block">
-    <p>WENN DIE DATENVERARBEITUNG AUF GRUNDLAGE VON ART. 6 ABS. 1 LIT. E ODER F DSGVO ERFOLGT, HABEN SIE JEDERZEIT DAS RECHT, AUS GRÜNDEN, DIE SICH AUS IHRER BESONDEREN SITUATION ERGEBEN, GEGEN DIE VERARBEITUNG IHRER PERSONENBEZOGENEN DATEN WIDERSPRUCH EINZULEGEN. WENN SIE WIDERSPRUCH EINLEGEN, WERDEN WIR IHRE BETROFFENEN PERSONENBEZOGENEN DATEN NICHT MEHR VERARBEITEN, ES SEI DENN, WIR KÖNNEN ZWINGENDE SCHUTZWÜRDIGE GRÜNDE FÜR DIE VERARBEITUNG NACHWEISEN (WIDERSPRUCH NACH ART. 21 ABS. 1 DSGVO).<br><br>WERDEN IHRE PERSONENBEZOGENEN DATEN VERARBEITET, UM DIREKTWERBUNG ZU BETREIBEN, SO HABEN SIE DAS RECHT, JEDERZEIT WIDERSPRUCH GEGEN DIE VERARBEITUNG ZUM ZWECKE DERARTIGER WERBUNG EINZULEGEN (WIDERSPRUCH NACH ART. 21 ABS. 2 DSGVO).</p>
-  </div>
+  <p>Viele Datenverarbeitungsvorgänge sind nur mit Ihrer ausdrücklichen Einwilligung möglich. Sie können eine bereits erteilte Einwilligung jederzeit per E-Mail an info@ausbildungscheck.de widerrufen. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Datenverarbeitung bleibt davon unberührt.</p>
+  <h3>Widerspruchsrecht (Art. 21 DSGVO)</h3>
+  <p>Wenn die Datenverarbeitung auf Grundlage von Art. 6 Abs. 1 lit. e oder f DSGVO erfolgt, haben Sie jederzeit das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, gegen die Verarbeitung Widerspruch einzulegen. Werden Ihre Daten verarbeitet, um Direktwerbung zu betreiben, haben Sie das Recht, jederzeit Widerspruch gegen die Verarbeitung zu diesem Zweck einzulegen.</p>
   <h3>Beschwerderecht bei der zuständigen Aufsichtsbehörde</h3>
-  <p>Im Falle von Verstößen gegen die DSGVO steht den Betroffenen ein Beschwerderecht bei einer Aufsichtsbehörde, insbesondere in dem Mitgliedstaat ihres gewöhnlichen Aufenthalts, ihres Arbeitsplatzes oder des Orts des mutmaßlichen Verstoßes zu.</p>
+  <p>Im Falle von Verstößen gegen die DSGVO steht Ihnen ein Beschwerderecht bei einer Aufsichtsbehörde zu, insbesondere in dem Mitgliedstaat Ihres gewöhnlichen Aufenthalts, Ihres Arbeitsplatzes oder des Orts des mutmaßlichen Verstoßes. Für Nordrhein-Westfalen ist dies die Landesbeauftragte für Datenschutz und Informationsfreiheit NRW.</p>
   <h3>Recht auf Datenübertragbarkeit</h3>
   <p>Sie haben das Recht, Daten, die wir auf Grundlage Ihrer Einwilligung oder in Erfüllung eines Vertrags automatisiert verarbeiten, an sich oder an einen Dritten in einem gängigen, maschinenlesbaren Format aushändigen zu lassen.</p>
   <h3>Auskunft, Berichtigung und Löschung</h3>
-  <p>Sie haben im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit das Recht auf unentgeltliche Auskunft über Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger und den Zweck der Datenverarbeitung und ggf. ein Recht auf Berichtigung oder Löschung dieser Daten.</p>
+  <p>Sie haben jederzeit das Recht auf unentgeltliche Auskunft über Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger und den Zweck der Datenverarbeitung sowie ein Recht auf Berichtigung oder Löschung dieser Daten. Wenden Sie sich hierzu einfach an info@ausbildungscheck.de.</p>
   <h3>SSL- bzw. TLS-Verschlüsselung</h3>
-  <p>Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte eine SSL- bzw. TLS-Verschlüsselung.</p>
+  <p>Diese Plattform nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte eine SSL- bzw. TLS-Verschlüsselung.</p>
   <h3>Widerspruch gegen Werbe-E-Mails</h3>
   <p>Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten zur Übersendung von nicht ausdrücklich angeforderter Werbung und Informationsmaterialien wird hiermit widersprochen.</p>
   <div class="divider"></div>
 
-  <h2 id="s4">4. Datenerfassung auf dieser Website</h2>
-  <h3>Server-Log-Dateien</h3>
-  <p>Der Provider der Seiten erhebt und speichert automatisch Informationen in so genannten Server-Log-Dateien, die Ihr Browser automatisch an uns übermittelt. Dies sind:</p>
-  <ul>
-    <li>Browsertyp und Browserversion</li>
-    <li>verwendetes Betriebssystem</li>
-    <li>Referrer URL</li>
-    <li>Hostname des zugreifenden Rechners</li>
-    <li>Uhrzeit der Serveranfrage</li>
-    <li>IP-Adresse</li>
-  </ul>
-  <p>Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen. Die Erfassung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO.</p>
-  <h3>Kontaktformular</h3>
-  <p>Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
-  <h3>Bewerberdaten</h3>
-  <p>Wenn Sie sich über unsere Website auf eine Ausbildungsstelle bewerben, erheben wir die von Ihnen angegebenen personenbezogenen Daten (z. B. Name, E-Mail-Adresse, Telefonnummer, Wohnort, Schulabschluss sowie Ihre Antworten auf stellenbezogene Fragen) zum Zweck der Bearbeitung Ihrer Bewerbung.</p>
-  <p>Die erhobenen Bewerberdaten werden ausschließlich zur Vermittlung zwischen Ihnen und dem jeweiligen Ausbildungsbetrieb verwendet und an den entsprechenden Betrieb weitergeleitet. Eine Weitergabe an Dritte außerhalb dieses Zwecks erfolgt nicht.</p>
-  <p>Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO sowie Art. 88 DSGVO i. V. m. § 26 BDSG. Ihre Bewerberdaten werden gelöscht, sobald sie für den Zweck ihrer Erhebung nicht mehr erforderlich sind, spätestens nach 6 Monaten.</p>
-  <h3>Anfrage per E-Mail, Telefon oder Telefax</h3>
-  <p>Wenn Sie uns per E-Mail, Telefon oder Telefax kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten zum Zwecke der Bearbeitung Ihres Anliegens bei uns gespeichert und verarbeitet. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
-  <div class="divider"></div>
-
-  <h2 id="s5">5. Soziale Medien</h2>
-  <h3>Facebook</h3>
-  <p>Auf dieser Website sind Elemente des sozialen Netzwerks Facebook integriert. Anbieter dieses Dienstes ist die Meta Platforms Ireland Limited, Merrion Road, Dublin 4, D04 X2K5, Irland. Die Nutzung dieses Dienstes erfolgt auf Grundlage Ihrer Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO. Die Einwilligung ist jederzeit widerrufbar. Weitere Informationen: <a href="https://de-de.facebook.com/privacy/explanation" target="_blank">https://de-de.facebook.com/privacy/explanation</a>.</p>
-  <h3>Instagram</h3>
-  <p>Auf dieser Website sind Funktionen des Dienstes Instagram eingebunden. Diese Funktionen werden angeboten durch die Meta Platforms Ireland Limited, Merrion Road, Dublin 4, D04 X2K5, Irland. Die Nutzung erfolgt auf Grundlage Ihrer Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO. Weitere Informationen: <a href="https://privacycenter.instagram.com/policy/" target="_blank">https://privacycenter.instagram.com/policy/</a>.</p>
-  <h3>LinkedIn</h3>
-  <p>Diese Website nutzt Funktionen des Netzwerks LinkedIn. Anbieter ist die LinkedIn Ireland Unlimited Company, Wilton Plaza, Wilton Place, Dublin 2, Irland. Die Nutzung dieses Dienstes erfolgt auf Grundlage Ihrer Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO. Weitere Informationen: <a href="https://www.linkedin.com/legal/privacy-policy" target="_blank">https://www.linkedin.com/legal/privacy-policy</a>.</p>
-  <div class="divider"></div>
-
-  <h2 id="s6">6. Analyse-Tools und Werbung</h2>
-  <h3>Google Analytics</h3>
-  <p>Diese Website nutzt Funktionen des Webanalysedienstes Google Analytics. Anbieter ist die Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Google Analytics ermöglicht es dem Websitebetreiber, das Verhalten der Websitebesucher zu analysieren. Die Nutzung dieses Analyse-Tools erfolgt auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO. Die Einwilligung ist jederzeit widerrufbar.</p>
-  <h3>Google Tag Manager</h3>
-  <p>Wir setzen den Google Tag Manager ein. Anbieter ist die Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Der Google Tag Manager ist ein Tool, mit dessen Hilfe wir Tracking- oder Statistik-Tools und andere Technologien auf unserer Website einbinden können. Der Einsatz erfolgt auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO. Die Einwilligung ist jederzeit widerrufbar.</p>
-  <div class="divider"></div>
-
-  <h2 id="s7">7. Plugins und Tools</h2>
-  <h3>YouTube mit erweitertem Datenschutz</h3>
-  <p>Diese Website bindet Videos der Website YouTube ein. Betreiber der Website ist die Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Wir nutzen YouTube im erweiterten Datenschutzmodus. Im erweiterten Datenschutzmodus werden keine Cookies gesetzt. Weitere Informationen: <a href="https://policies.google.com/privacy?hl=de" target="_blank">https://policies.google.com/privacy?hl=de</a>.</p>
-  <h3>Google Fonts</h3>
-  <p>Diese Seite nutzt zur einheitlichen Darstellung von Schriftarten so genannte Google Fonts, die von Google bereitgestellt werden. Beim Aufruf einer Seite lädt Ihr Browser die benötigten Fonts in ihren Browsercache. Weitere Informationen: <a href="https://policies.google.com/privacy?hl=de" target="_blank">https://policies.google.com/privacy?hl=de</a>.</p>
-  <p style="margin-top:2rem;font-size:12px;color:var(--text2)">Quelle: <a href="https://www.e-recht24.de" target="_blank">https://www.e-recht24.de</a></p>
+  <h2 id="s8">8. Änderungen dieser Datenschutzerklärung</h2>
+  <p>Wir entwickeln unsere Plattform laufend weiter – etwa um neue Funktionen, zusätzliche Angebote (z. B. Workshops oder Kurse) oder neue technische Dienstleister zu ergänzen. Wir passen diese Datenschutzerklärung daher regelmäßig an die tatsächliche Datenverarbeitung an. Die jeweils aktuelle Fassung finden Sie immer auf dieser Seite, das Datum der letzten Aktualisierung steht oben auf dieser Seite. Sollten wir künftig Analyse-, Tracking- oder Werbetools einsetzen, holen wir vorab Ihre Einwilligung über einen Cookie-Banner ein, soweit dies gesetzlich erforderlich ist.</p>
 </div>
 
 <footer>
@@ -217,10 +210,10 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.06);paddin
     <a href="stellen.html">Stellen</a>
     <a href="betriebe.html">Für Betriebe</a>
     <a href="datenschutz.html">Datenschutz</a>
+    <a href="impressum.html">Impressum</a>
   </div>
-  <div class="footer-copy">© 2025 AusbildungsCheck</div>
+  <div class="footer-copy">© 2026 AusbildungsCheck</div>
 </footer>
-<!-- PWA Service Worker -->
 <script>
 if('serviceWorker' in navigator){
   window.addEventListener('load',()=>{
