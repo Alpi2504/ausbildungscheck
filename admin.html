@@ -313,7 +313,7 @@ tr:hover td{background:var(--gray)}
     <div class="form-group"><label class="form-label">Berufsfeld</label>
       <select class="form-select" id="stelle-berufsfeld"><option value="">Bitte auswählen...</option></select>
     </div>
-    <div class="form-group"><label class="form-label">Ausbildungsberuf *</label><input class="form-input" id="stelle-beruf" placeholder="z.B. Kfz-Mechatroniker/in"></div>
+    <div class="form-group"><label class="form-label">Ausbildungsberuf *</label><input class="form-input" id="stelle-beruf" placeholder="z.B. Kfz-Mechatroniker/in"><small style="color:var(--text2);font-size:11px;display:block;margin-top:4px">💡 „(m/w/d)" wird automatisch ergänzt, falls nicht angegeben</small></div>
     <div class="form-row">
       <div class="form-group"><label class="form-label">Gehalt (€/Monat)</label><input class="form-input" id="stelle-gehalt" placeholder="820"></div>
       <div class="form-group"><label class="form-label">Standort</label><input class="form-input" id="stelle-standort" placeholder="Köln"></div>
@@ -643,9 +643,19 @@ function openStelleModal(id){
   document.getElementById('stelle-modal').classList.add('open');
 }
 
+function ensureMwd(beruf){
+  if(!beruf) return beruf;
+  var t=beruf.trim();
+  // Erkennt bereits vorhandene m/w/d-Angaben in beliebiger Reihenfolge/Schreibweise, z.B. (m/w/d), (w/m/d), m/w/d, (M/W/D)
+  var hatSchon=/\(?\s*[mwd]\s*\/\s*[mwd]\s*\/\s*[mwd]\s*\)?/i.test(t);
+  if(hatSchon) return t;
+  return t+' (m/w/d)';
+}
+
 async function saveStelle(){
   var id=document.getElementById('stelle-id').value;
-  var data={betrieb_id:document.getElementById('stelle-betrieb').value,berufsfeld_id:document.getElementById('stelle-berufsfeld').value||null,beruf:document.getElementById('stelle-beruf').value,gehalt:document.getElementById('stelle-gehalt').value,standort:document.getElementById('stelle-standort').value,beginn:document.getElementById('stelle-beginn').value,dauer:document.getElementById('stelle-dauer').value,beschreibung:document.getElementById('stelle-beschreibung').value,taetigkeiten:document.getElementById('stelle-taetigkeiten').value,arbeitgeber_wuensche:document.getElementById('stelle-arbeitgeber-wuensche').value,youtube_url:document.getElementById('stelle-youtube').value,frage1:document.getElementById('stelle-frage1').value,frage2:document.getElementById('stelle-frage2').value,aktiv:document.getElementById('stelle-aktiv').value==='true',datei_upload:document.getElementById('stelle-datei-upload').checked,datei_pflicht:document.getElementById('stelle-datei-pflicht').checked};
+  var beruf=ensureMwd(document.getElementById('stelle-beruf').value);
+  var data={betrieb_id:document.getElementById('stelle-betrieb').value,berufsfeld_id:document.getElementById('stelle-berufsfeld').value||null,beruf:beruf,gehalt:document.getElementById('stelle-gehalt').value,standort:document.getElementById('stelle-standort').value,beginn:document.getElementById('stelle-beginn').value,dauer:document.getElementById('stelle-dauer').value,beschreibung:document.getElementById('stelle-beschreibung').value,taetigkeiten:document.getElementById('stelle-taetigkeiten').value,arbeitgeber_wuensche:document.getElementById('stelle-arbeitgeber-wuensche').value,youtube_url:document.getElementById('stelle-youtube').value,frage1:document.getElementById('stelle-frage1').value,frage2:document.getElementById('stelle-frage2').value,aktiv:document.getElementById('stelle-aktiv').value==='true',datei_upload:document.getElementById('stelle-datei-upload').checked,datei_pflicht:document.getElementById('stelle-datei-pflicht').checked};
   if(!data.beruf||!data.betrieb_id){alert('Bitte Betrieb und Beruf ausfüllen!');return;}
   if(id){await sb.from('stellen').update(data).eq('id',id);}
   else{await sb.from('stellen').insert(data);}
