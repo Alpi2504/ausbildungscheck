@@ -10,6 +10,9 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
+#golive-slider:before{position:absolute;content:"";height:22px;width:22px;left:4px;bottom:4px;background-color:white;transition:.3s;border-radius:50%}
+#golive-toggle:checked + #golive-slider{background-color:var(--ice,#4FAADF)}
+#golive-toggle:checked + #golive-slider:before{transform:translateX(26px)}
 :root{--dark:#021D3D;--navy:#042C53;--ice:#4FAADF;--ice-light:#EBF5FC;--gray:#F7F9FC;--gray2:#EEF2F7;--text:#0A1929;--text2:#5A7490;--green:#10B981;--red:#EF4444;--yellow:#F59E0B}
 body{font-family:'DM Sans',sans-serif;background:var(--gray);color:var(--text)}
 .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--navy)}
@@ -158,6 +161,20 @@ tr:hover td{background:var(--gray)}
     <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
       <div class="page-title">Dashboard</div>
+
+      <div class="card" id="golive-card" style="border:2px solid var(--ice);background:var(--ice-light);margin-bottom:1.5rem">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+          <div>
+            <div style="font-family:'Outfit',sans-serif;font-weight:800;font-size:16px;color:var(--dark);margin-bottom:4px">🚀 Stellenanzeigen live schalten</div>
+            <div style="font-size:13px;color:var(--text2)" id="golive-status">Lädt...</div>
+          </div>
+          <label style="position:relative;display:inline-block;width:56px;height:30px;flex-shrink:0">
+            <input type="checkbox" id="golive-toggle" onchange="toggleStellenLive()" style="opacity:0;width:0;height:0">
+            <span id="golive-slider" style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;transition:.3s;border-radius:30px"></span>
+          </label>
+        </div>
+      </div>
+
       <div class="stats-grid">
         <div class="stat-card"><div class="stat-icon">🏢</div><div class="stat-value" id="stat-betriebe">0</div><div class="stat-label">Partnerbetriebe</div></div>
         <div class="stat-card"><div class="stat-icon">📋</div><div class="stat-value" id="stat-stellen">0</div><div class="stat-label">Aktive Stellen</div></div>
@@ -515,6 +532,7 @@ async function loadAll(){
 }
 
 async function loadDashboard(){
+  loadGoLiveStatus();
   var [b,s,bew,neu]=await Promise.all([
     sb.from('betriebe').select('id',{count:'exact'}),
     sb.from('stellen').select('id',{count:'exact'}).eq('aktiv',true),
@@ -529,6 +547,27 @@ async function loadDashboard(){
   var tb=document.getElementById('recent-bewerbungen');
   if(!data||!data.length){tb.innerHTML='<tr><td colspan="5" style="text-align:center;padding:2rem;color:#5A7490">Noch keine Bewerbungen</td></tr>';return;}
   tb.innerHTML=data.map(b=>`<tr><td>${esc(b.vorname)} ${esc(b.nachname)}</td><td>${esc(b.stellen?.beruf)||'-'}</td><td>${esc(b.stellen?.betrieb?.name)||'-'}</td><td>${new Date(b.created_at).toLocaleDateString('de-DE')}</td><td><span class="badge badge-${b.status==='neu'?'neu':'aktiv'}">${esc(b.status)}</span></td></tr>`).join('');
+}
+
+async function loadGoLiveStatus(){
+  var {data}=await sb.from('site_settings').select('stellen_live').eq('id',1).single();
+  var live=data?.stellen_live||false;
+  document.getElementById('golive-toggle').checked=live;
+  document.getElementById('golive-status').textContent=live
+    ? '✅ Live — Besucher sehen die eingetragenen Stellenanzeigen'
+    : '🔒 Noch nicht live — Besucher sehen das "Bald Live"-Banner, unabhängig davon wie viele Stellen du schon anlegst';
+}
+
+async function toggleStellenLive(){
+  var checked=document.getElementById('golive-toggle').checked;
+  var {error}=await sb.from('site_settings').update({stellen_live:checked,updated_at:new Date().toISOString()}).eq('id',1);
+  if(error){
+    alert('Fehler beim Umschalten: '+error.message);
+    document.getElementById('golive-toggle').checked=!checked;
+    return;
+  }
+  loadGoLiveStatus();
+  showToast(checked?'🚀 Stellen sind jetzt live!':'🔒 Stellen wieder auf "Bald Live" gestellt');
 }
 
 var betriebeData=[];
