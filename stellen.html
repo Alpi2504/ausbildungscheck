@@ -76,6 +76,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .apply-btn:hover{background:var(--ice)}
 .job-date{font-size:11px;color:var(--text2)}
 .empty-state{text-align:center;padding:3rem;color:var(--text2)}
+.coming-soon-banner{max-width:640px;margin:0 auto;background:linear-gradient(135deg,var(--navy),var(--dark));border-radius:20px;padding:2.5rem 2rem;text-align:center}
+.coming-soon-banner .cs-badge{display:inline-block;background:rgba(79,170,223,0.15);border:1.5px solid rgba(79,170,223,0.4);color:var(--ice);font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.5px;padding:6px 14px;border-radius:20px;margin-bottom:1rem}
+.coming-soon-banner h3{font-family:'Outfit',sans-serif;font-size:clamp(20px,3vw,26px);font-weight:800;color:#fff;margin-bottom:.75rem;letter-spacing:-0.3px}
+.coming-soon-banner p{font-size:14px;color:rgba(255,255,255,0.65);line-height:1.6;margin-bottom:1.5rem}
+.coming-soon-banner .cs-socials{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.coming-soon-banner .cs-social{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);color:#fff;padding:9px 18px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s}
+.coming-soon-banner .cs-social:hover{background:rgba(255,255,255,0.15)}
 footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-top:3rem}
 .footer-logo{font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;color:#fff}
 .footer-logo span{color:var(--ice)}
@@ -424,7 +431,7 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
 const SUPABASE_URL='https://trccxzjdddhbqjgyzlkv.supabase.co';
 const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRyY2N4empkZGRoYnFqZ3l6bGt2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1MDgyMjIsImV4cCI6MjA5NDA4NDIyMn0.xS5-9Tq1-i9_K9lYDuayomybBazHmnvY29K24LvRxaQ';
 const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,storageKey:'ausbildungscheck-auth'}});
-var alleStellen=[],alleBerufsfelder=[],aktuelleStelle=null,aktuellerUser=null,aktuellesProfil=null;
+var alleStellen=[],alleBerufsfelder=[],aktuelleStelle=null,aktuellerUser=null,aktuellesProfil=null,stellenLiveGlobal=false;
 
 sb.auth.getSession().then(async({data:{session}})=>{
   if(session){
@@ -437,10 +444,12 @@ sb.auth.getSession().then(async({data:{session}})=>{
 });
 
 async function ladeStellen(){
-  var[{data:stellen},{data:berufsfelder}]=await Promise.all([
+  var[{data:stellen},{data:berufsfelder},{data:settings}]=await Promise.all([
     sb.from('stellen').select('*, betrieb:betrieb_id(name,email,logo_url,website,info_text), berufsfeld:berufsfeld_id(name,emoji)').eq('aktiv',true).order('created_at',{ascending:false}),
-    sb.from('berufsfelder').select('*').order('name')
+    sb.from('berufsfelder').select('*').order('name'),
+    sb.from('site_settings').select('stellen_live').eq('id',1).single()
   ]);
+  stellenLiveGlobal=settings?.stellen_live||false;
   if(!stellen){document.getElementById('jobs-list').innerHTML='<div class="empty-state">😔 Keine Stellen gefunden</div>';return;}
   alleStellen=stellen;
   alleBerufsfelder=berufsfelder||[];
@@ -472,7 +481,33 @@ function bauFilterOptionen(){
 function zeigeStellen(data){
   document.getElementById('stellen-count').textContent=data.length;
   var list=document.getElementById('jobs-list');
-  if(!data.length){list.innerHTML='<div class="empty-state">😔 Keine Stellen gefunden</div>';return;}
+  if(!stellenLiveGlobal||!data.length){
+    if(!stellenLiveGlobal){
+      list.innerHTML=`
+        <div class="coming-soon-banner">
+          <div class="cs-badge">🚀 BALD LIVE</div>
+          <h3>Verschiedene Ausbildungsstellen ...</h3>
+          <p>Folg AusbildungsCheck, um nicht zu verpassen, wann diese online gehen. Sicher dir deine Traumausbildung 2027!</p>
+          <div class="cs-socials">
+            <a class="cs-social" href="https://instagram.com/ausbildungscheck" target="_blank" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5.5" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="4.2" stroke="#fff" stroke-width="2"/><circle cx="17.4" cy="6.6" r="1.3" fill="#fff"/></svg>
+              Instagram
+            </a>
+            <a class="cs-social" href="https://tiktok.com/@ausbildungscheck" target="_blank" aria-label="TikTok">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M16.6 5.8c-.9-1-1.4-2.3-1.4-3.8h-3.4v14.2c0 1.7-1.4 3.1-3.1 3.1s-3.1-1.4-3.1-3.1 1.4-3.1 3.1-3.1c.3 0 .6 0 .9.1V9.7c-.3 0-.6-.1-.9-.1-3.5 0-6.4 2.9-6.4 6.4S5.2 22.4 8.7 22.4s6.4-2.9 6.4-6.4V9.4c1.3 1 3 1.5 4.7 1.5V7.5c-1.1 0-2.2-.4-3.2-1.7z"/></svg>
+              TikTok
+            </a>
+            <a class="cs-social" href="https://youtube.com/@ausbildungscheck" target="_blank" aria-label="YouTube">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="1.5" y="5" width="21" height="14" rx="4" stroke="#fff" stroke-width="2"/><path d="M10 9.5l5.5 2.5-5.5 2.5z" fill="#fff"/></svg>
+              YouTube
+            </a>
+          </div>
+        </div>`;
+    }else{
+      list.innerHTML='<div class="empty-state">😔 Keine Stellen gefunden</div>';
+    }
+    return;
+  }
   list.innerHTML=data.map((s,i)=>`
     <div class="job-card ${i===0?'featured':''}" onclick="zeigeDetail('${s.id}')">
       <div class="job-logo">${s.betrieb?.logo_url?`<img src="${s.betrieb.logo_url}" alt="${s.betrieb.name}" style="width:100%;height:100%;object-fit:contain;border-radius:10px">`:s.berufsfeld?.emoji||s.beruf?.charAt(0)||'📋'}</div>
