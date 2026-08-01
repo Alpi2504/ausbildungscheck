@@ -95,7 +95,7 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.06);paddin
     <a href="#s2">2. Verantwortliche Stelle</a>
     <a href="#s3">3. Hosting und eingesetzte Dienste</a>
     <a href="#s4">4. Deine Daten auf unserer Plattform</a>
-    <a href="#s5">5. Cookies und lokale Speicherung</a>
+    <a href="#s5">5. Cookies, Analyse und lokale Speicherung</a>
     <a href="#s6">6. Soziale Medien</a>
     <a href="#s7">7. Allgemeine Hinweise und Pflichtinformationen</a>
     <a href="#s8">8. Änderungen dieser Datenschutzerklärung</a>
@@ -160,10 +160,12 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.06);paddin
   <p>Wenn Sie uns per E-Mail oder Telefon kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten zum Zwecke der Bearbeitung Ihres Anliegens bei uns gespeichert und verarbeitet. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
   <div class="divider"></div>
 
-  <h2 id="s5">5. Cookies und lokale Speicherung</h2>
-  <p>Unsere Plattform ist als Progressive Web App (PWA) umgesetzt. Dabei werden über einen sogenannten Service Worker rein technische Daten (z. B. einzelne Seitenbestandteile) lokal in Ihrem Browser zwischengespeichert, damit die Seite schneller lädt und auch bei schwacher Verbindung nutzbar bleibt. Es handelt sich dabei nicht um Tracking- oder Analyse-Cookies; es findet keine Auswertung Ihres Nutzungsverhaltens statt.</p>
+  <h2 id="s5">5. Cookies, Analyse und lokale Speicherung</h2>
+  <p>Unsere Plattform ist als Progressive Web App (PWA) umgesetzt. Dabei werden über einen sogenannten Service Worker rein technische Daten (z. B. einzelne Seitenbestandteile) lokal in Ihrem Browser zwischengespeichert, damit die Seite schneller lädt und auch bei schwacher Verbindung nutzbar bleibt.</p>
+  <h3>Vercel Web Analytics</h3>
+  <p>Zur anonymen Auswertung der Besucherzahlen und zur Verbesserung unseres Angebots nutzen wir Vercel Web Analytics, bereitgestellt von Vercel Inc. Dieser Dienst kommt ohne Cookies aus: Besucher werden über einen anonymisierten, aus der Anfrage berechneten Wert wiedererkannt, der keinen Rückschluss auf Ihre Identität zulässt und nicht geräte- oder seitenübergreifend nachverfolgt werden kann. Es werden keine personenbezogenen Daten gespeichert. Da kein Eingriff in die Privatsphäre der Endnutzer stattfindet, ist hierfür keine Einwilligung über einen Cookie-Banner erforderlich. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der bedarfsgerechten Gestaltung unserer Plattform). Weitere Informationen: <a href="https://vercel.com/legal/privacy-policy" target="_blank">vercel.com/legal/privacy-policy</a>.</p>
   <div class="future-box">
-    <p><strong>Hinweis für die Zukunft:</strong> Aktuell setzen wir keine Analyse-, Tracking- oder Werbe-Cookies (z. B. Google Analytics, Meta-Pixel) ein. Sollten wir solche Tools künftig einsetzen, werden wir diese Datenschutzerklärung entsprechend aktualisieren und vorab über einen Cookie-Banner Ihre Einwilligung einholen, soweit diese gesetzlich erforderlich ist.</p>
+    <p><strong>Hinweis für die Zukunft:</strong> Aktuell setzen wir keine Werbe-Cookies oder personenbezogenes Tracking (z. B. Google Analytics, Meta-Pixel) ein. Sollten wir solche Tools künftig einsetzen, werden wir diese Datenschutzerklärung entsprechend aktualisieren und vorab über einen Cookie-Banner Ihre Einwilligung einholen, soweit diese gesetzlich erforderlich ist.</p>
   </div>
   <div class="divider"></div>
 
@@ -221,5 +223,6 @@ if('serviceWorker' in navigator){
   });
 }
 </script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
