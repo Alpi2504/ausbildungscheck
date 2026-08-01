@@ -439,6 +439,18 @@ const SUPABASE_URL='https://trccxzjdddhbqjgyzlkv.supabase.co';
 const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRyY2N4empkZGRoYnFqZ3l6bGt2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1MDgyMjIsImV4cCI6MjA5NDA4NDIyMn0.xS5-9Tq1-i9_K9lYDuayomybBazHmnvY29K24LvRxaQ';
 const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
+// Escaped alle Nutzereingaben, bevor sie ins HTML eingefügt werden (Schutz vor XSS/Injection
+// über Bewerbungs-/Kontaktformulare, die von jedem ohne Login abgeschickt werden können).
+function esc(str){
+  if(str===null||str===undefined) return '';
+  return String(str)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
+}
+
 // LOGIN
 async function checkLogin(){
   var email=document.getElementById('pw-input').value.trim();
@@ -516,7 +528,7 @@ async function loadDashboard(){
   var {data}=await sb.from('bewerbungen').select('*, stellen:stellen_id(beruf, betrieb:betrieb_id(name))').order('created_at',{ascending:false}).limit(5);
   var tb=document.getElementById('recent-bewerbungen');
   if(!data||!data.length){tb.innerHTML='<tr><td colspan="5" style="text-align:center;padding:2rem;color:#5A7490">Noch keine Bewerbungen</td></tr>';return;}
-  tb.innerHTML=data.map(b=>`<tr><td>${b.vorname||''} ${b.nachname||''}</td><td>${b.stellen?.beruf||'-'}</td><td>${b.stellen?.betrieb?.name||'-'}</td><td>${new Date(b.created_at).toLocaleDateString('de-DE')}</td><td><span class="badge badge-${b.status==='neu'?'neu':'aktiv'}">${b.status}</span></td></tr>`).join('');
+  tb.innerHTML=data.map(b=>`<tr><td>${esc(b.vorname)} ${esc(b.nachname)}</td><td>${esc(b.stellen?.beruf)||'-'}</td><td>${esc(b.stellen?.betrieb?.name)||'-'}</td><td>${new Date(b.created_at).toLocaleDateString('de-DE')}</td><td><span class="badge badge-${b.status==='neu'?'neu':'aktiv'}">${esc(b.status)}</span></td></tr>`).join('');
 }
 
 var betriebeData=[];
@@ -691,25 +703,25 @@ async function loadBewerbungen(){
   list.innerHTML=data.map(b=>`
     <div class="bewerbung-card">
       <div class="bewerbung-header">
-        <div><div class="bewerbung-name">${b.vorname||''} ${b.nachname||''}</div><div class="bewerbung-stelle">${b.stellen?.beruf||'-'} · ${b.stellen?.betrieb?.name||'-'}</div></div>
-        <span class="badge badge-${b.status==='neu'?'neu':b.status==='weitergeleitet'?'aktiv':'inaktiv'}">${b.status}</span>
+        <div><div class="bewerbung-name">${esc(b.vorname)} ${esc(b.nachname)}</div><div class="bewerbung-stelle">${esc(b.stellen?.beruf)||'-'} · ${esc(b.stellen?.betrieb?.name)||'-'}</div></div>
+        <span class="badge badge-${b.status==='neu'?'neu':b.status==='weitergeleitet'?'aktiv':'inaktiv'}">${esc(b.status)}</span>
       </div>
       <div class="bewerbung-info">
-        <div class="info-item"><label>E-Mail</label><span>${b.email||'-'}</span></div>
-        <div class="info-item"><label>Telefon</label><span>${b.telefon||'-'}</span></div>
+        <div class="info-item"><label>E-Mail</label><span>${esc(b.email)||'-'}</span></div>
+        <div class="info-item"><label>Telefon</label><span>${esc(b.telefon)||'-'}</span></div>
         <div class="info-item"><label>Geburtsdatum</label><span>${b.geburtsdatum?new Date(b.geburtsdatum).toLocaleDateString('de-DE'):'-'}</span></div>
-        <div class="info-item"><label>Wohnort</label><span>${b.wohnort||'-'}</span></div>
-        <div class="info-item"><label>Schulabschluss</label><span>${b.schulabschluss||'-'}</span></div>
+        <div class="info-item"><label>Wohnort</label><span>${esc(b.wohnort)||'-'}</span></div>
+        <div class="info-item"><label>Schulabschluss</label><span>${esc(b.schulabschluss)||'-'}</span></div>
         <div class="info-item"><label>Noch Schüler</label><span>${b.noch_schueler?'Ja':'Nein'}</span></div>
         <div class="info-item"><label>Datum</label><span>${new Date(b.created_at).toLocaleDateString('de-DE')}</span></div>
       </div>
-      ${b.datei_url?`<div style="margin-bottom:1rem"><a href="${b.datei_url}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:var(--ice-light);color:var(--ice);border:1.5px solid rgba(79,170,223,0.3);padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none">📎 Datei herunterladen</a></div>`:''}
+      ${b.datei_url?`<div style="margin-bottom:1rem"><a href="${esc(b.datei_url)}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:var(--ice-light);color:var(--ice);border:1.5px solid rgba(79,170,223,0.3);padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none">📎 Datei herunterladen</a></div>`:''}
       ${b.antwort1||b.antwort2?`<div class="bewerbung-antworten">
-        ${b.antwort1?`<div class="antwort-item"><div class="antwort-frage">${b.stellen?.frage1||'Frage 1'}</div><div class="antwort-text">${b.antwort1}</div></div>`:''}
-        ${b.antwort2?`<div class="antwort-item"><div class="antwort-frage">${b.stellen?.frage2||'Frage 2'}</div><div class="antwort-text">${b.antwort2}</div></div>`:''}
+        ${b.antwort1?`<div class="antwort-item"><div class="antwort-frage">${esc(b.stellen?.frage1)||'Frage 1'}</div><div class="antwort-text">${esc(b.antwort1)}</div></div>`:''}
+        ${b.antwort2?`<div class="antwort-item"><div class="antwort-frage">${esc(b.stellen?.frage2)||'Frage 2'}</div><div class="antwort-text">${esc(b.antwort2)}</div></div>`:''}
       </div>`:''}
       <div class="status-btns">
-        <button class="status-btn btn-weiterleiten" onclick="weiterleitenBewerbung('${b.id}','${b.stellen?.betrieb?.email||''}','${b.vorname||''} ${b.nachname||''}','${b.email||''}','${b.stellen?.beruf||''}')">📤 Weiterleiten</button>
+        <button class="status-btn btn-weiterleiten" onclick="weiterleitenBewerbung('${b.id}','${esc(b.stellen?.betrieb?.email)||''}','${esc(b.vorname)} ${esc(b.nachname)}','${esc(b.email)||''}','${esc(b.stellen?.beruf)||''}')">📤 Weiterleiten</button>
         ${b.status!=='archiviert'?`<button class="status-btn btn-archivieren" onclick="archivierenBewerbung('${b.id}')">📁 Archivieren</button>`:''}
         <button class="status-btn" style="background:#FEE2E2;color:#EF4444" onclick="loeschenBewerbung('${b.id}')">🗑️ Löschen</button>
       </div>
@@ -739,15 +751,15 @@ async function loadBewerber(){
   if(error||!data||!data.length){tb.innerHTML='<tr><td colspan="8" style="text-align:center;padding:2rem;color:#5A7490">Noch keine registrierten Bewerber</td></tr>';return;}
   tb.innerHTML=data.map(b=>{
     var quiz=b.quiz_ergebnis;
-    var quizHtml=quiz&&quiz.length?quiz.slice(0,2).map(e=>`<span style="font-size:11px;background:var(--ice-light);color:var(--ice);padding:2px 7px;border-radius:5px;margin-right:3px">${e.emoji} ${e.name}</span>`).join(''):'-';
+    var quizHtml=quiz&&quiz.length?quiz.slice(0,2).map(e=>`<span style="font-size:11px;background:var(--ice-light);color:var(--ice);padding:2px 7px;border-radius:5px;margin-right:3px">${esc(e.emoji)} ${esc(e.name)}</span>`).join(''):'-';
     return `<tr>
-      <td><strong>${b.vorname||'-'} ${b.nachname||''}</strong></td>
-      <td>${b.email||'-'}</td>
+      <td><strong>${esc(b.vorname)||'-'} ${esc(b.nachname)}</strong></td>
+      <td>${esc(b.email)||'-'}</td>
       <td>${b.geburtsdatum?new Date(b.geburtsdatum).toLocaleDateString('de-DE'):'-'}</td>
       <td>${quizHtml}</td>
-      <td>${(b.strasse||'')+', '+(b.plz||'')+' '+(b.ort||'-')}</td>
-      <td>${b.telefon||'-'}</td>
-      <td>${b.schulabschluss||'-'}${b.noch_schueler&&b.abschluss_jahr?' (voraus. '+b.abschluss_jahr+')':''}</td>
+      <td>${esc((b.strasse||'')+', '+(b.plz||'')+' '+(b.ort||'-'))}</td>
+      <td>${esc(b.telefon)||'-'}</td>
+      <td>${esc(b.schulabschluss)||'-'}${b.noch_schueler&&b.abschluss_jahr?' (voraus. '+esc(b.abschluss_jahr)+')':''}</td>
       <td>${new Date(b.created_at).toLocaleDateString('de-DE')}</td>
     </tr>`;
   }).join('');
@@ -866,22 +878,22 @@ async function loadAnfragen(){
     <div class="bewerbung-card">
       <div class="bewerbung-header">
         <div>
-          <div class="bewerbung-name">${a.firmenname}</div>
-          <div class="bewerbung-stelle">${a.paket||'-'} · ${a.standort||'-'}</div>
+          <div class="bewerbung-name">${esc(a.firmenname)}</div>
+          <div class="bewerbung-stelle">${esc(a.paket)||'-'} · ${esc(a.standort)||'-'}</div>
         </div>
-        <span class="badge badge-${a.status==='neu'?'neu':'aktiv'}">${a.status}</span>
+        <span class="badge badge-${a.status==='neu'?'neu':'aktiv'}">${esc(a.status)}</span>
       </div>
       <div class="bewerbung-info">
-        <div class="info-item"><label>Ansprechpartner</label><span>${a.ansprechpartner||'-'}</span></div>
-        <div class="info-item"><label>E-Mail</label><span>${a.email||'-'}</span></div>
-        <div class="info-item"><label>Telefon</label><span>${a.telefon||'-'}</span></div>
-        <div class="info-item"><label>Ausbildungsberuf</label><span>${a.ausbildungsberuf||'-'}</span></div>
-        <div class="info-item"><label>Standort</label><span>${a.standort||'-'}</span></div>
+        <div class="info-item"><label>Ansprechpartner</label><span>${esc(a.ansprechpartner)||'-'}</span></div>
+        <div class="info-item"><label>E-Mail</label><span>${esc(a.email)||'-'}</span></div>
+        <div class="info-item"><label>Telefon</label><span>${esc(a.telefon)||'-'}</span></div>
+        <div class="info-item"><label>Ausbildungsberuf</label><span>${esc(a.ausbildungsberuf)||'-'}</span></div>
+        <div class="info-item"><label>Standort</label><span>${esc(a.standort)||'-'}</span></div>
         <div class="info-item"><label>Datum</label><span>${new Date(a.created_at).toLocaleDateString('de-DE')}</span></div>
       </div>
-      ${a.nachricht?`<div class="bewerbung-antworten"><div class="antwort-frage">Nachricht</div><div class="antwort-text">${a.nachricht}</div></div>`:''}
+      ${a.nachricht?`<div class="bewerbung-antworten"><div class="antwort-frage">Nachricht</div><div class="antwort-text">${esc(a.nachricht)}</div></div>`:''}
       <div class="status-btns">
-        <a href="mailto:${a.email}?subject=Ihre Anfrage bei AusbildungsCheck" class="status-btn btn-weiterleiten" style="text-decoration:none">✉️ Antworten</a>
+        <a href="mailto:${encodeURIComponent(a.email||'')}?subject=Ihre Anfrage bei AusbildungsCheck" class="status-btn btn-weiterleiten" style="text-decoration:none">✉️ Antworten</a>
         ${a.status==='neu'?`<button class="status-btn btn-archivieren" onclick="anfragErledigt('${a.id}')">✅ Als erledigt markieren</button>`:''}
         <button class="status-btn" style="background:#FEE2E2;color:#EF4444" onclick="loeschenAnfrage('${a.id}')">🗑️ Löschen</button>
       </div>
