@@ -354,7 +354,18 @@ async function doRegister(){
     vorname,nachname,telefon,geburtsdatum,strasse,plz,ort,
     schulabschluss:abschluss,noch_schueler:schueler,abschluss_jahr:jahr
   }}});
-  if(error){showErr('register-error','Fehler: '+error.message);return;}
+  if(error){
+    if(error.message&&(error.message.toLowerCase().includes('already')||error.message.toLowerCase().includes('registered'))){
+      showErr('register-error','Für diese E-Mail-Adresse besteht bereits ein Konto. Bitte logge dich ein oder setze dein Passwort zurück.');
+    }else{
+      showErr('register-error','Fehler: '+error.message);
+    }
+    return;
+  }
+  if(data.user&&data.user.identities&&data.user.identities.length===0){
+    showErr('register-error','Für diese E-Mail-Adresse besteht bereits ein Konto. Bitte logge dich ein oder setze dein Passwort zurück.');
+    return;
+  }
   if(data.session){
     showOk('register-success','✅ Konto erstellt! Du bist jetzt eingeloggt.');
   }else{
