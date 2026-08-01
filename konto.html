@@ -289,7 +289,7 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
 
 <footer>
   <div class="footer-logo">Ausbildungs<span>Check</span></div>
-  <div class="footer-links"><a href="index.html">Start</a><a href="datenschutz.html">Datenschutz</a><a href="#">Impressum</a></div>
+  <div class="footer-links"><a href="index.html">Start</a><a href="datenschutz.html">Datenschutz</a><a href="impressum.html">Impressum</a></div>
   <div class="footer-copy">© 2025 AusbildungsCheck</div>
 </footer>
 
@@ -350,10 +350,16 @@ async function doRegister(){
   if(!vorname||!nachname||!email||!pw||!telefon||!strasse||!plz||!ort){showErr('register-error','Bitte alle Pflichtfelder ausfüllen!');return;}
   if(pw.length<6){showErr('register-error','Passwort muss mindestens 6 Zeichen haben!');return;}
   if(!datenschutz){showErr('register-error','Bitte bestätige die Datenschutzerklärung!');return;}
-  var {data,error}=await sb.auth.signUp({email,password:pw});
+  var {data,error}=await sb.auth.signUp({email,password:pw,options:{data:{
+    vorname,nachname,telefon,geburtsdatum,strasse,plz,ort,
+    schulabschluss:abschluss,noch_schueler:schueler,abschluss_jahr:jahr
+  }}});
   if(error){showErr('register-error','Fehler: '+error.message);return;}
-  await sb.from('profile').insert({id:data.user.id,vorname,nachname,telefon,geburtsdatum,strasse,plz,ort,schulabschluss:abschluss,noch_schueler:schueler,abschluss_jahr:jahr});
-  showOk('register-success','✅ Konto erstellt! Du bist jetzt eingeloggt.');
+  if(data.session){
+    showOk('register-success','✅ Konto erstellt! Du bist jetzt eingeloggt.');
+  }else{
+    showOk('register-success','✅ Fast geschafft! Wir haben dir eine E-Mail geschickt – bitte bestätige deine Adresse, um dich einzuloggen.');
+  }
 }
 
 async function showProfil(user){
