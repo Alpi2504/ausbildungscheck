@@ -63,9 +63,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .search-box input{flex:1;background:none;border:none;outline:none;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;padding:6px 0}
 .search-box input::placeholder{color:rgba(10,25,41,0.35)}
 .search-btn{background:var(--navy);color:#fff;border:none;padding:11px 22px;border-radius:9px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;cursor:pointer}
-.search-tags{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;justify-content:center}
-.search-tag{font-size:11px;color:var(--text2);background:var(--gray);border:1px solid var(--gray2);padding:4px 12px;border-radius:20px;cursor:pointer;transition:all .2s}
-.search-tag:hover{border-color:var(--ice);color:var(--ice)}
 .stats{display:flex;justify-content:center;gap:3rem;margin-top:2.5rem;padding-top:2.5rem;border-top:1.5px solid var(--gray2)}
 .stat-icon{font-size:22px;margin-bottom:6px}
 .stat-label{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--dark)}
@@ -206,7 +203,6 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.06);paddin
       <input type="text" id="hero-search" placeholder="z.B. Kfz-Mechatroniker, Köln..." onkeydown="if(event.key==='Enter')goSearch()">
       <button class="search-btn" onclick="goSearch()">Suchen</button>
     </div>
-    <div class="search-tags" id="search-tags"></div>
   </div>
   <div class="stats">
     <div><div class="stat-icon">📍</div><div class="stat-label" id="stat-stellen">Aktuelle Stellen</div><div class="stat-sub">jede Woche mehr</div></div>
@@ -374,9 +370,6 @@ async function ladeStartseite(){
   if(stellen) document.getElementById('stat-stellen').textContent=stellen.length+' Aktuelle Stellen';
   if(betriebe) document.getElementById('stat-betriebe').textContent=(betriebe.length||0)+' Partnerbetriebe';
   if(berufsfelder&&berufsfelder.length){
-    document.getElementById('search-tags').innerHTML=berufsfelder.slice(0,6).map(b=>
-      `<span class="search-tag" onclick="goSearchTerm('${b.name}')">${b.emoji||''} ${b.name}</span>`
-    ).join('');
     var bfGrid=document.getElementById('berufsfelder-grid');
     bfGrid.innerHTML=berufsfelder.map(b=>`
       <a class="berufsfeld-card" href="stellen.html?q=${encodeURIComponent(b.name)}">
@@ -413,9 +406,6 @@ async function ladeStartseite(){
 function goSearch(){
   var q=document.getElementById('hero-search').value.trim();
   window.location.href='stellen.html'+(q?'?q='+encodeURIComponent(q):'');
-}
-function goSearchTerm(term){
-  window.location.href='stellen.html?q='+encodeURIComponent(term);
 }
 function toggleMenu(){
   document.getElementById('mobile-menu').classList.toggle('open');
