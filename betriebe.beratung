@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beratung für Ausbildungsbetriebe – AusbildungsCheck</title>
+<meta name="description" content="Individuelle Beratung für Ausbildungsbetriebe – Ausbildungsabläufe, Unterweisungen, Konfliktmanagement. Auf Anfrage, individuell auf euren Bedarf zugeschnitten.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Beratung für Ausbildungsbetriebe – AusbildungsCheck">
+<meta property="og:description" content="Individuelle Unterstützung rund um Ausbildung im Betrieb.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#042C53">
+<link rel="manifest" href="/manifest.json">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--dark:#021D3D;--navy:#042C53;--ice:#4FAADF;--ice-light:#EBF5FC;--gray:#F7F9FC;--gray2:#EEF2F7;--text:#0A1929;--text2:#5A7490}
+body{font-family:'DM Sans',sans-serif;background:#fff;color:var(--text)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:60px;background:rgba(255,255,255,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(4,44,83,0.07)}
+.logo{font-family:'Outfit',sans-serif;font-size:18px;font-weight:800;color:var(--dark);text-decoration:none}
+.logo span{color:var(--ice)}
+.nav-links{display:flex;align-items:center;gap:1.75rem}
+.nav-links a{font-size:13px;color:var(--text2);text-decoration:none;font-weight:500}
+.nav-links a.active{color:var(--ice);font-weight:700}
+.nav-login{background:transparent;color:var(--navy);border:1.5px solid rgba(4,44,83,0.2);padding:7px 16px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:5px}
+.hero{background:var(--navy);padding:120px 2rem 4.5rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 0%,rgba(79,170,223,0.12),transparent 60%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(79,170,223,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(79,170,223,0.04) 1px,transparent 1px);background-size:50px 50px}
+.hero-inner{max-width:680px;margin:0 auto;position:relative;text-align:center}
+.breadcrumb{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.5);text-decoration:none;margin-bottom:1.25rem}
+.hero-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ice);opacity:.8;margin-bottom:.75rem}
+.hero h1{font-family:'Outfit',sans-serif;font-size:clamp(26px,4vw,40px);font-weight:800;letter-spacing:-1.3px;color:#fff;line-height:1.15;margin-bottom:1rem}
+.hero h1 span{color:var(--ice)}
+.hero p{font-size:15px;color:rgba(255,255,255,0.62);line-height:1.7}
+.content{background:var(--gray);padding:4rem 2rem}
+.max-w{max-width:900px;margin:0 auto}
+.content-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:2.5rem;align-items:start}
+.info-card{background:#fff;border:1.5px solid var(--gray2);border-radius:20px;padding:2.25rem}
+.info-card h2{font-family:'Outfit',sans-serif;font-size:20px;font-weight:800;color:var(--dark);margin-bottom:1rem;letter-spacing:-0.3px}
+.info-card p{font-size:14px;color:var(--text2);line-height:1.75;margin-bottom:1.25rem}
+.themen-list{list-style:none;display:flex;flex-direction:column;gap:.85rem;margin:1.5rem 0}
+.themen-list li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--text);line-height:1.5}
+.themen-list li::before{content:'💡';flex-shrink:0}
+.status-badge{display:inline-block;background:var(--ice-light);color:var(--ice);font-family:'Outfit',sans-serif;font-size:11.5px;font-weight:700;padding:5px 12px;border-radius:20px;margin-bottom:1rem}
+.kontakt-card{background:#fff;border:1.5px solid var(--gray2);border-radius:20px;padding:2rem;position:sticky;top:80px}
+.kontakt-card h3{font-family:'Outfit',sans-serif;font-size:16px;font-weight:800;color:var(--dark);margin-bottom:1.25rem}
+.form-group{margin-bottom:1rem}
+.form-label{font-size:13px;font-weight:600;color:var(--dark);margin-bottom:.4rem;display:block}
+.form-input,.form-textarea{width:100%;border:1.5px solid var(--gray2);border-radius:9px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none;transition:border-color .2s}
+.form-textarea{resize:vertical;min-height:90px;font-family:'DM Sans',sans-serif}
+.form-input:focus,.form-textarea:focus{border-color:var(--ice)}
+.submit-btn{width:100%;background:#4FAADF !important;color:#fff !important;border:none;padding:14px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:14.5px;font-weight:700;cursor:pointer;margin-top:.5rem;box-shadow:0 4px 16px rgba(79,170,223,0.35)}
+footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem}
+.footer-logo{font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;color:#fff}
+.footer-logo span{color:var(--ice)}
+.footer-links{display:flex;gap:1.25rem}
+.footer-links a{font-size:12px;color:rgba(255,255,255,0.45);text-decoration:none}
+.footer-copy{font-size:11px;color:rgba(255,255,255,0.3)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none}
+.hamburger span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px}
+.mobile-menu{display:none;position:fixed;left:0;right:0;top:56px;background:#fff;z-index:98;padding:1.25rem;flex-direction:column;border-bottom:1.5px solid var(--gray2)}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-size:15px;padding:12px 0;border-bottom:1px solid var(--gray2);color:var(--text);text-decoration:none;font-weight:500}
+@media(max-width:768px){
+  nav{padding:0 1rem;height:56px}
+  .nav-links a:not(.active),.nav-login{display:none}
+  .hamburger{display:flex !important}
+  .hero{padding:80px 1.25rem 3rem}
+  .content-grid{grid-template-columns:1fr}
+  .kontakt-card{position:static}
+  footer{flex-direction:column;padding:1.25rem}
+  .footer-links{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="index.html">Ausbildungs<span>Check</span></a>
+  <div class="nav-links">
+    <a href="index.html">Start</a>
+    <a href="stellen.html">Stellen</a>
+    <a href="betriebe.html" class="active">Für Betriebe</a>
+    <a href="konto.html" class="nav-login">👤 Anmelden</a>
+  </div>
+  <button class="hamburger" style="display:none" onclick="toggleMenu()" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html">🏠 Start</a>
+  <a href="stellen.html">📋 Stellen</a>
+  <a href="betriebe.html">🏢 Für Betriebe</a>
+  <a href="konto.html">👤 Anmelden</a>
+</div>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <a href="betriebe.html" class="breadcrumb">← Für Betriebe</a>
+    <div class="hero-label">Beratung</div>
+    <h1>Individuelle Unterstützung für <span>deine Ausbildung</span></h1>
+    <p>Nicht jede Herausforderung in der Ausbildung lässt sich mit einer Stellenanzeige lösen. Wir beraten dich persönlich zu dem, was in deinem Betrieb gerade ansteht.</p>
+  </div>
+</section>
+
+<section class="content">
+  <div class="max-w">
+    <div class="content-grid">
+      <div class="info-card">
+        <div class="status-badge">🌱 Im Aufbau</div>
+        <h2>Worum es geht</h2>
+        <p>Als Industriemeister und IHK-Prüfer kennen wir Ausbildung nicht nur aus der Theorie, sondern aus dem betrieblichen Alltag. Die IHK prüft, ob dein Betrieb formal ausbildungsberechtigt ist – bei der praktischen Umsetzung im Alltag seid ihr meist auf euch gestellt. Genau da setzen wir an.</p>
+        <p>Mögliche Themen, bei denen wir euch individuell unterstützen können:</p>
+        <ul class="themen-list">
+          <li>Ausbildungsabläufe im Betrieb strukturieren und verbessern</li>
+          <li>Unterweisungen praxisnah und verständlich gestalten</li>
+          <li>Konfliktmanagement zwischen Azubi und Ausbilder</li>
+          <li>Feedback- und Beurteilungsgespräche professionell führen</li>
+          <li>Ausbildungsqualität langfristig sichern</li>
+        </ul>
+        <p style="margin-bottom:0">Dieses Angebot befindet sich aktuell im Aufbau und richtet sich individuell nach eurem Bedarf – Umfang und Ablauf besprechen wir gemeinsam in einem ersten, unverbindlichen Gespräch.</p>
+      </div>
+
+      <div class="kontakt-card">
+        <h3>Unverbindlich anfragen</h3>
+        <div id="success-msg" style="display:none;background:#E6F9F0;border:1.5px solid #34D399;border-radius:10px;padding:.85rem;text-align:center;color:#065F46;font-weight:600;margin-bottom:1rem;font-family:'Outfit',sans-serif;font-size:13px">🎉 Anfrage gesendet! Wir melden uns innerhalb von 24 Stunden.</div>
+        <div class="form-group"><label class="form-label">Firmenname *</label><input class="form-input" type="text" id="bf-firmenname" placeholder="Musterfirma GmbH"></div>
+        <div class="form-group"><label class="form-label">Ansprechpartner *</label><input class="form-input" type="text" id="bf-ansprechpartner" placeholder="Max Mustermann"></div>
+        <div class="form-group"><label class="form-label">E-Mail *</label><input class="form-input" type="email" id="bf-email" placeholder="max@firma.de"></div>
+        <div class="form-group"><label class="form-label">Telefon</label><input class="form-input" type="tel" id="bf-telefon" placeholder="+49 123 456789"></div>
+        <div class="form-group"><label class="form-label">Worum geht's? *</label><textarea class="form-textarea" id="bf-nachricht" placeholder="Kurz beschreiben, wobei wir euch unterstützen können..."></textarea></div>
+        <button class="submit-btn" onclick="sendeAnfrage()">Anfrage senden</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Ausbildungs<span>Check</span></div>
+  <div class="footer-links">
+    <a href="index.html">Start</a>
+    <a href="stellen.html">Stellen</a>
+    <a href="datenschutz.html">Datenschutz</a>
+    <a href="impressum.html">Impressum</a>
+    <a href="agb.html">AGB</a>
+  </div>
+  <div class="footer-copy">© 2026 AusbildungsCheck</div>
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById('mobile-menu').classList.toggle('open');
+  document.getElementById('hamburger').classList.toggle('open');
+}
+const SUPABASE_URL='https://trccxzjdddhbqjgyzlkv.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRyY2N4empkZGRoYnFqZ3l6bGt2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA4MzM0MzAsImV4cCI6MjA2NjQwOTQzMH0.xS5-9Tq1-i9_K9lYDuayomybBazHmnvY29K24LvRxaQ';
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+async function sendeAnfrage(){
+  var firmenname=document.getElementById('bf-firmenname').value.trim();
+  var ansprechpartner=document.getElementById('bf-ansprechpartner').value.trim();
+  var email=document.getElementById('bf-email').value.trim();
+  var telefon=document.getElementById('bf-telefon').value.trim();
+  var nachricht=document.getElementById('bf-nachricht').value.trim();
+  if(!firmenname||!ansprechpartner||!email||!nachricht){alert('Bitte alle Pflichtfelder ausfüllen (*)');return;}
+  var {error}=await sb.from('betrieb_anfragen').insert({
+    firmenname,ansprechpartner,email,telefon,
+    paket:'Beratung',nachricht,status:'neu'
+  });
+  if(error){alert('Fehler beim Senden. Bitte versuch es erneut oder schreib uns direkt an info@ausbildungscheck.de');return;}
+  document.getElementById('success-msg').style.display='block';
+  ['bf-firmenname','bf-ansprechpartner','bf-email','bf-telefon','bf-nachricht'].forEach(id=>document.getElementById(id).value='');
+}
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js');});
+}
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
