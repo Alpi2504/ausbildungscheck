@@ -5,26 +5,24 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ausbildungsbetrieb werden – AusbildungsCheck</title>
-<meta name="description" content="Schalte deine Ausbildungsstelle auf AusbildungsCheck und erreiche motivierte Bewerber aus deiner Region. Jetzt Partner werden.">
-<meta name="keywords" content="Ausbildungsbetrieb, Azubi suchen, Ausbildungsplatz anbieten, Ausbildung schalten">
+<title>Für Betriebe – AusbildungsCheck</title>
+<meta name="description" content="AusbildungsCheck unterstützt Betriebe dabei, Azubis zu gewinnen und Ausbildung im Betrieb weiterzuentwickeln – mit Listing, Video, Beratung und Workshops.">
+<meta name="keywords" content="Ausbildungsbetrieb, Azubi suchen, Ausbildungsberatung, Ausbilder Workshop">
 <meta name="author" content="AusbildungsCheck">
 <meta name="robots" content="index, follow">
-<meta property="og:title" content="Ausbildungsbetrieb werden – AusbildungsCheck">
-<meta property="og:description" content="Schalte deine Ausbildungsstelle auf AusbildungsCheck und erreiche motivierte Bewerber aus deiner Region.">
+<meta property="og:title" content="Für Betriebe – AusbildungsCheck">
+<meta property="og:description" content="Azubis gewinnen, Ausbildung beraten lassen, Workshops & Seminare buchen – alles an einem Ort.">
 <meta property="og:image" content="https://www.ausbildungscheck.de/favicon.svg">
 <meta property="og:url" content="https://www.ausbildungscheck.de/betriebe.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AusbildungsCheck">
 <meta name="twitter:card" content="summary">
-<!-- PWA -->
 <meta name="theme-color" content="#042C53">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="AusbildungsCheck">
 <link rel="manifest" href="/manifest.json">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -38,76 +36,34 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-links a:hover{color:var(--dark)}
 .nav-links a.active{color:var(--ice);font-weight:700}
 .nav-login{background:transparent;color:var(--navy);border:1.5px solid rgba(4,44,83,0.2);padding:7px 16px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:5px}
-.hero{background:var(--navy);padding:100px 2rem 5rem;position:relative;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 100% 50%,rgba(79,170,223,0.1),transparent 60%)}
+.hero{background:var(--navy);padding:120px 2rem 5rem;position:relative;overflow:hidden;text-align:center}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 0%,rgba(79,170,223,0.12),transparent 60%)}
 .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(79,170,223,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(79,170,223,0.04) 1px,transparent 1px);background-size:50px 50px}
-.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;position:relative}
+.hero-inner{max-width:720px;margin:0 auto;position:relative}
 .hero-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ice);opacity:.8;margin-bottom:.75rem}
-.hero h1{font-family:'Outfit',sans-serif;font-size:clamp(28px,4vw,46px);font-weight:800;letter-spacing:-1.5px;color:#fff;line-height:1.1;margin-bottom:1rem}
+.hero h1{font-family:'Outfit',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-1.5px;color:#fff;line-height:1.15;margin-bottom:1rem}
 .hero h1 span{color:var(--ice)}
-.hero p{font-size:15px;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:2rem;max-width:420px}
-.hero-btns{display:flex;gap:.75rem;flex-wrap:wrap}
-.btn-ice{background:var(--ice);color:#fff !important;border:none;padding:13px 28px;border-radius:9px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;-webkit-text-fill-color:#fff !important}
-.btn-white-outline{background:transparent;color:#fff !important;border:2px solid rgba(255,255,255,0.4);padding:13px 28px;border-radius:9px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;-webkit-text-fill-color:#fff !important}
-.hero-card{background:rgba(255,255,255,0.05);border:1px solid rgba(122,191,239,0.15);border-radius:20px;padding:1.75rem;backdrop-filter:blur(10px)}
-.hero-card-title{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:1.25rem}
-.metric-row{display:flex;gap:1rem;margin-bottom:1.25rem}
-.metric{flex:1;background:rgba(255,255,255,0.05);border-radius:12px;padding:1rem;text-align:center}
-.metric-num{font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;color:var(--ice)}
-.metric-label{font-size:11px;color:rgba(255,255,255,0.45);margin-top:3px}
-.applicant-list{display:flex;flex-direction:column;gap:.6rem}
-.applicant{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border-radius:10px;padding:.6rem .85rem}
-.applicant-avatar{width:30px;height:30px;border-radius:50%;background:var(--ice);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--dark);font-family:'Outfit',sans-serif;flex-shrink:0}
-.applicant-name{font-size:13px;font-weight:600;color:#fff}
-.applicant-role{font-size:11px;color:rgba(255,255,255,0.4)}
-.applicant-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;background:rgba(79,170,223,0.15);color:var(--ice);margin-left:auto}
-.vorteile{background:var(--gray);padding:4rem 2rem}
+.hero p{font-size:15px;color:rgba(255,255,255,0.6);line-height:1.7;max-width:520px;margin:0 auto}
+.wege{background:var(--gray);padding:4rem 2rem 5rem}
 .max-w{max-width:1100px;margin:0 auto}
-.center{text-align:center}
-.section-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ice);margin-bottom:.5rem}
-.section-title{font-family:'Outfit',sans-serif;font-size:clamp(22px,3vw,34px);font-weight:800;letter-spacing:-0.5px;color:var(--dark);margin-bottom:.4rem}
-.section-sub{font-size:14px;color:var(--text2);margin-bottom:2.5rem}
-.vorteile-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem}
-.vorteil-card{background:#fff;border:1.5px solid var(--gray2);border-radius:16px;padding:1.5rem}
-.vorteil-icon{font-size:28px;margin-bottom:.75rem}
-.vorteil-title{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:var(--dark);margin-bottom:.4rem}
-.vorteil-desc{font-size:13px;color:var(--text2);line-height:1.6}
-.pakete{background:#fff;padding:4rem 2rem}
-.pakete-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;max-width:900px;margin:0 auto}
-.paket-card{border:1.5px solid var(--gray2);border-radius:20px;padding:2rem;position:relative}
-.paket-card.highlight{border-color:var(--ice);background:linear-gradient(160deg,#fff,var(--ice-light))}
-.paket-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--ice);color:#fff;font-size:11px;font-weight:700;padding:3px 16px;border-radius:20px;white-space:nowrap;font-family:'Outfit',sans-serif}
-.paket-icon{font-size:32px;margin-bottom:.75rem}
-.paket-name{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:.4rem}
-.paket-title{font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;color:var(--dark);letter-spacing:-0.5px;margin-bottom:1.25rem}
-.paket-divider{height:1px;background:var(--gray2);margin:1.25rem 0}
-.preis-block{margin-bottom:.75rem}
-.preis-row{display:flex;align-items:baseline;gap:.4rem;margin-bottom:.2rem}
-.preis-amount{font-family:'Outfit',sans-serif;font-size:32px;font-weight:800;color:var(--dark);letter-spacing:-1px}
-.preis-unit{font-size:13px;color:var(--text2)}
-.preis-note{font-size:11px;color:var(--text2)}
-.preis-plus{font-size:13px;color:var(--text2);margin:.5rem 0;font-weight:500}
-.paket-features{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.75rem}
-.paket-features li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--text);line-height:1.4}
-.paket-features li::before{content:'✓';color:var(--ice);font-weight:800;font-size:13px;flex-shrink:0;margin-top:1px}
-.paket-btn{width:100%;padding:13px;border-radius:9px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none}
-.paket-btn.primary{background:var(--navy);color:#fff !important}
-.paket-btn.outline{background:transparent;color:var(--navy) !important;border:1.5px solid rgba(4,44,83,0.2)}
-.pakete-loading{text-align:center;padding:3rem;color:var(--text2);font-size:14px}
-.kontakt{background:var(--gray);padding:4rem 2rem}
-.kontakt-inner{max-width:680px;margin:0 auto;background:#fff;border-radius:20px;border:1.5px solid var(--gray2);padding:2.5rem}
-.form-group{margin-bottom:1rem}
-.form-label{font-size:13px;font-weight:600;color:var(--dark);margin-bottom:.4rem;display:block}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.form-input{width:100%;border:1.5px solid var(--gray2);border-radius:9px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none;transition:border-color .2s}
-.form-input:focus{border-color:var(--ice)}
-.paket-select{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1rem}
-.paket-option{border:1.5px solid var(--gray2);border-radius:10px;padding:.85rem 1rem;cursor:pointer;transition:all .2s}
-.paket-option:hover{border-color:var(--ice)}
-.paket-option.selected{border-color:var(--ice);background:var(--ice-light)}
-.paket-option-title{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--dark);margin-bottom:3px}
-.paket-option-price{font-size:11px;color:var(--text2)}
-.submit-btn{width:100%;background:#4FAADF !important;color:#fff !important;border:none;padding:15px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-top:.5rem;-webkit-text-fill-color:#fff !important;box-shadow:0 4px 16px rgba(79,170,223,0.35)}
+.wege-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:-3.5rem;position:relative;z-index:2}
+.weg-card{display:flex;flex-direction:column;background:#fff;border:1.5px solid var(--gray2);border-radius:22px;padding:2.25rem 2rem;text-decoration:none;transition:all .25s;box-shadow:0 20px 50px rgba(2,13,29,0.08)}
+.weg-card:hover{transform:translateY(-5px);border-color:var(--ice);box-shadow:0 24px 60px rgba(4,44,83,0.12)}
+.weg-card-primary{background:linear-gradient(160deg,var(--navy),var(--dark))}
+.weg-icon-wrap{width:56px;height:56px;border-radius:16px;background:var(--ice-light);display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:1.25rem}
+.weg-card-primary .weg-icon-wrap{background:rgba(79,170,223,0.15)}
+.weg-title{font-family:'Outfit',sans-serif;font-size:19px;font-weight:800;color:var(--dark);margin-bottom:.6rem;letter-spacing:-0.3px}
+.weg-card-primary .weg-title{color:#fff}
+.weg-desc{font-size:13.5px;color:var(--text2);line-height:1.65;margin-bottom:1.5rem;flex:1}
+.weg-card-primary .weg-desc{color:rgba(255,255,255,0.65)}
+.weg-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.5rem}
+.weg-tag{font-size:11px;font-weight:600;color:var(--ice);background:var(--ice-light);padding:4px 10px;border-radius:20px}
+.weg-card-primary .weg-tag{background:rgba(79,170,223,0.15)}
+.weg-cta{font-family:'Outfit',sans-serif;font-size:13.5px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:6px}
+.weg-card-primary .weg-cta{color:var(--ice)}
+.trust-row{max-width:900px;margin:4rem auto 0;text-align:center}
+.trust-row .section-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ice);margin-bottom:.75rem}
+.trust-row p{font-size:14px;color:var(--text2);line-height:1.7;max-width:600px;margin:0 auto}
 footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem}
 .footer-logo{font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;color:#fff}
 .footer-logo span{color:var(--ice)}
@@ -123,17 +79,15 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
 .mobile-menu.open{display:flex}
 .mobile-menu a{font-size:15px;padding:12px 0;border-bottom:1px solid var(--gray2);color:var(--text);text-decoration:none;font-weight:500;display:flex;align-items:center;gap:10px}
 .mobile-menu a:last-child{border-bottom:none}
+@media(max-width:900px){
+  .wege-grid{grid-template-columns:1fr;margin-top:-2.5rem}
+}
 @media(max-width:768px){
   nav{padding:0 1rem;height:56px}
   .nav-links a:not(.active),.nav-login{display:none}
   .hamburger{display:flex !important}
-  .hero{padding:76px 1.25rem 2rem}
-  .hero-inner{grid-template-columns:1fr !important;gap:1.5rem}
-  .hero-card{display:none}
-  .hero h1{font-size:28px !important}
-  .hero-btns{flex-direction:column}
-  .pakete-grid{grid-template-columns:1fr}
-  .form-row{grid-template-columns:1fr}
+  .hero{padding:80px 1.25rem 4rem}
+  .hero h1{font-size:26px !important}
   footer{flex-direction:column;padding:1.25rem}
   .footer-links{flex-wrap:wrap}
 }
@@ -161,96 +115,45 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-inner">
-    <div>
-      <div class="hero-label">Für Ausbildungsbetriebe</div>
-      <h1>Finde deinen nächsten <span>Top-Azubi</span></h1>
-      <p>Liste deine Ausbildungsstellen bei AusbildungsCheck und erreiche motivierte Bewerber direkt in deiner Region – unkompliziert und transparent.</p>
-      <div class="hero-btns">
-        <button class="btn-ice" onclick="document.querySelector('.kontakt').scrollIntoView({behavior:'smooth'})">Jetzt anfragen</button>
-        <button class="btn-white-outline" onclick="document.querySelector('.pakete').scrollIntoView({behavior:'smooth'})">Pakete ansehen</button>
-      </div>
-    </div>
-    <div class="hero-card">
-      <div class="hero-card-title">Dein Dashboard</div>
-      <div class="metric-row">
-        <div class="metric"><div class="metric-num">24</div><div class="metric-label">Bewerbungen</div></div>
-        <div class="metric"><div class="metric-num">312</div><div class="metric-label">Profilaufrufe</div></div>
-        <div class="metric"><div class="metric-num">3</div><div class="metric-label">Aktive Stellen</div></div>
-      </div>
-      <div class="applicant-list">
-        <div class="applicant"><div class="applicant-avatar">LM</div><div style="flex:1"><div class="applicant-name">Lena Müller</div><div class="applicant-role">Kfz-Mechatroniker</div></div><span class="applicant-badge">NEU</span></div>
-        <div class="applicant"><div class="applicant-avatar">JS</div><div style="flex:1"><div class="applicant-name">Jonas Schmidt</div><div class="applicant-role">Fachinformatiker</div></div><span class="applicant-badge">NEU</span></div>
-        <div class="applicant"><div class="applicant-avatar">SK</div><div style="flex:1"><div class="applicant-name">Sara Kaya</div><div class="applicant-role">Kauffrau Einzelhandel</div></div><span class="applicant-badge" style="background:rgba(16,185,129,0.15);color:#059669">GESEHEN</span></div>
-      </div>
-    </div>
+    <div class="hero-label">Für Ausbildungsbetriebe</div>
+    <h1>Wobei können wir dich <span>unterstützen?</span></h1>
+    <p>Ob Azubis finden, individuelle Beratung oder praxisnahe Workshops – wähle den Bereich, der gerade zu dir passt.</p>
   </div>
 </section>
 
-<section class="vorteile">
+<section class="wege">
   <div class="max-w">
-    <div class="center" style="margin-bottom:2.5rem">
+    <div class="wege-grid">
+
+      <a href="betriebe-azubis.html" class="weg-card weg-card-primary">
+        <div class="weg-icon-wrap">🎯</div>
+        <div class="weg-title">Azubis gewinnen</div>
+        <div class="weg-desc">Liste deine Ausbildungsstelle bei uns und erreiche motivierte Bewerber über unsere Plattform und Social-Media-Kanäle – optional mit eigenem Betriebs-Video.</div>
+        <div class="weg-tags"><span class="weg-tag">Listing</span><span class="weg-tag">Video</span></div>
+        <div class="weg-cta">Pakete ansehen →</div>
+      </a>
+
+      <a href="betriebe-beratung.html" class="weg-card">
+        <div class="weg-icon-wrap">💬</div>
+        <div class="weg-title">Beratung</div>
+        <div class="weg-desc">Individuelle Unterstützung für deinen Betrieb – z. B. bei Ausbildungsabläufen, Unterweisungen oder Konfliktmanagement zwischen Azubi und Ausbilder.</div>
+        <div class="weg-tags"><span class="weg-tag">1:1</span><span class="weg-tag">Auf Anfrage</span></div>
+        <div class="weg-cta">Mehr erfahren →</div>
+      </a>
+
+      <a href="betriebe-workshops.html" class="weg-card">
+        <div class="weg-icon-wrap">🎓</div>
+        <div class="weg-title">Workshops & Seminare</div>
+        <div class="weg-desc">Praxisnahe Formate für Ausbilder und Azubis – von Kommunikationstraining bis Konfliktmanagement, vor Ort in deinem Betrieb.</div>
+        <div class="weg-tags"><span class="weg-tag">Gruppen</span><span class="weg-tag">Auf Anfrage</span></div>
+        <div class="weg-cta">Mehr erfahren →</div>
+      </a>
+
+    </div>
+
+    <div class="trust-row">
       <div class="section-label">Warum AusbildungsCheck</div>
-      <div class="section-title">Mehr als nur eine Stellenanzeige</div>
-      <div class="section-sub">Wir bringen echte Reichweite durch Social Media – dein Betrieb wird gesehen.</div>
-    </div>
-    <div class="vorteile-grid">
-      <div class="vorteil-card"><div class="vorteil-icon">📱</div><div class="vorteil-title">Social Media Reichweite</div><div class="vorteil-desc">Deine Stelle wird über unsere Kanäle an tausende junge Bewerber ausgespielt.</div></div>
-      <div class="vorteil-card"><div class="vorteil-icon">🎯</div><div class="vorteil-title">Direkte Bewerbungen</div><div class="vorteil-desc">Bewerber laden ihren Lebenslauf direkt hoch – du erhältst vollständige Bewerbungen per E-Mail.</div></div>
-      <div class="vorteil-card"><div class="vorteil-icon">🎥</div><div class="vorteil-title">Exklusives Betriebs-Video</div><div class="vorteil-desc">Wir kommen zu dir, drehen ein authentisches Video und veröffentlichen es auf allen Kanälen.</div></div>
-      <div class="vorteil-card"><div class="vorteil-icon">⚡</div><div class="vorteil-title">Schnell & einfach</div><div class="vorteil-desc">Kontaktiere uns kurz und wir kümmern uns um alles – du kannst dich auf deine Azubis konzentrieren.</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- PAKETE – dynamisch aus Supabase -->
-<section class="pakete">
-  <div class="max-w">
-    <div class="center" style="margin-bottom:2.5rem">
-      <div class="section-label">Unsere Pakete</div>
-      <div class="section-title">Wähle was zu dir passt</div>
-      <div class="section-sub">Klare Optionen – ohne versteckte Kosten. Alle Preise netto zzgl. MwSt.</div>
-    </div>
-    <div class="pakete-grid" id="pakete-grid">
-      <div class="pakete-loading">⏳ Pakete werden geladen...</div>
-    </div>
-  </div>
-</section>
-
-<section class="kontakt">
-  <div class="max-w">
-    <div class="center" style="margin-bottom:2rem">
-      <div class="section-label">Kontakt</div>
-      <div class="section-title">Jetzt anfragen</div>
-      <div class="section-sub">Füll das Formular aus – wir melden uns innerhalb von 24 Stunden.</div>
-    </div>
-    <div class="kontakt-inner">
-      <div id="betriebe-success" style="display:none;background:#E6F9F0;border:1.5px solid #34D399;border-radius:10px;padding:1rem;text-align:center;color:#065F46;font-weight:600;margin-bottom:1rem;font-family:'Outfit',sans-serif">🎉 Anfrage erfolgreich gesendet! Wir melden uns innerhalb von 24 Stunden.</div>
-      <div class="form-group">
-        <label class="form-label">Welches Paket interessiert dich? *</label>
-        <div class="paket-select" id="paket-select-form">
-          <div class="pakete-loading" style="padding:1rem">⏳ Lädt...</div>
-        </div>
-        <input type="hidden" id="paket-hidden" value="">
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">Firmenname *</label><input class="form-input" type="text" id="bf-firmenname" placeholder="Musterfirma GmbH"></div>
-        <div class="form-group"><label class="form-label">Ansprechpartner *</label><input class="form-input" type="text" id="bf-ansprechpartner" placeholder="Max Mustermann"></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">E-Mail *</label><input class="form-input" type="email" id="bf-email" placeholder="max@firma.de"></div>
-        <div class="form-group"><label class="form-label">Telefon</label><input class="form-input" type="tel" id="bf-telefon" placeholder="+49 123 456789"></div>
-      </div>
-      <div class="form-group"><label class="form-label">Ausbildungsberuf *</label><input class="form-input" type="text" id="bf-ausbildungsberuf" placeholder="z.B. Kfz-Mechatroniker/in"></div>
-      <div class="form-group"><label class="form-label">Standort *</label><input class="form-input" type="text" id="bf-standort" placeholder="z.B. Köln"></div>
-      <div class="form-group"><label class="form-label">Nachricht (optional)</label><textarea class="form-input" id="bf-nachricht" rows="3" placeholder="Weitere Infos..."></textarea></div>
-      <div style="display:flex;align-items:flex-start;gap:10px;margin-top:.75rem;padding:1rem;background:var(--gray);border-radius:9px;border:1.5px solid var(--gray2)">
-        <input type="checkbox" id="datenschutz-betriebe" style="accent-color:var(--ice);width:16px;height:16px;cursor:pointer;flex-shrink:0;margin-top:2px">
-        <label for="datenschutz-betriebe" style="font-size:13px;color:var(--text2);line-height:1.5;cursor:pointer">Ich habe die <a href="datenschutz.html" target="_blank" style="color:var(--ice);font-weight:600">Datenschutzerklärung</a> gelesen und bin damit einverstanden, dass meine Daten zur Bearbeitung meiner Anfrage verarbeitet werden. *</label>
-      </div>
-      <button type="button" class="submit-btn" onclick="submitBetriebe()">Anfrage absenden 🚀</button>
-      <div style="text-align:center;margin-top:1rem;font-size:13px;color:var(--text2)">
-        Oder schreib uns direkt: <a href="mailto:info@ausbildungscheck.de" style="color:var(--ice);font-weight:600">info@ausbildungscheck.de</a>
-      </div>
+      <p>Gegründet von Alparslan Sükür, Industriemeister Chemie und IHK-Prüfer – wir kennen Ausbildung nicht nur aus der Theorie, sondern aus der betrieblichen Praxis.</p>
     </div>
   </div>
 </section>
@@ -259,141 +162,19 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
   <div class="footer-logo">Ausbildungs<span>Check</span></div>
   <div class="footer-links">
     <a href="index.html">Start</a>
+    <a href="stellen.html">Stellen</a>
     <a href="datenschutz.html">Datenschutz</a>
-    <a href="mailto:info@ausbildungscheck.de">✉️ info@ausbildungscheck.de</a>
     <a href="impressum.html">Impressum</a>
+    <a href="agb.html">AGB</a>
   </div>
   <div class="footer-copy">© 2026 AusbildungsCheck</div>
 </footer>
 
 <script>
-const SUPABASE_URL='https://trccxzjdddhbqjgyzlkv.supabase.co';
-const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRyY2N4empkZGRoYnFqZ3l6bGt2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1MDgyMjIsImV4cCI6MjA5NDA4NDIyMn0.xS5-9Tq1-i9_K9lYDuayomybBazHmnvY29K24LvRxaQ';
-const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-
-var aktiverPaketIndex=0;
-
-async function ladePakete(){
-  var {data}=await sb.from('pakete').select('*').eq('aktiv',true).order('reihenfolge');
-  var grid=document.getElementById('pakete-grid');
-  var formSelect=document.getElementById('paket-select-form');
-
-  if(!data||!data.length){
-    grid.innerHTML='<div class="pakete-loading">Pakete werden bald veröffentlicht.</div>';
-    formSelect.innerHTML='';
-    return;
-  }
-
-  // Pakete Cards rendern
-  grid.innerHTML=data.map((p,i)=>{
-    var features=p.features?p.features.split('\n').filter(f=>f.trim()):[];
-    var preisLabel=p.preis_monatlich?p.preis_monatlich+'€':'-';
-    return `
-      <div class="paket-card ${p.highlighted?'highlight':''}">
-        ${p.badge?`<div class="paket-badge">${p.badge}</div>`:''}
-        <div class="paket-icon">${p.emoji||'📋'}</div>
-        <div class="paket-name">Paket ${i+1}</div>
-        <div class="paket-title">${p.name}</div>
-        <div class="preis-block">
-          ${p.preis_einmalig?`
-            <div class="preis-row">
-              <span class="preis-amount">${p.preis_einmalig}€</span>
-              <span class="preis-unit">einmalig</span>
-            </div>
-            <div class="preis-note" style="margin-bottom:.6rem">Videoproduktion zzgl. MwSt.</div>
-            <div style="font-size:13px;color:var(--text2);font-weight:600;margin-bottom:.3rem">+ ${p.preis_monatlich}€ / Monat</div>
-          `:`
-            <div class="preis-row">
-              <span class="preis-amount">${preisLabel}</span>
-              <span class="preis-unit">/ Monat</span>
-            </div>
-          `}
-          ${p.preishinweis?`<div class="preis-note">${p.preishinweis}</div>`:''}
-          ${p.mindestlaufzeit?`<div class="preis-note" style="margin-top:4px">⏱ ${p.mindestlaufzeit}</div>`:''}
-        </div>
-        <div class="paket-divider"></div>
-        ${features.length?`<ul class="paket-features">${features.map(f=>`<li>${f}</li>`).join('')}</ul>`:''}
-        <button class="paket-btn ${p.highlighted?'primary':'outline'}" onclick="scrollToKontakt(${i})">Paket anfragen</button>
-      </div>`;
-  }).join('');
-
-  // Formular-Optionen rendern
-  formSelect.innerHTML=data.map((p,i)=>{
-    var preisTxt=p.preis_einmalig?p.preis_einmalig+'€ + '+p.preis_monatlich+'€/Monat':p.preis_monatlich+'€/Monat';
-    return `<div class="paket-option ${i===0?'selected':''}" id="form-opt-${i}" onclick="selectFormPaket(${i},'${p.name.replace(/'/g,"\\'")}','${preisTxt}')">
-      <div class="paket-option-title">${p.emoji||''} ${p.name}</div>
-      <div class="paket-option-price">${preisTxt}</div>
-    </div>`;
-  }).join('');
-
-  // Ersten Eintrag im hidden field setzen
-  if(data.length>0){
-    var preisTxt0=data[0].preis_einmalig?data[0].preis_einmalig+'€ + '+data[0].preis_monatlich+'€/Monat':data[0].preis_monatlich+'€/Monat';
-    document.getElementById('paket-hidden').value=data[0].name+' ('+preisTxt0+')';
-  }
-}
-
-function selectFormPaket(idx,name,preis){
-  document.querySelectorAll('.paket-option').forEach((el,i)=>{
-    el.classList.toggle('selected',i===idx);
-  });
-  document.getElementById('paket-hidden').value=name+' ('+preis+')';
-  aktiverPaketIndex=idx;
-}
-
-function scrollToKontakt(paketIdx){
-  document.querySelector('.kontakt').scrollIntoView({behavior:'smooth'});
-  setTimeout(()=>selectFormPaket(paketIdx,
-    document.querySelectorAll('.paket-option')[paketIdx]?.querySelector('.paket-option-title')?.textContent||'',
-    document.querySelectorAll('.paket-option')[paketIdx]?.querySelector('.paket-option-price')?.textContent||''
-  ),500);
-}
-
-async function submitBetriebe(){
-  if(!document.getElementById('datenschutz-betriebe').checked){alert('Bitte bestätige die Datenschutzerklärung!');return;}
-  var firmenname=document.getElementById('bf-firmenname').value.trim();
-  var ansprechpartner=document.getElementById('bf-ansprechpartner').value.trim();
-  var email=document.getElementById('bf-email').value.trim();
-  var telefon=document.getElementById('bf-telefon').value.trim();
-  var ausbildungsberuf=document.getElementById('bf-ausbildungsberuf').value.trim();
-  var standort=document.getElementById('bf-standort').value.trim();
-  var nachricht=document.getElementById('bf-nachricht').value.trim();
-  var paket=document.getElementById('paket-hidden').value;
-  if(!firmenname||!ansprechpartner||!email||!ausbildungsberuf||!standort){alert('Bitte alle Pflichtfelder ausfüllen!');return;}
-  var btn=document.querySelector('.submit-btn');
-  btn.disabled=true;btn.textContent='Wird gesendet...';
-  var anfrage={paket,firmenname,ansprechpartner,email,telefon,ausbildungsberuf,standort,nachricht};
-  var {error}=await sb.from('betrieb_anfragen').insert(anfrage);
-  if(error){btn.disabled=false;btn.textContent='Anfrage absenden 🚀';alert('Fehler beim Senden. Bitte versuche es nochmal.');return;}
-  await sb.functions.invoke('betrieb-anfrage-weiterleiten',{body:{anfrage}});
-  document.getElementById('betriebe-success').style.display='block';
-  document.getElementById('bf-firmenname').value='';
-  document.getElementById('bf-ansprechpartner').value='';
-  document.getElementById('bf-email').value='';
-  document.getElementById('bf-telefon').value='';
-  document.getElementById('bf-ausbildungsberuf').value='';
-  document.getElementById('bf-standort').value='';
-  document.getElementById('bf-nachricht').value='';
-  document.getElementById('datenschutz-betriebe').checked=false;
-  btn.disabled=false;btn.textContent='Anfrage absenden 🚀';
-  ladePakete();
-}
-
 function toggleMenu(){
   document.getElementById('mobile-menu').classList.toggle('open');
   document.getElementById('hamburger').classList.toggle('open');
 }
-if(window.innerWidth<=768){document.getElementById('hamburger').style.display='flex';}
-window.addEventListener('resize',function(){
-  var ham=document.getElementById('hamburger');
-  if(window.innerWidth<=768) ham.style.display='flex';
-  else{ham.style.display='none';document.getElementById('mobile-menu').classList.remove('open');}
-});
-
-ladePakete();
-</script>
-<!-- PWA Service Worker -->
-<script>
 if('serviceWorker' in navigator){
   window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js');});
 }
