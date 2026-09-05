@@ -151,6 +151,7 @@ tr:hover td{background:var(--gray)}
     <div class="nav-item" onclick="showPage('pakete')"><span class="icon">💰</span> Pakete & Preise</div>
     <div class="nav-item" onclick="showPage('anfragen')"><span class="icon">📬</span> Betriebsanfragen</div>
     <div class="nav-item" onclick="showPage('statistiken')"><span class="icon">📊</span> Quiz Statistiken</div>
+    <div class="nav-item" onclick="showPage('newsletter')"><span class="icon">📧</span> Newsletter</div>
     <div class="sidebar-bottom">
       <button class="logout-btn" onclick="logout()"><span>🚪</span> Ausloggen</button>
     </div>
@@ -260,6 +261,21 @@ tr:hover td{background:var(--gray)}
       <div class="card">
         <div class="card-header"><div class="card-title">Top Berufsfelder</div></div>
         <div id="quiz-berufsfelder-chart" style="padding:1.5rem"></div>
+      </div>
+    </div>
+
+    <!-- NEWSLETTER -->
+    <div class="page" id="page-newsletter">
+      <div class="page-title">Newsletter-Anmeldungen</div>
+      <div class="stats-grid" style="margin-bottom:1.5rem">
+        <div class="stat-card"><div class="stat-icon">📧</div><div class="stat-value" id="stat-newsletter-total">0</div><div class="stat-label">Eingetragene E-Mails</div></div>
+      </div>
+      <div style="margin-bottom:1rem">
+        <button onclick="exportNewsletterCSV()" style="background:var(--navy);color:#fff;border:none;padding:10px 18px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;cursor:pointer">⬇️ Als CSV exportieren</button>
+      </div>
+      <div class="card">
+        <table><thead><tr><th>E-Mail</th><th>Angemeldet am</th></tr></thead>
+        <tbody id="newsletter-list"><tr><td colspan="2" class="empty-state">Lädt...</td></tr></tbody></table>
       </div>
     </div>
 
@@ -519,12 +535,39 @@ function showPage(name){
   if(name==='statistiken') loadStatistiken();
   if(name==='berufsfelder') loadBerufsfelder();
   if(name==='bewerber') loadBewerber();
+  if(name==='newsletter') loadNewsletter();
 }
 
 function showToast(msg){
   var t=document.getElementById('toast');
   t.textContent=msg;t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+var newsletterDataCache=[];
+
+async function loadNewsletter(){
+  var {data}=await sb.from('newsletter_signups').select('*').order('created_at',{ascending:false});
+  newsletterDataCache=data||[];
+  document.getElementById('stat-newsletter-total').textContent=newsletterDataCache.length;
+  var tb=document.getElementById('newsletter-list');
+  if(!newsletterDataCache.length){
+    tb.innerHTML='<tr><td colspan="2" style="text-align:center;padding:2rem;color:#5A7490">Noch keine Anmeldungen</td></tr>';
+    return;
+  }
+  tb.innerHTML=newsletterDataCache.map(n=>`<tr><td>${esc(n.email)}</td><td>${new Date(n.created_at).toLocaleDateString('de-DE')}</td></tr>`).join('');
+}
+
+function exportNewsletterCSV(){
+  if(!newsletterDataCache.length){alert('Keine Daten zum Exportieren.');return;}
+  var rows=[['E-Mail','Angemeldet am']];
+  newsletterDataCache.forEach(n=>rows.push([n.email,new Date(n.created_at).toLocaleDateString('de-DE')]));
+  var csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+  var blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  var link=document.createElement('a');
+  link.href=URL.createObjectURL(blob);
+  link.download='newsletter_anmeldungen.csv';
+  link.click();
 }
 
 async function loadAll(){
