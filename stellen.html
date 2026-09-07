@@ -243,7 +243,7 @@ footer{background:var(--dark);padding:1.5rem 2rem;display:flex;align-items:cente
           <span class="bf-current" id="bf-current"><span class="bf-emoji">📋</span>Alle Berufsfelder</span>
           <span id="bf-chevron">▾</span>
         </div>
-        <div class="bf-dropdown-list" id="bf-dropdown-list"></div>
+        <div class="bf-dropdown-list" id="bf-dropdown-list" onclick="event.stopPropagation()"></div>
       </div>
       <input type="hidden" id="berufsfeld-filter" value="">
     </div>
@@ -573,15 +573,14 @@ document.addEventListener('click',function(e){
 });
 
 function zeigeStellen(data){
-  document.getElementById('stellen-count').textContent=data.length;
   var list=document.getElementById('jobs-list');
-  if(!stellenLiveGlobal||!data.length){
-    if(!stellenLiveGlobal){
-      list.innerHTML=`
+  if(!stellenLiveGlobal){
+    document.getElementById('stellen-count').textContent='0';
+    list.innerHTML=`
         <div class="coming-soon-banner">
           <div class="cs-badge">🚀 BALD LIVE</div>
           <h3>Hier passiert bald etwas Großes 👀</h3>
-          <p>Trag dich jetzt per Mail ein, um nicht zu verpassen, wenn die ersten Ausbildungsplätze für 2027 online gehen!</p>
+          <p>Trag dich jetzt per Mail in unseren Newsletter ein, um nicht zu verpassen, wenn die ersten Ausbildungsplätze für 2027 online gehen!</p>
           <form class="cs-form" id="newsletter-form" onsubmit="return submitNewsletter(event)">
             <input type="email" id="newsletter-email" placeholder="Deine E-Mail-Adresse" required>
             <button type="submit">Benachrichtigen</button>
@@ -603,9 +602,11 @@ function zeigeStellen(data){
             </a>
           </div>
         </div>`;
-    }else{
-      list.innerHTML='<div class="empty-state">😔 Keine Stellen gefunden</div>';
-    }
+    return;
+  }
+  document.getElementById('stellen-count').textContent=data.length;
+  if(!data.length){
+    list.innerHTML='<div class="empty-state">😔 Keine Stellen gefunden</div>';
     return;
   }
   list.innerHTML=data.map((s,i)=>`
